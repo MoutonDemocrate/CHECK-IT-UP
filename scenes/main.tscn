@@ -1,0 +1,121 @@
+[gd_scene load_steps=13 format=3 uid="uid://8m6o74ud0t8o"]
+
+[ext_resource type="Script" path="res://scenes/main.gd" id="1_hfrkx"]
+[ext_resource type="Texture2D" uid="uid://b3uh0body4qu5" path="res://assets/player/default.png" id="1_r7gxw"]
+[ext_resource type="Script" path="res://scenes/World.gd" id="2_lgqa5"]
+[ext_resource type="PackedScene" uid="uid://bna7646swxqlu" path="res://scenes/inter.tscn" id="2_r6xpu"]
+[ext_resource type="FontFile" uid="uid://cef20c6oql2my" path="res://assets/fonts/Funkrocker.otf" id="2_s1ja7"]
+[ext_resource type="Script" path="res://scenes/player.gd" id="3_p36vy"]
+[ext_resource type="Script" path="res://scenes/CameraScript.gd" id="4_tdvwj"]
+[ext_resource type="FontFile" uid="uid://ccy1baifnycgq" path="res://assets/fonts/FREAKSOFNATURE.ttf" id="5_2cqnd"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s3ucp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_r7gxw")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="LabelSettings" id="LabelSettings_sc68o"]
+font = ExtResource("2_s1ja7")
+font_size = 190
+
+[sub_resource type="LabelSettings" id="LabelSettings_064kb"]
+font = ExtResource("5_2cqnd")
+font_size = 61
+
+[sub_resource type="LabelSettings" id="LabelSettings_w2473"]
+font = ExtResource("5_2cqnd")
+font_size = 100
+
+[node name="main" type="Node"]
+script = ExtResource("1_hfrkx")
+
+[node name="World" type="Node2D" parent="."]
+script = ExtResource("2_lgqa5")
+
+[node name="inter" parent="World" instance=ExtResource("2_r6xpu")]
+position = Vector2(0, 750)
+
+[node name="Player" type="Node2D" parent="."]
+position = Vector2(800, 750)
+script = ExtResource("3_p36vy")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
+sprite_frames = SubResource("SpriteFrames_s3ucp")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(800, 450)
+script = ExtResource("4_tdvwj")
+
+[node name="UI" type="Control" parent="Camera2D"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -800.0
+offset_top = -450.0
+offset_right = -800.0
+offset_bottom = -450.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CHECK_IT_UP" type="Control" parent="Camera2D/UI"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label_CHECK" type="Label" parent="Camera2D/UI/CHECK_IT_UP"]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 50.0
+offset_right = 709.0
+offset_bottom = 337.0
+text = "CHECK"
+label_settings = SubResource("LabelSettings_sc68o")
+
+[node name="Label_IT" type="Label" parent="Camera2D/UI/CHECK_IT_UP"]
+layout_mode = 0
+offset_left = 750.0
+offset_top = 50.0
+offset_right = 919.0
+offset_bottom = 337.0
+text = "IT"
+label_settings = SubResource("LabelSettings_sc68o")
+
+[node name="Label_UP" type="Label" parent="Camera2D/UI/CHECK_IT_UP"]
+layout_mode = 0
+offset_left = 950.0
+offset_top = 50.0
+offset_right = 1439.0
+offset_bottom = 337.0
+text = "UP !  ✓"
+label_settings = SubResource("LabelSettings_sc68o")
+
+[node name="Direction_Label" type="Label" parent="Camera2D/UI"]
+layout_mode = 0
+offset_left = 350.0
+offset_top = 800.0
+offset_right = 1250.0
+offset_bottom = 873.0
+text = "GO RIGHT TO CONTINUE"
+label_settings = SubResource("LabelSettings_064kb")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Motivation_Label" type="Label" parent="Camera2D/UI"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 500.0
+offset_right = 1550.0
+offset_bottom = 673.0
+text = "GO FASTER"
+label_settings = SubResource("LabelSettings_w2473")
+horizontal_alignment = 1
+vertical_alignment = 1

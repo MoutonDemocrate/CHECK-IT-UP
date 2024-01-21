@@ -1,0 +1,128 @@
+[gd_scene load_steps=5 format=3 uid="uid://dix54pcanheeh"]
+
+[ext_resource type="Script" path="res://scenes/level.gd" id="1_aer3t"]
+[ext_resource type="Script" path="res://scenes/RandomLevelGenerator.gd" id="2_cm3nc"]
+
+[sub_resource type="Curve2D" id="Curve2D_57smi"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -50, 550, 0, 0, 0, 0, 550, 550, 0, 0, 0, 0, 550, 350, 0, 0, 0, 0, 950, 350, 0, 0, 0, 0, 950, 550, 0, 0, 0, 0, 1350, 550, 0, 0, 0, 0, 1350, 450, 0, 0, 0, 0, 550, 450, 0, 0, 0, 0, 250, 450, 0, 0, 0, 0, 250, 650, 0, 0, 0, 0, 1650, 650)
+}
+point_count = 11
+
+[sub_resource type="GDScript" id="GDScript_vy5vq"]
+resource_name = "MainPath"
+script/source = "extends Path2D
+
+var points : Array[Vector2] = []
+var angle1 : int
+var angle2 : int
+var textureNode : TextureRect
+var distance : int
+var i_sup : int
+
+var texture_array : Array[TextureRect] = []
+
+var rlg : RandomLevelGenerator
+
+func _enter_tree():
+	
+	print(\"Entered tree.\")
+	
+	rlg = $\"../RandomLevelGenerator\"
+	rlg.difficulty = $\"..\".difficulty
+	
+	curve = rlg._calculate_random_path()
+	
+	print(curve.get_point_position(curve.point_count - 1))
+	
+	_fill_path()
+	
+func _fill_path():
+	
+	# Get points in the curve
+	for i in curve.get_point_count() :
+		points.append(curve.get_point_position(i))
+		
+	# Fill out path
+	i_sup = len(points) - 1
+	distance = abs(points[i_sup].distance_to(points[i_sup-1]))/100 - 1
+	
+	for j in range(0, distance) :
+		textureNode = TextureRect.new()
+		self.add_child(textureNode)
+		textureNode.pivot_offset = Vector2(50,50)
+		textureNode.size = Vector2(100,100)
+		textureNode.position = points[i_sup] + (points[i_sup-1]-points[i_sup]).normalized()*(j+1)*100
+		textureNode.texture = load(\"res://assets/textures/paths/line_basic.png\")
+		if (points[i_sup]-points[i_sup-1]).normalized() == Vector2.UP or (points[i_sup]-points[i_sup-1]).normalized() == Vector2.DOWN :
+			textureNode.rotation = PI/2
+		texture_array.push_front(textureNode)
+	
+	for i in range(len(points)-2, 0, -1) :
+		
+		# Fill out corner
+		angle1 = (points[i]-points[i-1]).angle() /(PI/2)
+		angle2 = (points[i]-points[i+1]).angle() /(PI/2)
+		
+		textureNode = TextureRect.new()
+		self.add_child(textureNode)
+		textureNode.size = Vector2(100,100)
+		textureNode.position = points[i]
+		textureNode.pivot_offset = Vector2(50,50)
+		textureNode.texture = load(\"res://assets/textures/paths/corner_basic.png\")
+		texture_array.push_front(textureNode)
+		
+		match angle1:
+			0:
+				if angle2 == 1 :
+					textureNode.rotation = PI/2
+			1:
+				if angle2 == 0 :
+					textureNode.rotation = PI/2
+				else :
+					textureNode.rotation = PI
+			2:
+				if angle2 == 1 :
+					textureNode.rotation = PI
+				else :
+					textureNode.rotation = -PI/2
+			-1:
+				if angle2 == 2 :
+					textureNode.rotation = -PI/2
+		
+		# Fill rest of path
+		distance = abs(points[i].distance_to(points[i-1]))/100 - 1
+		
+		for j in range(0, distance) :
+			textureNode = TextureRect.new()
+			self.add_child(textureNode)
+			textureNode.pivot_offset = Vector2(50,50)
+			textureNode.size = Vector2(100,100)
+			textureNode.position = points[i] + (points[i-1]-points[i]).normalized()*(j+1)*100
+			textureNode.texture = load(\"res://assets/textures/paths/line_basic.png\")
+			if (points[i]-points[i-1]).normalized() == Vector2.UP or (points[i]-points[i-1]).normalized() == Vector2.DOWN :
+				textureNode.rotation = PI/2
+			texture_array.push_front(textureNode)
+		
+	textureNode = TextureRect.new()
+	self.add_child(textureNode)
+	textureNode.size = Vector2(100,100)
+	textureNode.position = points[0]
+	textureNode.texture = load(\"res://assets/textures/paths/line_basic.png\")
+	texture_array.push_front(textureNode)
+"
+
+[node name="level" type="Node2D"]
+script = ExtResource("1_aer3t")
+difficulty = 10
+
+[node name="Path2D" type="Path2D" parent="."]
+position = Vector2(0, -100)
+curve = SubResource("Curve2D_57smi")
+script = SubResource("GDScript_vy5vq")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(-50, 550)
+
+[node name="RandomLevelGenerator" type="Node" parent="."]
+script = ExtResource("2_cm3nc")
