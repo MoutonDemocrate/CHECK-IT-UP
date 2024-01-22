@@ -36,6 +36,5 @@ func _inter_activities():
 	level.queue_free()
 	inter.position = Vector2(0,750)
 	player.position = Vector2(800,750)
-	$"../Camera2D/UI".show()
 	_load_next_level()
 	player._set_player_green()
