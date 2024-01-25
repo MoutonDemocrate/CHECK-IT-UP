@@ -2,13 +2,15 @@ class_name Player
 extends Node2D
 
 ## Speed of the player, in blocs per second
-@export var speed : float = 40.0
+@export var speed : float = 10.0
 
 signal leaving_inter
 signal first_node
 signal last_node
 signal entering_inter
 signal stopped_at_inter
+
+var line_progress : float
 
 var direction : Vector2
 
@@ -23,6 +25,7 @@ var state : PlayerState = PlayerState.INTER_GREEN
 
 func _ready():
 	last_node.connect($"../World"._load_inter)
+	first_node.connect($"../World"._hide_inter)
 	stopped_at_inter.connect($"../World"._inter_activities)
 
 func _set_player_green() -> void :
@@ -74,6 +77,11 @@ func _physics_process(_delta):
 				node += 1
 				next_node = $"../World".level.get_path_point_global(node)
 				direction_to_next_node = calculate_next_node_direction()
+				
+			line_progress = ((position - $"../World".level.get_path_point_global(node-1)).dot(direction)/(next_node - $"../World".level.get_path_point_global(node-1)).dot(direction))
+			if is_nan(line_progress) :
+				line_progress = 0.0
+			$"../World".level._hide_path(min(node,level_nodes_count), line_progress)
 		
 		PlayerState.CORNER:
 			if direction_to_next_node == Vector2(

@@ -20,6 +20,9 @@ func _load_inter() -> void :
 	add_child(inter)
 	print("Inter loaded!")
 
+func _hide_inter() -> void: 
+	inter.hide()
+
 func _load_next_level() -> void:
 	
 	# Adding next level

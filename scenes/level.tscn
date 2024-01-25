@@ -16,11 +16,11 @@ script/source = "extends Path2D
 var points : Array[Vector2] = []
 var angle1 : int
 var angle2 : int
-var textureNode : TextureRect
+var textureNode : TextureBloc
 var distance : int
 var i_sup : int
 
-var texture_array : Array[TextureRect] = []
+var texture_array : Array[TextureBloc] = []
 
 var rlg : RandomLevelGenerator
 
@@ -48,15 +48,16 @@ func _fill_path():
 	distance = abs(points[i_sup].distance_to(points[i_sup-1]))/100 - 1
 	
 	for j in range(0, distance) :
-		textureNode = TextureRect.new()
+		textureNode = TextureBloc.new()
 		self.add_child(textureNode)
 		textureNode.pivot_offset = Vector2(50,50)
 		textureNode.size = Vector2(100,100)
 		textureNode.position = points[i_sup] + (points[i_sup-1]-points[i_sup]).normalized()*(j+1)*100
-		textureNode.texture = load(\"res://assets/textures/paths/line_basic.png\")
+		textureNode.is_corner = false
 		if (points[i_sup]-points[i_sup-1]).normalized() == Vector2.UP or (points[i_sup]-points[i_sup-1]).normalized() == Vector2.DOWN :
 			textureNode.rotation = PI/2
 		texture_array.push_front(textureNode)
+		textureNode._update()
 	
 	for i in range(len(points)-2, 0, -1) :
 		
@@ -64,13 +65,14 @@ func _fill_path():
 		angle1 = (points[i]-points[i-1]).angle() /(PI/2)
 		angle2 = (points[i]-points[i+1]).angle() /(PI/2)
 		
-		textureNode = TextureRect.new()
+		textureNode = TextureBloc.new()
 		self.add_child(textureNode)
 		textureNode.size = Vector2(100,100)
 		textureNode.position = points[i]
 		textureNode.pivot_offset = Vector2(50,50)
-		textureNode.texture = load(\"res://assets/textures/paths/corner_basic.png\")
+		textureNode.is_corner = true
 		texture_array.push_front(textureNode)
+		textureNode._update()
 		
 		match angle1:
 			0:
@@ -94,22 +96,43 @@ func _fill_path():
 		distance = abs(points[i].distance_to(points[i-1]))/100 - 1
 		
 		for j in range(0, distance) :
-			textureNode = TextureRect.new()
+			textureNode = TextureBloc.new()
 			self.add_child(textureNode)
 			textureNode.pivot_offset = Vector2(50,50)
 			textureNode.size = Vector2(100,100)
 			textureNode.position = points[i] + (points[i-1]-points[i]).normalized()*(j+1)*100
-			textureNode.texture = load(\"res://assets/textures/paths/line_basic.png\")
+			textureNode.is_corner = false
 			if (points[i]-points[i-1]).normalized() == Vector2.UP or (points[i]-points[i-1]).normalized() == Vector2.DOWN :
 				textureNode.rotation = PI/2
 			texture_array.push_front(textureNode)
+			textureNode._update()
 		
-	textureNode = TextureRect.new()
+	textureNode = TextureBloc.new()
 	self.add_child(textureNode)
 	textureNode.size = Vector2(100,100)
 	textureNode.position = points[0]
-	textureNode.texture = load(\"res://assets/textures/paths/line_basic.png\")
+	textureNode.is_corner = false
 	texture_array.push_front(textureNode)
+	textureNode._update()
+	
+func _hide_path(node : int, progress : float) -> void:
+	var nodes_passed : int = 1
+	
+	var last_corner := 0
+	var i := 0
+	while node >= nodes_passed :
+		if texture_array[i].is_corner :
+			if nodes_passed - node == 0 :
+				for j in range(last_corner, last_corner + floorf((i-last_corner)*progress)+1) :
+					texture_array[j]._goodbye()
+			else :
+				for j in range(last_corner, i) :
+					texture_array[j]._goodbye()
+			last_corner = i
+			nodes_passed += 1
+			i += 1
+		else :
+			i += 1
 "
 
 [node name="level" type="Node2D"]
@@ -122,7 +145,8 @@ curve = SubResource("Curve2D_57smi")
 script = SubResource("GDScript_vy5vq")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
-position = Vector2(-50, 550)
+position = Vector2(106.398, 550)
+progress = 156.4
 
 [node name="RandomLevelGenerator" type="Node" parent="."]
 script = ExtResource("2_cm3nc")
