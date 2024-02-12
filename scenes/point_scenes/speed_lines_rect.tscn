@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://dnqcwj84cpetv"]
+
+[ext_resource type="Shader" path="res://assets/shaders/speed_lines.gdshader" id="1_d1y8n"]
+[ext_resource type="Script" path="res://scenes/point_scenes/speed_lines_rect.gd" id="2_ujena"]
+
+[sub_resource type="Gradient" id="Gradient_jks7s"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_x66qw"]
+frequency = 0.0767
+domain_warp_amplitude = 19.91
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_15mbu"]
+seamless = true
+seamless_blend_skirt = 0.024
+color_ramp = SubResource("Gradient_jks7s")
+noise = SubResource("FastNoiseLite_x66qw")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p20g6"]
+shader = ExtResource("1_d1y8n")
+shader_parameter/line_color_a = Color(0.854902, 0.854902, 0.854902, 1)
+shader_parameter/line_color_b = Color(0, 0.698039, 0.729412, 1)
+shader_parameter/line_threshold = 0.75
+shader_parameter/inverse_speed = 50.0
+shader_parameter/line_length = 100.0
+shader_parameter/angle = 0.0
+shader_parameter/alpha = 1.0
+shader_parameter/noise = SubResource("NoiseTexture2D_15mbu")
+
+[node name="SpeedLinesRect" type="ColorRect"]
+material = SubResource("ShaderMaterial_p20g6")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(800, 450)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_ujena")
+
+[connection signal="property_list_changed" from="." to="." method="parameters_changed"]

@@ -123,7 +123,7 @@ func _hide_path(node : int, progress : float) -> void:
 	while node >= nodes_passed :
 		if texture_array[i].is_corner :
 			if nodes_passed - node == 0 :
-				for j in range(last_corner, last_corner + floorf((i-last_corner)*progress)+1) :
+				for j in range(last_corner, last_corner + floorf((i-last_corner)*progress)) :
 					texture_array[j]._goodbye()
 			else :
 				for j in range(last_corner, i) :

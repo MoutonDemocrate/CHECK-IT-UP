@@ -1,13 +1,175 @@
-[gd_scene load_steps=13 format=3 uid="uid://8m6o74ud0t8o"]
+[gd_scene load_steps=55 format=3 uid="uid://8m6o74ud0t8o"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_hfrkx"]
 [ext_resource type="Texture2D" uid="uid://b3uh0body4qu5" path="res://assets/player/default.png" id="1_r7gxw"]
+[ext_resource type="Texture2D" uid="uid://b6ge22joqqrmn" path="res://assets/textures/background/LAND1/land0.png" id="2_k4ce7"]
 [ext_resource type="Script" path="res://scenes/World.gd" id="2_lgqa5"]
 [ext_resource type="PackedScene" uid="uid://bna7646swxqlu" path="res://scenes/inter.tscn" id="2_r6xpu"]
 [ext_resource type="FontFile" uid="uid://cef20c6oql2my" path="res://assets/fonts/Funkrocker.otf" id="2_s1ja7"]
+[ext_resource type="Texture2D" uid="uid://cthdhv5pnpuua" path="res://assets/textures/background/LAND1/land1.png" id="3_mbp10"]
 [ext_resource type="Script" path="res://scenes/player.gd" id="3_p36vy"]
+[ext_resource type="Texture2D" uid="uid://bik0xous30nlu" path="res://assets/textures/background/LAND1/land2.png" id="4_kxh6s"]
 [ext_resource type="Script" path="res://scenes/CameraScript.gd" id="4_tdvwj"]
-[ext_resource type="FontFile" uid="uid://ccy1baifnycgq" path="res://assets/fonts/FREAKSOFNATURE.ttf" id="5_2cqnd"]
+[ext_resource type="Texture2D" uid="uid://cmmqm1275kyvb" path="res://assets/textures/background/LAND1/land3.png" id="5_g6gdt"]
+[ext_resource type="Texture2D" uid="uid://c5mayqp5hs83k" path="res://assets/textures/background/LAND1/land4.png" id="6_yddbg"]
+[ext_resource type="Shader" path="res://assets/shaders/speed_lines.gdshader" id="7_ivdtm"]
+[ext_resource type="Texture2D" uid="uid://b6ursk3agj2xm" path="res://assets/textures/background/LAND1/land5.png" id="7_lv2tb"]
+[ext_resource type="FontFile" uid="uid://d0q5l1wdxnnnm" path="res://assets/fonts/FREAKSOFNATUREMASSIVE.ttf" id="8_437b5"]
+[ext_resource type="Texture2D" uid="uid://cujhkej0c1wb7" path="res://assets/textures/background/LAND1/land6.png" id="8_mv0kc"]
+[ext_resource type="Shader" path="res://assets/shaders/pixelate.gdshader" id="9_0ahqh"]
+[ext_resource type="Texture2D" uid="uid://f151kspbu3is" path="res://assets/textures/background/LAND1/land7.png" id="9_ci43w"]
+[ext_resource type="Texture2D" uid="uid://ffppqbsxwp81" path="res://assets/textures/background/LAND1/land8.png" id="10_na5gm"]
+[ext_resource type="Texture2D" uid="uid://d3lnvyvodjg6i" path="res://assets/textures/background/LAND1/land9.png" id="11_pgq1t"]
+[ext_resource type="Texture2D" uid="uid://b8g8lhxvdc2n4" path="res://assets/textures/background/LAND1/land10.png" id="12_uwwex"]
+[ext_resource type="Script" path="res://scenes/Void.gd" id="13_7a4jl"]
+[ext_resource type="Script" path="res://scenes/point_scenes/speed_lines_rect.gd" id="14_80mxc"]
+[ext_resource type="Script" path="res://scenes/SpeedLinesContainer.gd" id="14_bi13k"]
+
+[sub_resource type="Gradient" id="Gradient_ncgqo"]
+colors = PackedColorArray(0, 0, 0, 1, 0.39, 1, 0.928833, 1)
+
+[sub_resource type="Gradient" id="Gradient_2o1ox"]
+interpolation_mode = 2
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vsf54"]
+gradient = SubResource("Gradient_2o1ox")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w24l0"]
+texture = SubResource("GradientTexture1D_vsf54")
+
+[sub_resource type="Gradient" id="Gradient_o3mpk"]
+interpolation_mode = 2
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_4640t"]
+gradient = SubResource("Gradient_o3mpk")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sy8bl"]
+texture = SubResource("GradientTexture1D_4640t")
+
+[sub_resource type="Shader" id="Shader_lfjx0"]
+code = "shader_type canvas_item;
+
+uniform sampler2D noise;
+uniform vec4 line_color_a : source_color = vec4(1.0, 1.0, 1.0, 1.0);
+uniform vec4 line_color_b : source_color = vec4(0.0, 1.0, 1.0, 1.0);
+uniform float line_threshold = 0.6;
+uniform float inverse_speed = 10.0;
+uniform float line_length = 1000.0;
+uniform float angle: hint_range(0.0, 360.0) = 0.0;
+uniform float alpha : hint_range(0.0,1.0) = 1.0;
+
+void fragment() {
+	float uvx = UV.x * cos(radians(angle)) - UV.y * sin(radians(angle));
+	float uvy = UV.x * sin(radians(angle)) + UV.y * cos(radians(angle));
+	vec2 uv = vec2(fract(uvx),fract(uvy));
+	vec4 noise_line = texture(noise, vec2(fract(uv.x / line_length + TIME / inverse_speed), uv.y));
+	vec4 color;
+	if (noise_line.r < line_threshold){
+		color = vec4(0.);
+	} else {
+		color = mix(line_color_a, line_color_b, 1.0 - noise_line.r);
+		color.a = alpha;
+	}
+	COLOR = color;
+}"
+
+[sub_resource type="Gradient" id="Gradient_2sgxw"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_sa1i8"]
+frequency = 0.0767
+domain_warp_amplitude = 19.91
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ksrf7"]
+seamless = true
+seamless_blend_skirt = 0.024
+color_ramp = SubResource("Gradient_2sgxw")
+noise = SubResource("FastNoiseLite_sa1i8")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x702c"]
+shader = SubResource("Shader_lfjx0")
+shader_parameter/line_color_a = Color(0.541176, 0.541176, 0.541176, 1)
+shader_parameter/line_color_b = Color(0, 0.498039, 0.521569, 1)
+shader_parameter/line_threshold = 0.8
+shader_parameter/inverse_speed = 75.0
+shader_parameter/line_length = 150.0
+shader_parameter/angle = 0.0
+shader_parameter/alpha = 1.0
+shader_parameter/noise = SubResource("NoiseTexture2D_ksrf7")
+
+[sub_resource type="Shader" id="Shader_1wyo1"]
+code = "shader_type canvas_item;
+
+uniform sampler2D noise;
+uniform vec4 line_color_a : source_color = vec4(1.0, 1.0, 1.0, 1.0);
+uniform vec4 line_color_b : source_color = vec4(0.0, 1.0, 1.0, 1.0);
+uniform float line_threshold = 0.6;
+uniform float inverse_speed = 10.0;
+uniform float line_length = 1000.0;
+uniform float angle: hint_range(0.0, 360.0) = 0.0;
+uniform float alpha : hint_range(0.0,1.0) = 1.0;
+
+void fragment() {
+	float uvx = UV.x * cos(radians(angle)) - UV.y * sin(radians(angle));
+	float uvy = UV.x * sin(radians(angle)) + UV.y * cos(radians(angle));
+	vec2 uv = vec2(fract(uvx),fract(uvy));
+	vec4 noise_line = texture(noise, vec2(fract(uv.x / line_length + TIME / inverse_speed), uv.y));
+	vec4 color;
+	if (noise_line.r < line_threshold){
+		color = vec4(0.);
+	} else {
+		color = mix(line_color_a, line_color_b, 1.0 - noise_line.r);
+		color.a = alpha;
+	}
+	COLOR = color;
+}"
+
+[sub_resource type="Gradient" id="Gradient_5wmkm"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_dd0jd"]
+frequency = 0.0767
+domain_warp_amplitude = 19.91
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ntk4t"]
+seamless = true
+seamless_blend_skirt = 0.024
+color_ramp = SubResource("Gradient_5wmkm")
+noise = SubResource("FastNoiseLite_dd0jd")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x2coy"]
+shader = SubResource("Shader_1wyo1")
+shader_parameter/line_color_a = Color(0.737255, 0.737255, 0.737255, 1)
+shader_parameter/line_color_b = Color(0, 0.627451, 0.654902, 1)
+shader_parameter/line_threshold = 0.75
+shader_parameter/inverse_speed = 60.0
+shader_parameter/line_length = 100.0
+shader_parameter/angle = 0.0
+shader_parameter/alpha = 1.0
+shader_parameter/noise = SubResource("NoiseTexture2D_ntk4t")
+
+[sub_resource type="Gradient" id="Gradient_jks7s"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_x66qw"]
+frequency = 0.0767
+domain_warp_amplitude = 19.91
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_15mbu"]
+seamless = true
+seamless_blend_skirt = 0.024
+color_ramp = SubResource("Gradient_jks7s")
+noise = SubResource("FastNoiseLite_x66qw")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p20g6"]
+shader = ExtResource("7_ivdtm")
+shader_parameter/line_color_a = Color(0.929412, 0.929412, 0.929412, 1)
+shader_parameter/line_color_b = Color(0, 0.698039, 0.729412, 1)
+shader_parameter/line_threshold = 0.75
+shader_parameter/inverse_speed = 50.0
+shader_parameter/line_length = 300.0
+shader_parameter/angle = 0.0
+shader_parameter/alpha = 1.0
+shader_parameter/noise = SubResource("NoiseTexture2D_15mbu")
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_s3ucp"]
 animations = [{
@@ -20,20 +182,232 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Gradient" id="Gradient_028eg"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_e677u"]
+seed = 970
+frequency = 0.0767
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_py2uu"]
+seamless = true
+seamless_blend_skirt = 0.5
+color_ramp = SubResource("Gradient_028eg")
+noise = SubResource("FastNoiseLite_e677u")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jh0xa"]
+shader = ExtResource("7_ivdtm")
+shader_parameter/line_color_a = Color(1, 1, 1, 1)
+shader_parameter/line_color_b = Color(0.388235, 0.956863, 1, 1)
+shader_parameter/line_threshold = 0.75
+shader_parameter/inverse_speed = 10.0
+shader_parameter/line_length = 1000.0
+shader_parameter/angle = 0.0
+shader_parameter/alpha = 1.0
+shader_parameter/noise = SubResource("NoiseTexture2D_py2uu")
+
 [sub_resource type="LabelSettings" id="LabelSettings_sc68o"]
 font = ExtResource("2_s1ja7")
 font_size = 190
 
 [sub_resource type="LabelSettings" id="LabelSettings_064kb"]
-font = ExtResource("5_2cqnd")
+font = ExtResource("8_437b5")
 font_size = 61
 
 [sub_resource type="LabelSettings" id="LabelSettings_w2473"]
-font = ExtResource("5_2cqnd")
+font = ExtResource("8_437b5")
 font_size = 100
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_40d0i"]
+shader = ExtResource("9_0ahqh")
+shader_parameter/pixelSize = 4
 
 [node name="main" type="Node"]
 script = ExtResource("1_hfrkx")
+BackgroundCol = SubResource("Gradient_ncgqo")
+
+[node name="Parralax" type="ParallaxBackground" parent="."]
+offset = Vector2(0, -400)
+transform = Transform2D(1, 0, 0, 1, 0, -400)
+scroll_ignore_camera_zoom = true
+
+[node name="ColorRect" type="ColorRect" parent="Parralax"]
+modulate = Color(0.537255, 0.901961, 1, 1)
+self_modulate = Color(0, 0.415686, 0.494118, 1)
+offset_right = 1600.0
+offset_bottom = 1600.0
+scale = Vector2(10, 10)
+pivot_offset = Vector2(800, 800)
+color = Color(0.0745098, 0.0745098, 0.0745098, 1)
+
+[node name="ParallaxLayer0" type="ParallaxLayer" parent="Parralax"]
+position = Vector2(800, 850)
+motion_scale = Vector2(0, 0)
+
+[node name="Sprite2D0" type="Sprite2D" parent="Parralax/ParallaxLayer0"]
+texture_filter = 1
+scale = Vector2(16, 16)
+texture = ExtResource("2_k4ce7")
+
+[node name="ParallaxLayer1" type="ParallaxLayer" parent="Parralax"]
+position = Vector2(800, 850)
+motion_scale = Vector2(0.2, 0.2)
+
+[node name="Sprite2D1" type="Sprite2D" parent="Parralax/ParallaxLayer1"]
+texture_filter = 1
+scale = Vector2(16, 16)
+texture = ExtResource("3_mbp10")
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="Parralax"]
+position = Vector2(800, 850)
+motion_scale = Vector2(0.4, 0.4)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Parralax/ParallaxLayer2"]
+texture_filter = 1
+scale = Vector2(16, 16)
+texture = ExtResource("4_kxh6s")
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="Parralax"]
+position = Vector2(800, 850)
+motion_scale = Vector2(0.6, 0.6)
+
+[node name="Sprite2D3" type="Sprite2D" parent="Parralax/ParallaxLayer3"]
+texture_filter = 1
+scale = Vector2(16, 16)
+texture = ExtResource("5_g6gdt")
+
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="Parralax"]
+position = Vector2(800, 850)
+motion_scale = Vector2(0.8, 0.8)
+
+[node name="Sprite2D4" type="Sprite2D" parent="Parralax/ParallaxLayer4"]
+texture_filter = 1
+scale = Vector2(16, 16)
+texture = ExtResource("6_yddbg")
+
+[node name="ParallaxLayer5" type="ParallaxLayer" parent="Parralax"]
+position = Vector2(800, 850)
+
+[node name="Sprite2D5" type="Sprite2D" parent="Parralax/ParallaxLayer5"]
+texture_filter = 1
+scale = Vector2(16, 16)
+texture = ExtResource("7_lv2tb")
+
+[node name="ParallaxLayer6" type="ParallaxLayer" parent="Parralax"]
+position = Vector2(800, 850)
+motion_scale = Vector2(1.2, 1.2)
+
+[node name="Sprite2D6" type="Sprite2D" parent="Parralax/ParallaxLayer6"]
+texture_filter = 1
+scale = Vector2(16, 16)
+texture = ExtResource("8_mv0kc")
+
+[node name="ParallaxLayer7" type="ParallaxLayer" parent="Parralax"]
+position = Vector2(800, 850)
+motion_scale = Vector2(1.4, 1.4)
+
+[node name="Sprite2D7" type="Sprite2D" parent="Parralax/ParallaxLayer7"]
+texture_filter = 1
+scale = Vector2(16, 16)
+texture = ExtResource("9_ci43w")
+
+[node name="ParallaxLayer8" type="ParallaxLayer" parent="Parralax"]
+position = Vector2(800, 850)
+motion_scale = Vector2(1.6, 1.6)
+
+[node name="Sprite2D8" type="Sprite2D" parent="Parralax/ParallaxLayer8"]
+texture_filter = 1
+scale = Vector2(16, 16)
+texture = ExtResource("10_na5gm")
+
+[node name="ParallaxLayer9" type="ParallaxLayer" parent="Parralax"]
+position = Vector2(800, 850)
+motion_scale = Vector2(1.8, 1.8)
+
+[node name="Sprite2D9" type="Sprite2D" parent="Parralax/ParallaxLayer9"]
+texture_filter = 1
+scale = Vector2(16, 16)
+texture = ExtResource("11_pgq1t")
+
+[node name="ParallaxLayer10" type="ParallaxLayer" parent="Parralax"]
+position = Vector2(800, 850)
+motion_scale = Vector2(2, 2)
+
+[node name="Sprite2D10" type="Sprite2D" parent="Parralax/ParallaxLayer10"]
+texture_filter = 1
+scale = Vector2(16, 16)
+texture = ExtResource("12_uwwex")
+
+[node name="Void" type="Node2D" parent="."]
+position = Vector2(800, 450)
+script = ExtResource("13_7a4jl")
+
+[node name="Slide" type="Node2D" parent="Void"]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Void/Slide"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1600.0
+offset_top = -450.0
+offset_right = 1600.0
+offset_bottom = 450.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(1600, 450)
+theme_override_constants/separation = 0
+
+[node name="Panel2" type="Panel" parent="Void/Slide/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+theme_override_styles/panel = SubResource("StyleBoxTexture_w24l0")
+
+[node name="ColorRect" type="ColorRect" parent="Void/Slide/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0, 0, 0, 1)
+
+[node name="Panel" type="Panel" parent="Void/Slide/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+theme_override_styles/panel = SubResource("StyleBoxTexture_sy8bl")
+
+[node name="ReferenceRect" type="PanelContainer" parent="Void/Slide"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1600.0
+offset_top = -450.0
+offset_right = 1600.0
+offset_bottom = 450.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("14_bi13k")
+
+[node name="SpeedLinesRectTop" type="ColorRect" parent="Void/Slide/ReferenceRect"]
+material = SubResource("ShaderMaterial_x702c")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("14_80mxc")
+
+[node name="SpeedLinesRectMid" type="ColorRect" parent="Void/Slide/ReferenceRect"]
+material = SubResource("ShaderMaterial_x2coy")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("14_80mxc")
+
+[node name="SpeedLinesRectBottom" type="ColorRect" parent="Void/Slide/ReferenceRect"]
+material = SubResource("ShaderMaterial_p20g6")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("14_80mxc")
 
 [node name="World" type="Node2D" parent="."]
 script = ExtResource("2_lgqa5")
@@ -49,9 +423,25 @@ script = ExtResource("3_p36vy")
 sprite_frames = SubResource("SpriteFrames_s3ucp")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+texture_filter = 1
 position = Vector2(800, 450)
 editor_draw_limits = true
 script = ExtResource("4_tdvwj")
+
+[node name="EffectsLayer" type="CanvasLayer" parent="Camera2D"]
+scale = Vector2(0.5, 0.5)
+transform = Transform2D(0.5, 0, 0, 0.5, 0, 0)
+
+[node name="SpeedLinesRect" type="ColorRect" parent="Camera2D/EffectsLayer"]
+material = SubResource("ShaderMaterial_jh0xa")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1600.0
+offset_bottom = 900.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(800, 450)
 
 [node name="UI" type="Control" parent="Camera2D"]
 visible = false
@@ -70,33 +460,36 @@ size_flags_vertical = 3
 
 [node name="CHECK_IT_UP" type="Control" parent="Camera2D/UI"]
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 780.0
+offset_top = 124.0
+offset_right = 820.0
+offset_bottom = 164.0
+pivot_offset = Vector2(20, 20)
 
 [node name="Label_CHECK" type="Label" parent="Camera2D/UI/CHECK_IT_UP"]
 layout_mode = 0
-offset_left = 150.0
-offset_top = 50.0
-offset_right = 709.0
-offset_bottom = 337.0
+offset_left = -652.0
+offset_top = -60.0
+offset_right = -93.0
+offset_bottom = 227.0
 text = "CHECK"
 label_settings = SubResource("LabelSettings_sc68o")
 
 [node name="Label_IT" type="Label" parent="Camera2D/UI/CHECK_IT_UP"]
 layout_mode = 0
-offset_left = 750.0
-offset_top = 50.0
-offset_right = 919.0
-offset_bottom = 337.0
+offset_left = -52.0
+offset_top = -60.0
+offset_right = 117.0
+offset_bottom = 227.0
 text = "IT"
 label_settings = SubResource("LabelSettings_sc68o")
 
 [node name="Label_UP" type="Label" parent="Camera2D/UI/CHECK_IT_UP"]
 layout_mode = 0
-offset_left = 950.0
-offset_top = 50.0
-offset_right = 1439.0
-offset_bottom = 337.0
+offset_left = 148.0
+offset_top = -60.0
+offset_right = 672.0
+offset_bottom = 227.0
 text = "UP !  ✓"
 label_settings = SubResource("LabelSettings_sc68o")
 
@@ -121,3 +514,18 @@ text = "GO FASTER"
 label_settings = SubResource("LabelSettings_w2473")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="Camera2D/UI"]
+material = SubResource("ShaderMaterial_40d0i")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1600.0
+offset_bottom = 900.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[connection signal="property_list_changed" from="Void/Slide/ReferenceRect/SpeedLinesRectTop" to="Void/Slide/ReferenceRect/SpeedLinesRectTop" method="parameters_changed" flags=18]
+[connection signal="property_list_changed" from="Void/Slide/ReferenceRect/SpeedLinesRectMid" to="Void/Slide/ReferenceRect/SpeedLinesRectMid" method="parameters_changed" flags=18]
+[connection signal="property_list_changed" from="Void/Slide/ReferenceRect/SpeedLinesRectBottom" to="Void/Slide/ReferenceRect/SpeedLinesRectBottom" method="parameters_changed" flags=18]

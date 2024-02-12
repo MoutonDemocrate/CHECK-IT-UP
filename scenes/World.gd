@@ -33,6 +33,7 @@ func _load_next_level() -> void:
 	level.position = inter.position + Vector2(1650, -500)
 	add_child(level)
 	print("Added level to tree.")
+	$"..".game_difficulty += 1
 
 func _inter_activities():
 	old_inter.queue_free()
@@ -40,4 +41,5 @@ func _inter_activities():
 	inter.position = Vector2(0,750)
 	player.position = Vector2(800,750)
 	_load_next_level()
+	await get_tree().create_timer(1.0).timeout
 	player._set_player_green()

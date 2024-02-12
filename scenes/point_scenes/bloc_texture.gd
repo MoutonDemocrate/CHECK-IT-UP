@@ -10,24 +10,24 @@ var min_f : float
 var is_tweened : bool = false
 
 func set_goodbye_progress(f : float) -> void :
-	print(f)
 	goodbye_progress = f
 	position = pos_base + Vector2(0, 75)*f
-	min_f = minf(min_f, f)
+	min_f = maxf(min_f, f)
 	self_modulate = Color(1.0,1.0,1.0,(1.0-min_f))
+	if min_f == 0.0 :
+		queue_free()
 
 @export var is_corner : bool = false
 @export var flip : bool = false
 
 func _ready() -> void :
-	print("New bloc created")
+	pass
 	
 func _update(new_prog : float = 1.0) -> void:
 	if is_corner :
 		texture = load("res://assets/textures/paths/corner_basic.png")
 	else :
 		texture = load("res://assets/textures/paths/line_basic.png")
-
 
 func _goodbye() -> void :
 	if not pos_base :

@@ -2,7 +2,7 @@ class_name Player
 extends Node2D
 
 ## Speed of the player, in blocs per second
-@export var speed : float = 10.0
+@export var speed : float = 50.0
 
 signal leaving_inter
 signal first_node
@@ -31,7 +31,6 @@ func _ready():
 func _set_player_green() -> void :
 	print("Player is good to go.")
 	state = PlayerState.INTER_GREEN
-	print(state)
 
 func _physics_process(_delta):
 	
@@ -46,12 +45,15 @@ func _physics_process(_delta):
 				direction = Vector2.RIGHT
 				print("Leaving inter ---->")
 				next_node = $"../World".level.get_path_point_global(0)
+				print("Next node : ", next_node)
 				node = 0
 				level_nodes_count = $"../World".level.difficulty*2
 				print("Node count : ",level_nodes_count)
 				print("Emitting signal : leaving_inter")
 				$"../Camera2D".follow_player = true
 				emit_signal("leaving_inter")
+				$"../Camera2D"._sl_set_inv_speed(10,1.0)
+				$"../Void"._exit()
 		
 		PlayerState.INTER_LEAVING:
 			position += direction*speed
@@ -61,10 +63,17 @@ func _physics_process(_delta):
 				next_node = $"../World".level.get_path_point_global(node)
 				$"../Camera2D".follow_player = false
 				$"../Camera2D"._lerp_to_pos($"../World".level.global_position + Vector2(800,450))
-		
+				$"../Parralax".offset = $"../World".level.global_position + Vector2(0,-400) 
+				$"../Parralax".scroll_limit_begin =Vector2(0,0)
+				$"../Parralax".scroll_limit_end = Vector2(1600,900)
+				
+				print('Parralax limits : ',$"../Parralax".scroll_limit_begin," - ",$"../Parralax".scroll_limit_end)
+				
 		PlayerState.GOING:
 			position += direction*speed
+			$"../Camera2D"._inertia(direction,-10)
 			if (direction.x and (direction.x*position.x >= direction.x*next_node.x)) or (direction.y and (direction.y*position.y >= direction.y*next_node.y)) :
+				$"../Camera2D"._sl_dissolve()
 				print("Stopped at : ",next_node, ", node = ",node)
 				if node == 1 :
 					print("Emitting signal : first_node")
@@ -77,6 +86,7 @@ func _physics_process(_delta):
 				node += 1
 				next_node = $"../World".level.get_path_point_global(node)
 				direction_to_next_node = calculate_next_node_direction()
+				$"../Camera2D"._inertia(direction,20)
 				
 			line_progress = ((position - $"../World".level.get_path_point_global(node-1)).dot(direction)/(next_node - $"../World".level.get_path_point_global(node-1)).dot(direction))
 			if is_nan(line_progress) :
@@ -90,10 +100,14 @@ func _physics_process(_delta):
 			) :
 				direction = direction_to_next_node
 				print("Departing.")
+				$"../Camera2D"._sl_set_angle(direction)
+				$"../Camera2D"._sl_appear()
 				if node - 1 == level_nodes_count :
 					$"../Camera2D".follow_player = true
 					$"../Camera2D"._lerp_zoom(1.0)
 					state = PlayerState.INTER_ENTER
+					$"../Void"._enter()
+					print("Void entered!")
 				else :
 					if node == level_nodes_count :
 						$"../Camera2D"._lerp_to_pos($"../World".level.get_path_point_global(level_nodes_count))
@@ -107,6 +121,7 @@ func _physics_process(_delta):
 				state = PlayerState.INTER_ENTER
 				print("Emitting signal : entering_inter")
 				emit_signal("entering_inter")
+				
 		
 		PlayerState.INTER_ENTER:
 			position += direction*speed
@@ -115,6 +130,7 @@ func _physics_process(_delta):
 				emit_signal("stopped_at_inter")
 				position.x = $"../World".inter.position.x + 800
 				state = PlayerState.INTER_RED
+				$"../Camera2D"._sl_set_inv_speed(50,0.1)
 
 func calculate_next_node_direction() -> Vector2 :
 	return (next_node - position).normalized()

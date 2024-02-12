@@ -1,0 +1,103 @@
+[gd_scene load_steps=8 format=3 uid="uid://dtdsosqv8xekr"]
+
+[ext_resource type="FontFile" uid="uid://cef20c6oql2my" path="res://assets/fonts/Funkrocker.otf" id="1_1vmcf"]
+[ext_resource type="FontFile" uid="uid://d0q5l1wdxnnnm" path="res://assets/fonts/FREAKSOFNATUREMASSIVE.ttf" id="2_jx87q"]
+[ext_resource type="Shader" path="res://assets/shaders/pixelate.gdshader" id="3_dhlnq"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_sc68o"]
+font = ExtResource("1_1vmcf")
+font_size = 190
+
+[sub_resource type="LabelSettings" id="LabelSettings_064kb"]
+font = ExtResource("2_jx87q")
+font_size = 61
+
+[sub_resource type="LabelSettings" id="LabelSettings_w2473"]
+font = ExtResource("2_jx87q")
+font_size = 100
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_40d0i"]
+shader = ExtResource("3_dhlnq")
+shader_parameter/pixelSize = 4
+
+[node name="UI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -800.0
+offset_top = -450.0
+offset_right = -800.0
+offset_bottom = -450.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CHECK_IT_UP" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 780.0
+offset_top = 124.0
+offset_right = 820.0
+offset_bottom = 164.0
+pivot_offset = Vector2(20, 20)
+
+[node name="Label_CHECK" type="Label" parent="CHECK_IT_UP"]
+layout_mode = 0
+offset_left = -652.0
+offset_top = -60.0
+offset_right = -93.0
+offset_bottom = 227.0
+text = "CHECK"
+label_settings = SubResource("LabelSettings_sc68o")
+
+[node name="Label_IT" type="Label" parent="CHECK_IT_UP"]
+layout_mode = 0
+offset_left = -52.0
+offset_top = -60.0
+offset_right = 117.0
+offset_bottom = 227.0
+text = "IT"
+label_settings = SubResource("LabelSettings_sc68o")
+
+[node name="Label_UP" type="Label" parent="CHECK_IT_UP"]
+layout_mode = 0
+offset_left = 148.0
+offset_top = -60.0
+offset_right = 672.0
+offset_bottom = 227.0
+text = "UP !  ✓"
+label_settings = SubResource("LabelSettings_sc68o")
+
+[node name="Direction_Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 350.0
+offset_top = 800.0
+offset_right = 1250.0
+offset_bottom = 873.0
+text = "GO RIGHT TO CONTINUE"
+label_settings = SubResource("LabelSettings_064kb")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Motivation_Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 500.0
+offset_right = 1550.0
+offset_bottom = 673.0
+text = "GO FASTER"
+label_settings = SubResource("LabelSettings_w2473")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_40d0i")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1600.0
+offset_bottom = 900.0
+grow_horizontal = 2
+grow_vertical = 2
