@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://8m6o74ud0t8o"]
+[gd_scene load_steps=61 format=3 uid="uid://8m6o74ud0t8o"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_hfrkx"]
 [ext_resource type="Texture2D" uid="uid://b3uh0body4qu5" path="res://assets/player/default.png" id="1_r7gxw"]
@@ -24,6 +24,7 @@
 [ext_resource type="Script" path="res://scenes/Void.gd" id="13_7a4jl"]
 [ext_resource type="Script" path="res://scenes/point_scenes/speed_lines_rect.gd" id="14_80mxc"]
 [ext_resource type="Script" path="res://scenes/SpeedLinesContainer.gd" id="14_bi13k"]
+[ext_resource type="Texture2D" uid="uid://bcadj2xve5q2a" path="res://assets/textures/particles/Spark.png" id="21_k5y07"]
 
 [sub_resource type="Gradient" id="Gradient_ncgqo"]
 colors = PackedColorArray(0, 0, 0, 1, 0.39, 1, 0.928833, 1)
@@ -181,6 +182,34 @@ animations = [{
 "name": &"default",
 "speed": 5.0
 }]
+
+[sub_resource type="Gradient" id="Gradient_iet15"]
+offsets = PackedFloat32Array(0, 0.0413223, 0.0909091, 0.661157, 1)
+colors = PackedColorArray(0.997667, 0.99, 1, 1, 0, 0.996078, 1, 1, 0.94902, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5wcrk"]
+gradient = SubResource("Gradient_iet15")
+
+[sub_resource type="Curve" id="Curve_fgh0f"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.0804196, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.84992, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_uwg5s"]
+curve = SubResource("Curve_fgh0f")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_u8vtn"]
+emission_shape = 1
+emission_sphere_radius = 8.9
+particle_flag_disable_z = true
+direction = Vector3(-1, 0, 0)
+spread = 23.33
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 482.72
+initial_velocity_max = 1000.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_curve = SubResource("CurveTexture_uwg5s")
+color_ramp = SubResource("GradientTexture1D_5wcrk")
 
 [sub_resource type="Gradient" id="Gradient_028eg"]
 
@@ -421,6 +450,15 @@ script = ExtResource("3_p36vy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
 sprite_frames = SubResource("SpriteFrames_s3ucp")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Player"]
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_u8vtn")
+texture = ExtResource("21_k5y07")
+lifetime = 0.2
+trail_lifetime = 0.01
+trail_sections = 2
+trail_section_subdivisions = 1
 
 [node name="Camera2D" type="Camera2D" parent="."]
 texture_filter = 1
