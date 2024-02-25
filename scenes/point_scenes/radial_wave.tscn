@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://cqmqpyuumoma5"]
+
+[ext_resource type="Script" path="res://scenes/point_scenes/radial_wave.gd" id="1_enbrx"]
+[ext_resource type="Shader" path="res://scenes/point_scenes/radial_wave.gdshader" id="2_oco5a"]
+
+[sub_resource type="Gradient" id="Gradient_ekqqr"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_d6fss"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vweig"]
+color_ramp = SubResource("Gradient_ekqqr")
+noise = SubResource("FastNoiseLite_d6fss")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hx8y6"]
+shader = ExtResource("2_oco5a")
+shader_parameter/strength = 0.049
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/radius = 0.39
+shader_parameter/aberration = 0.373
+shader_parameter/width = 0.1
+shader_parameter/feather = 0.135
+
+[node name="RadialWave" type="Node2D"]
+process_mode = 4
+script = ExtResource("1_enbrx")
+
+[node name="ColorRect" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -10000.0
+offset_top = -10000.0
+offset_right = 10000.0
+offset_bottom = 10000.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("NoiseTexture2D_vweig")
+
+[node name="WaveRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_hx8y6")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2500.0
+offset_top = -2500.0
+offset_right = 2500.0
+offset_bottom = 2500.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(10000, 10000)

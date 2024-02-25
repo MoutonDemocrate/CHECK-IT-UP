@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://dpnv12tio38bc"]
+
+[ext_resource type="PackedScene" uid="uid://dxycwrm1sxpgv" path="res://assets/models/terrain.blend" id="1_ok5fy"]
+[ext_resource type="Shader" path="res://assets/models/terrain.gdshader" id="2_owi75"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_il61q"]
+render_priority = 0
+shader = ExtResource("2_owi75")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fmcei"]
+render_priority = 0
+shader = ExtResource("2_owi75")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lrcf4"]
+render_priority = 0
+shader = ExtResource("2_owi75")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pvrhy"]
+render_priority = 0
+shader = ExtResource("2_owi75")
+
+[node name="terrain" instance=ExtResource("1_ok5fy")]
+
+[node name="BASE" parent="." index="0"]
+layers = 7
+material_override = SubResource("ShaderMaterial_il61q")
+surface_material_override/0 = SubResource("ShaderMaterial_fmcei")
+
+[node name="StrataLake" parent="." index="1"]
+visible = false
+
+[node name="StrataMountain" parent="." index="2"]
+material_override = SubResource("ShaderMaterial_lrcf4")
+surface_material_override/0 = SubResource("ShaderMaterial_pvrhy")
+
+[node name="fBmValley" parent="." index="3"]
+visible = false

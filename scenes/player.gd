@@ -1,7 +1,7 @@
 class_name Player
 extends Node2D
 
-## Speed of the player, in blocs per second
+## Speed of the player
 @export var speed : float = 50.0
 
 signal leaving_inter
@@ -27,6 +27,12 @@ func _ready():
 	last_node.connect($"../World"._load_inter)
 	first_node.connect($"../World"._hide_inter)
 	stopped_at_inter.connect($"../World"._inter_activities)
+
+func change_spark_speed(velocity : float = 1500, spread : float = 500, angle : float = 25) -> void :
+	$GPUParticles2D.process_material.initial_velocity_min = velocity - spread
+	$GPUParticles2D.process_material.initial_velocity_max = velocity + spread
+	
+	print($GPUParticles2D.process_material.initial_velocity_min, ", ", $GPUParticles2D.process_material.initial_velocity_max)
 
 func _set_player_green() -> void :
 	print("Player is good to go.")
@@ -63,11 +69,7 @@ func _physics_process(_delta):
 				next_node = $"../World".level.get_path_point_global(node)
 				$"../Camera2D".follow_player = false
 				$"../Camera2D"._lerp_to_pos($"../World".level.global_position + Vector2(800,450))
-				$"../Parralax".offset = $"../World".level.global_position + Vector2(0,-400) 
-				$"../Parralax".scroll_limit_begin =Vector2(0,0)
-				$"../Parralax".scroll_limit_end = Vector2(1600,900)
-				
-				print('Parralax limits : ',$"../Parralax".scroll_limit_begin," - ",$"../Parralax".scroll_limit_end)
+				$"../Background".position = $"../World".level.global_position + Vector2(0,-350) 
 				
 		PlayerState.GOING:
 			position += direction*speed
@@ -87,6 +89,7 @@ func _physics_process(_delta):
 				next_node = $"../World".level.get_path_point_global(node)
 				direction_to_next_node = calculate_next_node_direction()
 				$"../Camera2D"._inertia(direction,20)
+				$GPUParticles2D.emitting = false
 				
 			line_progress = ((position - $"../World".level.get_path_point_global(node-1)).dot(direction)/(next_node - $"../World".level.get_path_point_global(node-1)).dot(direction))
 			if is_nan(line_progress) :
@@ -99,7 +102,9 @@ func _physics_process(_delta):
 				signf(Input.get_action_strength("down") - Input.get_action_strength("up"))
 			) :
 				direction = direction_to_next_node
+				look_at(position + direction)
 				print("Departing.")
+				$GPUParticles2D.emitting = true
 				$"../Camera2D"._sl_set_angle(direction)
 				$"../Camera2D"._sl_appear()
 				if node - 1 == level_nodes_count :
@@ -134,3 +139,11 @@ func _physics_process(_delta):
 
 func calculate_next_node_direction() -> Vector2 :
 	return (next_node - position).normalized()
+
+func _input(event : InputEvent):
+	if event.is_action_pressed("m1"):
+		var radial_wave : RadialWave = RadialWave.new()
+		var center : Vector2 = (self.global_position + self.get_canvas_transform().origin) / get_viewport().get_visible_rect().size
+		radial_wave.position += self.global_position
+		get_parent().add_child(radial_wave)
+		radial_wave.activate([center])

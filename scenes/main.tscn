@@ -1,33 +1,40 @@
-[gd_scene load_steps=61 format=3 uid="uid://8m6o74ud0t8o"]
+[gd_scene load_steps=59 format=3 uid="uid://8m6o74ud0t8o"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_hfrkx"]
 [ext_resource type="Texture2D" uid="uid://b3uh0body4qu5" path="res://assets/player/default.png" id="1_r7gxw"]
-[ext_resource type="Texture2D" uid="uid://b6ge22joqqrmn" path="res://assets/textures/background/LAND1/land0.png" id="2_k4ce7"]
 [ext_resource type="Script" path="res://scenes/World.gd" id="2_lgqa5"]
 [ext_resource type="PackedScene" uid="uid://bna7646swxqlu" path="res://scenes/inter.tscn" id="2_r6xpu"]
-[ext_resource type="FontFile" uid="uid://cef20c6oql2my" path="res://assets/fonts/Funkrocker.otf" id="2_s1ja7"]
-[ext_resource type="Texture2D" uid="uid://cthdhv5pnpuua" path="res://assets/textures/background/LAND1/land1.png" id="3_mbp10"]
+[ext_resource type="PackedScene" uid="uid://dpnv12tio38bc" path="res://assets/models/terrain.tscn" id="2_wlpy3"]
 [ext_resource type="Script" path="res://scenes/player.gd" id="3_p36vy"]
-[ext_resource type="Texture2D" uid="uid://bik0xous30nlu" path="res://assets/textures/background/LAND1/land2.png" id="4_kxh6s"]
 [ext_resource type="Script" path="res://scenes/CameraScript.gd" id="4_tdvwj"]
-[ext_resource type="Texture2D" uid="uid://cmmqm1275kyvb" path="res://assets/textures/background/LAND1/land3.png" id="5_g6gdt"]
-[ext_resource type="Texture2D" uid="uid://c5mayqp5hs83k" path="res://assets/textures/background/LAND1/land4.png" id="6_yddbg"]
 [ext_resource type="Shader" path="res://assets/shaders/speed_lines.gdshader" id="7_ivdtm"]
-[ext_resource type="Texture2D" uid="uid://b6ursk3agj2xm" path="res://assets/textures/background/LAND1/land5.png" id="7_lv2tb"]
 [ext_resource type="FontFile" uid="uid://d0q5l1wdxnnnm" path="res://assets/fonts/FREAKSOFNATUREMASSIVE.ttf" id="8_437b5"]
-[ext_resource type="Texture2D" uid="uid://cujhkej0c1wb7" path="res://assets/textures/background/LAND1/land6.png" id="8_mv0kc"]
-[ext_resource type="Shader" path="res://assets/shaders/pixelate.gdshader" id="9_0ahqh"]
-[ext_resource type="Texture2D" uid="uid://f151kspbu3is" path="res://assets/textures/background/LAND1/land7.png" id="9_ci43w"]
-[ext_resource type="Texture2D" uid="uid://ffppqbsxwp81" path="res://assets/textures/background/LAND1/land8.png" id="10_na5gm"]
-[ext_resource type="Texture2D" uid="uid://d3lnvyvodjg6i" path="res://assets/textures/background/LAND1/land9.png" id="11_pgq1t"]
-[ext_resource type="Texture2D" uid="uid://b8g8lhxvdc2n4" path="res://assets/textures/background/LAND1/land10.png" id="12_uwwex"]
 [ext_resource type="Script" path="res://scenes/Void.gd" id="13_7a4jl"]
+[ext_resource type="Shader" path="res://assets/shaders/blur.gdshader" id="13_fixur"]
+[ext_resource type="FontFile" uid="uid://bgkhf3ustndfv" path="res://assets/fonts/theyrecomingtotakemeaway.ttf" id="13_oh5di"]
 [ext_resource type="Script" path="res://scenes/point_scenes/speed_lines_rect.gd" id="14_80mxc"]
 [ext_resource type="Script" path="res://scenes/SpeedLinesContainer.gd" id="14_bi13k"]
+[ext_resource type="Texture2D" uid="uid://drxejlne4ksle" path="res://assets/textures/ui/logo/check_it_up_logo.png" id="14_s2em0"]
 [ext_resource type="Texture2D" uid="uid://bcadj2xve5q2a" path="res://assets/textures/particles/Spark.png" id="21_k5y07"]
 
 [sub_resource type="Gradient" id="Gradient_ncgqo"]
-colors = PackedColorArray(0, 0, 0, 1, 0.39, 1, 0.928833, 1)
+colors = PackedColorArray(0, 0.25, 0.225, 1, 0.39, 1, 0.928833, 1)
+
+[sub_resource type="Environment" id="Environment_mfs8q"]
+background_mode = 1
+ambient_light_source = 1
+ambient_light_energy = 0.0
+reflected_light_source = 1
+tonemap_mode = 3
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_fbmq6"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ki2sn"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4gkwr"]
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
 
 [sub_resource type="Gradient" id="Gradient_2o1ox"]
 interpolation_mode = 2
@@ -172,6 +179,31 @@ shader_parameter/angle = 0.0
 shader_parameter/alpha = 1.0
 shader_parameter/noise = SubResource("NoiseTexture2D_15mbu")
 
+[sub_resource type="Gradient" id="Gradient_iet15"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.0592593, 0.0796296, 0.0981481, 0.620438, 1)
+colors = PackedColorArray(0.996078, 0.988235, 1, 0, 1.00026, 0.989223, 1.05705, 0.883167, 0.997667, 0.99, 1, 1, 0.94902, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5wcrk"]
+gradient = SubResource("Gradient_iet15")
+use_hdr = true
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_u8vtn"]
+emission_shape = 1
+emission_sphere_radius = 8.9
+particle_flag_align_y = true
+particle_flag_disable_z = true
+direction = Vector3(-1, 0, 0)
+spread = 25.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 1000.0
+initial_velocity_max = 2000.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 0.3
+scale_max = 0.5
+color_ramp = SubResource("GradientTexture1D_5wcrk")
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_s3ucp"]
 animations = [{
 "frames": [{
@@ -182,34 +214,6 @@ animations = [{
 "name": &"default",
 "speed": 5.0
 }]
-
-[sub_resource type="Gradient" id="Gradient_iet15"]
-offsets = PackedFloat32Array(0, 0.0413223, 0.0909091, 0.661157, 1)
-colors = PackedColorArray(0.997667, 0.99, 1, 1, 0, 0.996078, 1, 1, 0.94902, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_5wcrk"]
-gradient = SubResource("Gradient_iet15")
-
-[sub_resource type="Curve" id="Curve_fgh0f"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.0804196, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.84992, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="CurveTexture" id="CurveTexture_uwg5s"]
-curve = SubResource("Curve_fgh0f")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_u8vtn"]
-emission_shape = 1
-emission_sphere_radius = 8.9
-particle_flag_disable_z = true
-direction = Vector3(-1, 0, 0)
-spread = 23.33
-gravity = Vector3(0, 0, 0)
-initial_velocity_min = 482.72
-initial_velocity_max = 1000.0
-orbit_velocity_min = 0.0
-orbit_velocity_max = 0.0
-scale_curve = SubResource("CurveTexture_uwg5s")
-color_ramp = SubResource("GradientTexture1D_5wcrk")
 
 [sub_resource type="Gradient" id="Gradient_028eg"]
 
@@ -234,9 +238,46 @@ shader_parameter/angle = 0.0
 shader_parameter/alpha = 1.0
 shader_parameter/noise = SubResource("NoiseTexture2D_py2uu")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3hlsx"]
+shader = ExtResource("13_fixur")
+shader_parameter/intensity = 0.0
+shader_parameter/line_color = Color(0, 0, 0, 1)
+shader_parameter/line_thickness = 2.5
+
+[sub_resource type="GDScript" id="GDScript_hn8ls"]
+resource_name = "TitleScript"
+script/source = "extends HBoxContainer
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+
+func set_blur_intensity(intensity : float = 0) :
+	self.material.set_shader_parameter(\"intensity\", intensity)
+"
+
 [sub_resource type="LabelSettings" id="LabelSettings_sc68o"]
-font = ExtResource("2_s1ja7")
+font = ExtResource("13_oh5di")
 font_size = 190
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l44pw"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ixbic"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_s2em0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="LabelSettings" id="LabelSettings_064kb"]
 font = ExtResource("8_437b5")
@@ -246,127 +287,124 @@ font_size = 61
 font = ExtResource("8_437b5")
 font_size = 100
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_40d0i"]
-shader = ExtResource("9_0ahqh")
-shader_parameter/pixelSize = 4
+[sub_resource type="Animation" id="Animation_8nfcp"]
+resource_name = "game_begin"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CHECK_IT_UP:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 0.297302),
+"update": 0,
+"values": [Vector2(10, 10), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CHECK_IT_UP:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1.5, 1),
+"update": 0,
+"values": [Vector2(150, 300), Vector2(150, 50)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CHECK_IT_UP:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.785398, 0.0]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CHECK_IT_UP")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [15.0],
+"method": &"set_blur_intensity"
+}, {
+"args": [0.0],
+"method": &"set_blur_intensity"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8e02g"]
+_data = {
+"game_begin": SubResource("Animation_8nfcp")
+}
 
 [node name="main" type="Node"]
 script = ExtResource("1_hfrkx")
 BackgroundCol = SubResource("Gradient_ncgqo")
 
-[node name="Parralax" type="ParallaxBackground" parent="."]
-offset = Vector2(0, -400)
-transform = Transform2D(1, 0, 0, 1, 0, -400)
-scroll_ignore_camera_zoom = true
+[node name="Background" type="Node2D" parent="."]
 
-[node name="ColorRect" type="ColorRect" parent="Parralax"]
-modulate = Color(0.537255, 0.901961, 1, 1)
-self_modulate = Color(0, 0.415686, 0.494118, 1)
+[node name="ColorRect" type="ColorRect" parent="Background"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -350.0
 offset_right = 1600.0
-offset_bottom = 1600.0
-scale = Vector2(10, 10)
-pivot_offset = Vector2(800, 800)
-color = Color(0.0745098, 0.0745098, 0.0745098, 1)
+offset_bottom = 1250.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(1, 0, 0, 1)
 
-[node name="ParallaxLayer0" type="ParallaxLayer" parent="Parralax"]
-position = Vector2(800, 850)
-motion_scale = Vector2(0, 0)
-
-[node name="Sprite2D0" type="Sprite2D" parent="Parralax/ParallaxLayer0"]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Background"]
 texture_filter = 1
-scale = Vector2(16, 16)
-texture = ExtResource("2_k4ce7")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -350.0
+offset_right = 1600.0
+offset_bottom = 1250.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+stretch_shrink = 10
 
-[node name="ParallaxLayer1" type="ParallaxLayer" parent="Parralax"]
-position = Vector2(800, 850)
-motion_scale = Vector2(0.2, 0.2)
+[node name="SubViewport" type="SubViewport" parent="Background/SubViewportContainer"]
+handle_input_locally = false
+screen_space_aa = 1
+size = Vector2i(160, 160)
+render_target_update_mode = 4
 
-[node name="Sprite2D1" type="Sprite2D" parent="Parralax/ParallaxLayer1"]
-texture_filter = 1
-scale = Vector2(16, 16)
-texture = ExtResource("3_mbp10")
+[node name="terrain" parent="Background/SubViewportContainer/SubViewport" instance=ExtResource("2_wlpy3")]
 
-[node name="ParallaxLayer2" type="ParallaxLayer" parent="Parralax"]
-position = Vector2(800, 850)
-motion_scale = Vector2(0.4, 0.4)
+[node name="Camera3D" type="Camera3D" parent="Background/SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 4.195, 0)
+keep_aspect = 0
+environment = SubResource("Environment_mfs8q")
+attributes = SubResource("CameraAttributesPractical_fbmq6")
+current = true
+fov = 53.5
+size = 0.051
+near = 0.025
 
-[node name="Sprite2D2" type="Sprite2D" parent="Parralax/ParallaxLayer2"]
-texture_filter = 1
-scale = Vector2(16, 16)
-texture = ExtResource("4_kxh6s")
-
-[node name="ParallaxLayer3" type="ParallaxLayer" parent="Parralax"]
-position = Vector2(800, 850)
-motion_scale = Vector2(0.6, 0.6)
-
-[node name="Sprite2D3" type="Sprite2D" parent="Parralax/ParallaxLayer3"]
-texture_filter = 1
-scale = Vector2(16, 16)
-texture = ExtResource("5_g6gdt")
-
-[node name="ParallaxLayer4" type="ParallaxLayer" parent="Parralax"]
-position = Vector2(800, 850)
-motion_scale = Vector2(0.8, 0.8)
-
-[node name="Sprite2D4" type="Sprite2D" parent="Parralax/ParallaxLayer4"]
-texture_filter = 1
-scale = Vector2(16, 16)
-texture = ExtResource("6_yddbg")
-
-[node name="ParallaxLayer5" type="ParallaxLayer" parent="Parralax"]
-position = Vector2(800, 850)
-
-[node name="Sprite2D5" type="Sprite2D" parent="Parralax/ParallaxLayer5"]
-texture_filter = 1
-scale = Vector2(16, 16)
-texture = ExtResource("7_lv2tb")
-
-[node name="ParallaxLayer6" type="ParallaxLayer" parent="Parralax"]
-position = Vector2(800, 850)
-motion_scale = Vector2(1.2, 1.2)
-
-[node name="Sprite2D6" type="Sprite2D" parent="Parralax/ParallaxLayer6"]
-texture_filter = 1
-scale = Vector2(16, 16)
-texture = ExtResource("8_mv0kc")
-
-[node name="ParallaxLayer7" type="ParallaxLayer" parent="Parralax"]
-position = Vector2(800, 850)
-motion_scale = Vector2(1.4, 1.4)
-
-[node name="Sprite2D7" type="Sprite2D" parent="Parralax/ParallaxLayer7"]
-texture_filter = 1
-scale = Vector2(16, 16)
-texture = ExtResource("9_ci43w")
-
-[node name="ParallaxLayer8" type="ParallaxLayer" parent="Parralax"]
-position = Vector2(800, 850)
-motion_scale = Vector2(1.6, 1.6)
-
-[node name="Sprite2D8" type="Sprite2D" parent="Parralax/ParallaxLayer8"]
-texture_filter = 1
-scale = Vector2(16, 16)
-texture = ExtResource("10_na5gm")
-
-[node name="ParallaxLayer9" type="ParallaxLayer" parent="Parralax"]
-position = Vector2(800, 850)
-motion_scale = Vector2(1.8, 1.8)
-
-[node name="Sprite2D9" type="Sprite2D" parent="Parralax/ParallaxLayer9"]
-texture_filter = 1
-scale = Vector2(16, 16)
-texture = ExtResource("11_pgq1t")
-
-[node name="ParallaxLayer10" type="ParallaxLayer" parent="Parralax"]
-position = Vector2(800, 850)
-motion_scale = Vector2(2, 2)
-
-[node name="Sprite2D10" type="Sprite2D" parent="Parralax/ParallaxLayer10"]
-texture_filter = 1
-scale = Vector2(16, 16)
-texture = ExtResource("12_uwwex")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Background/SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.41405, 0)
+mesh = SubResource("PlaneMesh_ki2sn")
+surface_material_override/0 = SubResource("StandardMaterial3D_4gkwr")
 
 [node name="Void" type="Node2D" parent="."]
+visible = false
 position = Vector2(800, 450)
 script = ExtResource("13_7a4jl")
 
@@ -448,23 +486,28 @@ position = Vector2(0, 750)
 position = Vector2(800, 750)
 script = ExtResource("3_p36vy")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
-sprite_frames = SubResource("SpriteFrames_s3ucp")
-
 [node name="GPUParticles2D" type="GPUParticles2D" parent="Player"]
-amount = 20
+amount = 50
 process_material = SubResource("ParticleProcessMaterial_u8vtn")
 texture = ExtResource("21_k5y07")
 lifetime = 0.2
-trail_lifetime = 0.01
-trail_sections = 2
-trail_section_subdivisions = 1
+fixed_fps = 200
+local_coords = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
+sprite_frames = SubResource("SpriteFrames_s3ucp")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 texture_filter = 1
 position = Vector2(800, 450)
+process_callback = 0
 editor_draw_limits = true
 script = ExtResource("4_tdvwj")
+
+[node name="TestCamera" type="Camera2D" parent="Camera2D"]
+ignore_rotation = false
+enabled = false
+zoom = Vector2(0.1, 0.1)
 
 [node name="EffectsLayer" type="CanvasLayer" parent="Camera2D"]
 scale = Vector2(0.5, 0.5)
@@ -482,87 +525,103 @@ grow_vertical = 2
 pivot_offset = Vector2(800, 450)
 
 [node name="UI" type="Control" parent="Camera2D"]
-visible = false
+z_index = 10
+z_as_relative = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -800.0
 offset_top = -450.0
-offset_right = -800.0
-offset_bottom = -450.0
+offset_right = 800.0
+offset_bottom = 450.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="CHECK_IT_UP" type="Control" parent="Camera2D/UI"]
-anchors_preset = 0
-offset_left = 780.0
-offset_top = 124.0
-offset_right = 820.0
-offset_bottom = 164.0
-pivot_offset = Vector2(20, 20)
+[node name="CHECK_IT_UP" type="HBoxContainer" parent="Camera2D/UI"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_3hlsx")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.094
+anchor_top = 0.056
+anchor_right = 0.906
+anchor_bottom = 0.389
+offset_left = -0.400009
+offset_top = 249.6
+offset_right = 0.400024
+offset_bottom = 249.901
+rotation = 0.785398
+scale = Vector2(10, 10)
+pivot_offset = Vector2(650, 150)
+theme_override_constants/separation = 50
+script = SubResource("GDScript_hn8ls")
 
 [node name="Label_CHECK" type="Label" parent="Camera2D/UI/CHECK_IT_UP"]
-layout_mode = 0
-offset_left = -652.0
-offset_top = -60.0
-offset_right = -93.0
-offset_bottom = 227.0
+use_parent_material = true
+layout_mode = 2
+size_flags_horizontal = 3
 text = "CHECK"
 label_settings = SubResource("LabelSettings_sc68o")
+horizontal_alignment = 1
 
 [node name="Label_IT" type="Label" parent="Camera2D/UI/CHECK_IT_UP"]
-layout_mode = 0
-offset_left = -52.0
-offset_top = -60.0
-offset_right = 117.0
-offset_bottom = 227.0
+use_parent_material = true
+layout_mode = 2
+size_flags_horizontal = 3
 text = "IT"
 label_settings = SubResource("LabelSettings_sc68o")
+horizontal_alignment = 1
 
 [node name="Label_UP" type="Label" parent="Camera2D/UI/CHECK_IT_UP"]
-layout_mode = 0
-offset_left = 148.0
-offset_top = -60.0
-offset_right = 672.0
-offset_bottom = 227.0
-text = "UP !  ✓"
+use_parent_material = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "UP ! "
 label_settings = SubResource("LabelSettings_sc68o")
+horizontal_alignment = 1
 
-[node name="Direction_Label" type="Label" parent="Camera2D/UI"]
-layout_mode = 0
+[node name="VSeparator" type="VSeparator" parent="Camera2D/UI/CHECK_IT_UP"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_l44pw")
+
+[node name="Control" type="CenterContainer" parent="Camera2D/UI/CHECK_IT_UP"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Camera2D/UI/CHECK_IT_UP/Control"]
+position = Vector2(0, 143)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_ixbic")
+
+[node name="MotivationLabel_Label" type="Label" parent="Camera2D/UI"]
+visible = false
 offset_left = 350.0
-offset_top = 800.0
+offset_top = 600.0
 offset_right = 1250.0
-offset_bottom = 873.0
+offset_bottom = 673.0
 text = "GO RIGHT TO CONTINUE"
 label_settings = SubResource("LabelSettings_064kb")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Motivation_Label" type="Label" parent="Camera2D/UI"]
-layout_mode = 0
+[node name="LevelEnd_Label" type="Label" parent="Camera2D/UI"]
+visible = false
 offset_left = 50.0
-offset_top = 500.0
+offset_top = 100.0
 offset_right = 1550.0
-offset_bottom = 673.0
+offset_bottom = 273.0
 text = "GO FASTER"
 label_settings = SubResource("LabelSettings_w2473")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ColorRect" type="ColorRect" parent="Camera2D/UI"]
-material = SubResource("ShaderMaterial_40d0i")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 1600.0
-offset_bottom = 900.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera2D/UI"]
+libraries = {
+"": SubResource("AnimationLibrary_8e02g")
+}
 
 [connection signal="property_list_changed" from="Void/Slide/ReferenceRect/SpeedLinesRectTop" to="Void/Slide/ReferenceRect/SpeedLinesRectTop" method="parameters_changed" flags=18]
 [connection signal="property_list_changed" from="Void/Slide/ReferenceRect/SpeedLinesRectMid" to="Void/Slide/ReferenceRect/SpeedLinesRectMid" method="parameters_changed" flags=18]
