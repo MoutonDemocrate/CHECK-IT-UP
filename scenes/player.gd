@@ -21,7 +21,7 @@ var direction_to_next_node : Vector2
 
 enum PlayerState {GOING, GOING_LAST_NODE, CORNER, INTER_RED, INTER_GREEN, INTER_LEAVING, INTER_ENTER}
 
-var state : PlayerState = PlayerState.INTER_GREEN
+@export var state : PlayerState = PlayerState.INTER_RED
 
 func _ready():
 	last_node.connect($"../World"._load_inter)
@@ -69,7 +69,7 @@ func _physics_process(_delta):
 				next_node = $"../World".level.get_path_point_global(node)
 				$"../Camera2D".follow_player = false
 				$"../Camera2D"._lerp_to_pos($"../World".level.global_position + Vector2(800,450))
-				$"../Background".position = $"../World".level.global_position + Vector2(0,-350) 
+				$"../Background".position = $"../World".level.global_position
 				
 		PlayerState.GOING:
 			position += direction*speed
@@ -89,6 +89,7 @@ func _physics_process(_delta):
 				next_node = $"../World".level.get_path_point_global(node)
 				direction_to_next_node = calculate_next_node_direction()
 				$"../Camera2D"._inertia(direction,20)
+				$"../Background".set_camera_pos(Vector3(direction.x,0,direction.y)*0.3)
 				$GPUParticles2D.emitting = false
 				
 			line_progress = ((position - $"../World".level.get_path_point_global(node-1)).dot(direction)/(next_node - $"../World".level.get_path_point_global(node-1)).dot(direction))
@@ -136,6 +137,9 @@ func _physics_process(_delta):
 				position.x = $"../World".inter.position.x + 800
 				state = PlayerState.INTER_RED
 				$"../Camera2D"._sl_set_inv_speed(50,0.1)
+				$"../Camera2D".follow_player = false
+				$"../Camera2D".position = position
+				$"../Camera2D"._lerp_to_pos($"../World".inter.global_position + Vector2(800,-300))
 
 func calculate_next_node_direction() -> Vector2 :
 	return (next_node - position).normalized()

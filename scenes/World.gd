@@ -36,10 +36,11 @@ func _load_next_level() -> void:
 	$"..".game_difficulty += 1
 
 func _inter_activities():
-	old_inter.queue_free()
-	level.queue_free()
 	inter.position = Vector2(0,750)
 	player.position = Vector2(800,750)
+	old_inter.queue_free()
+	level.queue_free()
 	_load_next_level()
 	await get_tree().create_timer(1.0).timeout
+	$"../Background"._next_terrain()
 	player._set_player_green()

@@ -6,6 +6,7 @@ var a_pos : float = 10.0
 var a_zoom : float = 5.0
 
 var follow_player : bool = true
+var follow_player_y : bool = false
 var zoom_base : float = 1.0
 
 var pos_base : Vector2 = Vector2(800,450)
@@ -39,7 +40,9 @@ func _physics_process(_delta) -> void :
 	zoom = lerp(zoom, Vector2(zoom_base, zoom_base), a_zoom*_delta)
 	position = lerp(position, pos_base, a_pos*_delta)
 	if follow_player :
-		position = $"../Player".global_position
+		position.x = $"../Player".global_position.x
+	if follow_player_y :
+		position.y = $"../Player".global_position.y
 	$"../Void".global_position = self.global_position
 	inertia = lerp(inertia, Vector2.ZERO, a_inertia*_delta)
 	position += inertia + shake

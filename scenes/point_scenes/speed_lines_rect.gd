@@ -33,4 +33,5 @@ func _set_parameter(param : String, value) -> void :
 func _tween_parameter(param : String, start, end, duration : float = 0.5) -> void :
 	tween = create_tween()
 	print("Tween parameter called with param : ",param,", start = ",start,", end = ",end)
-	tween.tween_method(_set_parameter.bind(param),start, end, duration)
+	var callback : Callable = func(value) : _set_parameter(param, value)
+	tween.tween_method(callback,start, end, duration)

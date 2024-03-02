@@ -7,7 +7,7 @@ func _ready() -> void:
 
 func _enter() -> void:
 	$Slide.position.x = 1600
-	#self.show()
+	self.show()
 	tween_pos = create_tween()
 	tween_pos.tween_property($Slide,"position", Vector2(0,0),0.5)
 	$Slide/ReferenceRect._tween_alpha(0.0,1.0,0.5)

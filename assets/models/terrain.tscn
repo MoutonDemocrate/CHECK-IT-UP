@@ -1,37 +1,28 @@
-[gd_scene load_steps=7 format=3 uid="uid://dpnv12tio38bc"]
+[gd_scene load_steps=5 format=3 uid="uid://dvstcfs3dg8bk"]
 
-[ext_resource type="PackedScene" uid="uid://dxycwrm1sxpgv" path="res://assets/models/terrain.blend" id="1_ok5fy"]
-[ext_resource type="Shader" path="res://assets/models/terrain.gdshader" id="2_owi75"]
+[ext_resource type="PackedScene" uid="uid://dxycwrm1sxpgv" path="res://assets/models/terrain.blend" id="1_1jul2"]
+[ext_resource type="Shader" path="res://assets/models/terrain.gdshader" id="2_yn1lv"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_il61q"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x31nu"]
 render_priority = 0
-shader = ExtResource("2_owi75")
+shader = ExtResource("2_yn1lv")
+shader_parameter/test_vec = null
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fmcei"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ol0lj"]
 render_priority = 0
-shader = ExtResource("2_owi75")
+shader = ExtResource("2_yn1lv")
+shader_parameter/test_vec = null
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_lrcf4"]
-render_priority = 0
-shader = ExtResource("2_owi75")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_pvrhy"]
-render_priority = 0
-shader = ExtResource("2_owi75")
-
-[node name="terrain" instance=ExtResource("1_ok5fy")]
+[node name="terrain" instance=ExtResource("1_1jul2")]
 
 [node name="BASE" parent="." index="0"]
-layers = 7
-material_override = SubResource("ShaderMaterial_il61q")
-surface_material_override/0 = SubResource("ShaderMaterial_fmcei")
+surface_material_override/0 = SubResource("ShaderMaterial_x31nu")
 
 [node name="StrataLake" parent="." index="1"]
 visible = false
 
 [node name="StrataMountain" parent="." index="2"]
-material_override = SubResource("ShaderMaterial_lrcf4")
-surface_material_override/0 = SubResource("ShaderMaterial_pvrhy")
+surface_material_override/0 = SubResource("ShaderMaterial_ol0lj")
 
 [node name="fBmValley" parent="." index="3"]
 visible = false

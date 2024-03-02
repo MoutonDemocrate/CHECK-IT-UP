@@ -1,40 +1,79 @@
-[gd_scene load_steps=59 format=3 uid="uid://8m6o74ud0t8o"]
+[gd_scene load_steps=102 format=3 uid="uid://8m6o74ud0t8o"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_hfrkx"]
 [ext_resource type="Texture2D" uid="uid://b3uh0body4qu5" path="res://assets/player/default.png" id="1_r7gxw"]
 [ext_resource type="Script" path="res://scenes/World.gd" id="2_lgqa5"]
 [ext_resource type="PackedScene" uid="uid://bna7646swxqlu" path="res://scenes/inter.tscn" id="2_r6xpu"]
-[ext_resource type="PackedScene" uid="uid://dpnv12tio38bc" path="res://assets/models/terrain.tscn" id="2_wlpy3"]
+[ext_resource type="Script" path="res://scenes/Background.gd" id="2_vr5km"]
+[ext_resource type="PackedScene" uid="uid://dvstcfs3dg8bk" path="res://assets/models/terrain.tscn" id="3_2lnbl"]
 [ext_resource type="Script" path="res://scenes/player.gd" id="3_p36vy"]
 [ext_resource type="Script" path="res://scenes/CameraScript.gd" id="4_tdvwj"]
+[ext_resource type="Shader" path="res://assets/shaders/stars.gdshader" id="5_bgvg7"]
 [ext_resource type="Shader" path="res://assets/shaders/speed_lines.gdshader" id="7_ivdtm"]
-[ext_resource type="FontFile" uid="uid://d0q5l1wdxnnnm" path="res://assets/fonts/FREAKSOFNATUREMASSIVE.ttf" id="8_437b5"]
 [ext_resource type="Script" path="res://scenes/Void.gd" id="13_7a4jl"]
 [ext_resource type="Shader" path="res://assets/shaders/blur.gdshader" id="13_fixur"]
 [ext_resource type="FontFile" uid="uid://bgkhf3ustndfv" path="res://assets/fonts/theyrecomingtotakemeaway.ttf" id="13_oh5di"]
 [ext_resource type="Script" path="res://scenes/point_scenes/speed_lines_rect.gd" id="14_80mxc"]
 [ext_resource type="Script" path="res://scenes/SpeedLinesContainer.gd" id="14_bi13k"]
-[ext_resource type="Texture2D" uid="uid://drxejlne4ksle" path="res://assets/textures/ui/logo/check_it_up_logo.png" id="14_s2em0"]
+[ext_resource type="Script" path="res://scenes/UI.gd" id="15_0s21d"]
+[ext_resource type="Texture2D" uid="uid://cb2sy2tsic8p2" path="res://assets/textures/ui/logo/check_it_up_case_ANIM.png" id="17_xthpe"]
+[ext_resource type="Texture2D" uid="uid://d36n203yaq58b" path="res://assets/textures/ui/logo/check_it_up_check_ANIM.png" id="18_0v2vd"]
 [ext_resource type="Texture2D" uid="uid://bcadj2xve5q2a" path="res://assets/textures/particles/Spark.png" id="21_k5y07"]
 
 [sub_resource type="Gradient" id="Gradient_ncgqo"]
 colors = PackedColorArray(0, 0.25, 0.225, 1, 0.39, 1, 0.928833, 1)
 
-[sub_resource type="Environment" id="Environment_mfs8q"]
-background_mode = 1
+[sub_resource type="ViewportTexture" id="ViewportTexture_r3o2h"]
+viewport_path = NodePath("Background/ColorRect/SubViewport")
+
+[sub_resource type="Environment" id="Environment_ts1jf"]
+background_energy_multiplier = 0.0
 ambient_light_source = 1
-ambient_light_energy = 0.0
-reflected_light_source = 1
-tonemap_mode = 3
 
-[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_fbmq6"]
+[sub_resource type="Gradient" id="Gradient_hll8v"]
+interpolation_mode = 2
+interpolation_color_space = 2
+colors = PackedColorArray(0.484348, 0.00217821, 0.748497, 1, 0, 1, 1, 1)
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_ki2sn"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jomjh"]
+seed = 145
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4gkwr"]
-albedo_color = Color(0, 0, 0, 1)
-emission_enabled = true
-emission = Color(1, 0, 0, 1)
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_rdw0n"]
+color_ramp = SubResource("Gradient_hll8v")
+noise = SubResource("FastNoiseLite_jomjh")
+
+[sub_resource type="Gradient" id="Gradient_t0xnt"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_gwdti"]
+noise_type = 4
+seed = 510
+frequency = 0.0857
+fractal_type = 3
+fractal_octaves = 10
+fractal_lacunarity = 2.825
+fractal_gain = 0.4
+domain_warp_enabled = true
+domain_warp_type = 1
+domain_warp_amplitude = 10.19
+domain_warp_frequency = 0.035
+domain_warp_fractal_octaves = 10
+metadata/_preview_in_3d_space_ = true
+
+[sub_resource type="NoiseTexture3D" id="NoiseTexture3D_oum83"]
+width = 113
+seamless = true
+color_ramp = SubResource("Gradient_t0xnt")
+noise = SubResource("FastNoiseLite_gwdti")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e81x0"]
+shader = ExtResource("5_bgvg7")
+shader_parameter/speed = 6.05
+shader_parameter/multi = 2.0
+shader_parameter/movement_speed = 2.0
+shader_parameter/alpha = 0.184
+shader_parameter/edge_strength = 1.807
+shader_parameter/noise = SubResource("NoiseTexture3D_oum83")
+shader_parameter/color_noise = SubResource("NoiseTexture2D_rdw0n")
 
 [sub_resource type="Gradient" id="Gradient_2o1ox"]
 interpolation_mode = 2
@@ -97,11 +136,11 @@ noise = SubResource("FastNoiseLite_sa1i8")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_x702c"]
 shader = SubResource("Shader_lfjx0")
-shader_parameter/line_color_a = Color(0.541176, 0.541176, 0.541176, 1)
-shader_parameter/line_color_b = Color(0, 0.498039, 0.521569, 1)
+shader_parameter/line_color_a = Color(0.34902, 0.34902, 0.34902, 1)
+shader_parameter/line_color_b = Color(0, 0.364706, 0.384314, 1)
 shader_parameter/line_threshold = 0.8
-shader_parameter/inverse_speed = 75.0
-shader_parameter/line_length = 150.0
+shader_parameter/inverse_speed = 200.0
+shader_parameter/line_length = 125.0
 shader_parameter/angle = 0.0
 shader_parameter/alpha = 1.0
 shader_parameter/noise = SubResource("NoiseTexture2D_ksrf7")
@@ -147,10 +186,10 @@ noise = SubResource("FastNoiseLite_dd0jd")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_x2coy"]
 shader = SubResource("Shader_1wyo1")
-shader_parameter/line_color_a = Color(0.737255, 0.737255, 0.737255, 1)
-shader_parameter/line_color_b = Color(0, 0.627451, 0.654902, 1)
+shader_parameter/line_color_a = Color(0.6, 0.6, 0.6, 1)
+shader_parameter/line_color_b = Color(0, 0.568627, 0.592157, 1)
 shader_parameter/line_threshold = 0.75
-shader_parameter/inverse_speed = 60.0
+shader_parameter/inverse_speed = 80.0
 shader_parameter/line_length = 100.0
 shader_parameter/angle = 0.0
 shader_parameter/alpha = 1.0
@@ -170,14 +209,590 @@ noise = SubResource("FastNoiseLite_x66qw")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_p20g6"]
 shader = ExtResource("7_ivdtm")
-shader_parameter/line_color_a = Color(0.929412, 0.929412, 0.929412, 1)
-shader_parameter/line_color_b = Color(0, 0.698039, 0.729412, 1)
+shader_parameter/line_color_a = Color(0.713726, 0.713726, 0.713726, 1)
+shader_parameter/line_color_b = Color(0, 0.8, 0.835294, 1)
 shader_parameter/line_threshold = 0.75
 shader_parameter/inverse_speed = 50.0
 shader_parameter/line_length = 300.0
 shader_parameter/angle = 0.0
 shader_parameter/alpha = 1.0
 shader_parameter/noise = SubResource("NoiseTexture2D_15mbu")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tg0f7"]
+shader = ExtResource("13_fixur")
+shader_parameter/pixelSize = 1
+shader_parameter/line_color = Color(0, 0, 0, 1)
+shader_parameter/line_thickness = 2.5
+shader_parameter/alpha = 1.0
+
+[sub_resource type="GDScript" id="GDScript_hn8ls"]
+resource_name = "TitleScript"
+script/source = "extends CenterContainer
+
+@export var alpha := 1.0
+@export var pixelate := 1
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta):
+	self.material.set_shader_parameter(\"alpha\", alpha)
+	self.material.set_shader_parameter(\"pixelSize\", pixelate)
+
+func set_blur_intensity(intensity : float = 0) -> void :
+	self.material.set_shader_parameter(\"intensity\", intensity)
+
+func set_blur_alpha(a : float = 1.0) -> void :
+	self.material.set_shader_parameter(\"alpha\", a)
+"
+
+[sub_resource type="LabelSettings" id="LabelSettings_sc68o"]
+font = ExtResource("13_oh5di")
+font_size = 200
+
+[sub_resource type="LabelSettings" id="LabelSettings_064kb"]
+font = ExtResource("13_oh5di")
+font_size = 71
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p0ylt"]
+shader = ExtResource("13_fixur")
+shader_parameter/pixelSize = 1
+shader_parameter/line_color = Color(0, 0, 0, 1)
+shader_parameter/line_thickness = 1.0
+shader_parameter/alpha = 1.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_w2473"]
+font = ExtResource("13_oh5di")
+font_size = 120
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jmbsq"]
+atlas = ExtResource("17_xthpe")
+region = Rect2(0, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0w3it"]
+atlas = ExtResource("17_xthpe")
+region = Rect2(100, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1r3ba"]
+atlas = ExtResource("17_xthpe")
+region = Rect2(200, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oiskt"]
+atlas = ExtResource("17_xthpe")
+region = Rect2(300, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kd1lw"]
+atlas = ExtResource("17_xthpe")
+region = Rect2(400, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5le34"]
+atlas = ExtResource("17_xthpe")
+region = Rect2(500, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w0kwj"]
+atlas = ExtResource("17_xthpe")
+region = Rect2(600, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gbxwo"]
+atlas = ExtResource("17_xthpe")
+region = Rect2(700, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqt26"]
+atlas = ExtResource("17_xthpe")
+region = Rect2(800, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lq3go"]
+atlas = ExtResource("17_xthpe")
+region = Rect2(900, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yfvah"]
+atlas = ExtResource("18_0v2vd")
+region = Rect2(0, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ymk8k"]
+atlas = ExtResource("18_0v2vd")
+region = Rect2(100, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ndn6s"]
+atlas = ExtResource("18_0v2vd")
+region = Rect2(200, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2m13l"]
+atlas = ExtResource("18_0v2vd")
+region = Rect2(300, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ku7d"]
+atlas = ExtResource("18_0v2vd")
+region = Rect2(400, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_23ena"]
+atlas = ExtResource("18_0v2vd")
+region = Rect2(500, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a0eyf"]
+atlas = ExtResource("18_0v2vd")
+region = Rect2(600, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cwwll"]
+atlas = ExtResource("18_0v2vd")
+region = Rect2(700, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xayva"]
+atlas = ExtResource("18_0v2vd")
+region = Rect2(800, 0, 100, 100)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ixbic"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jmbsq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0w3it")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1r3ba")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oiskt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kd1lw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5le34")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w0kwj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gbxwo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dqt26")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lq3go")
+}],
+"loop": false,
+"name": &"CASE",
+"speed": 60.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yfvah")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ymk8k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ndn6s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2m13l")
+}, {
+"duration": 10.0,
+"texture": SubResource("AtlasTexture_3ku7d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_23ena")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a0eyf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cwwll")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xayva")
+}],
+"loop": false,
+"name": &"CHECK",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jmbsq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_f7cc5"]
+colors = PackedColorArray(0, 1, 0, 1, 0, 0.329412, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_4iebo"]
+gradient = SubResource("Gradient_f7cc5")
+
+[sub_resource type="Gradient" id="Gradient_20yby"]
+offsets = PackedFloat32Array(0, 0.0384615, 0.646154, 1)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_dnagj"]
+gradient = SubResource("Gradient_20yby")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tfwf1"]
+lifetime_randomness = 0.46
+particle_flag_disable_z = true
+angle_min = -301.4
+angle_max = 267.9
+spread = 20.0
+initial_velocity_min = 50.0
+initial_velocity_max = 200.0
+gravity = Vector3(0, 0, 0)
+damping_min = 50.0
+damping_max = 100.0
+scale_min = 3.4
+scale_max = 7.9
+color_ramp = SubResource("GradientTexture1D_dnagj")
+color_initial_ramp = SubResource("GradientTexture1D_4iebo")
+hue_variation_min = -0.15
+hue_variation_max = 0.06
+
+[sub_resource type="Animation" id="Animation_6i4et"]
+resource_name = "RESET"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LevelEnd_Label:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(10, 10)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LevelEnd_Label:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.785398]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LevelEnd_Label:material:shader_parameter/alpha")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("LevelEnd_Label:material:shader_parameter/pixelSize")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("LevelEnd_Label:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_8nfcp"]
+resource_name = "game_begin"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CHECK_IT_UP:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 0.297302),
+"update": 0,
+"values": [Vector2(10, 10), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CHECK_IT_UP:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1.5, 1),
+"update": 0,
+"values": [Vector2(150, 300), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CHECK_IT_UP:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.785398, 0.0]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CHECKMARK")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1.2, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [&"default", 1.0, false],
+"method": &"play"
+}, {
+"args": [&"CASE", 1.0, false],
+"method": &"play"
+}, {
+"args": [&"CHECK", 1.0, false],
+"method": &"play"
+}]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../../../Player:state")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 2.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [3, 4]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CHECK_IT_UP:alpha")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.1, 1),
+"transitions": PackedFloat32Array(1, 2),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CHECK_IT_UP:pixelate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 0.329877),
+"update": 0,
+"values": [16, 1]
+}
+
+[sub_resource type="Animation" id="Animation_20blm"]
+resource_name = "press_right_loop"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PressRight_Label:visible_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 1.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PressRight_Label:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_fpo3s"]
+resource_name = "level_end"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MotivationLabel_Label:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LevelEnd_Label:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(10, 10), Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LevelEnd_Label:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.785398, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("LevelEnd_Label:material:shader_parameter/alpha")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("LevelEnd_Label:material:shader_parameter/pixelSize")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [16, 1]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CHECKMARK:animation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.501428, 1.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [&"CASE", &"CASE", &"CHECK", &"CHECK"]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CHECKMARK:frame")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.501428, 1.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0, 9, 0, 8]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("LevelEnd_Label:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8e02g"]
+_data = {
+"RESET": SubResource("Animation_6i4et"),
+"game_begin": SubResource("Animation_8nfcp"),
+"level_end": SubResource("Animation_fpo3s"),
+"press_right_loop": SubResource("Animation_20blm")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fkt4f"]
+animation = &"game_begin"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1t45r"]
+animation = &"level_end"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_h42oy"]
+animation = &"press_right_loop"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_rlbt5"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qknh3"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_72nyu"]
+advance_mode = 0
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_yci7v"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_einhv"]
+states/End/position = Vector2(1012, 161.333)
+states/Start/position = Vector2(72, 99.2597)
+states/game_begin/node = SubResource("AnimationNodeAnimation_fkt4f")
+states/game_begin/position = Vector2(246.667, 57.8353)
+states/level_end/node = SubResource("AnimationNodeAnimation_1t45r")
+states/level_end/position = Vector2(705.333, 57.3049)
+states/press_right_loop/node = SubResource("AnimationNodeAnimation_h42oy")
+states/press_right_loop/position = Vector2(466.667, 57.945)
+transitions = ["Start", "game_begin", SubResource("AnimationNodeStateMachineTransition_rlbt5"), "level_end", "press_right_loop", SubResource("AnimationNodeStateMachineTransition_qknh3"), "press_right_loop", "level_end", SubResource("AnimationNodeStateMachineTransition_72nyu"), "game_begin", "press_right_loop", SubResource("AnimationNodeStateMachineTransition_yci7v")]
 
 [sub_resource type="Gradient" id="Gradient_iet15"]
 interpolation_mode = 2
@@ -189,17 +804,15 @@ gradient = SubResource("Gradient_iet15")
 use_hdr = true
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_u8vtn"]
-emission_shape = 1
-emission_sphere_radius = 8.9
 particle_flag_align_y = true
 particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 8.9
 direction = Vector3(-1, 0, 0)
 spread = 25.0
-gravity = Vector3(0, 0, 0)
 initial_velocity_min = 1000.0
 initial_velocity_max = 2000.0
-orbit_velocity_min = 0.0
-orbit_velocity_max = 0.0
+gravity = Vector3(0, 0, 0)
 scale_min = 0.3
 scale_max = 0.5
 color_ramp = SubResource("GradientTexture1D_5wcrk")
@@ -238,179 +851,57 @@ shader_parameter/angle = 0.0
 shader_parameter/alpha = 1.0
 shader_parameter/noise = SubResource("NoiseTexture2D_py2uu")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_3hlsx"]
-shader = ExtResource("13_fixur")
-shader_parameter/intensity = 0.0
-shader_parameter/line_color = Color(0, 0, 0, 1)
-shader_parameter/line_thickness = 2.5
-
-[sub_resource type="GDScript" id="GDScript_hn8ls"]
-resource_name = "TitleScript"
-script/source = "extends HBoxContainer
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
-func set_blur_intensity(intensity : float = 0) :
-	self.material.set_shader_parameter(\"intensity\", intensity)
-"
-
-[sub_resource type="LabelSettings" id="LabelSettings_sc68o"]
-font = ExtResource("13_oh5di")
-font_size = 190
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l44pw"]
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_ixbic"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("14_s2em0")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
-
-[sub_resource type="LabelSettings" id="LabelSettings_064kb"]
-font = ExtResource("8_437b5")
-font_size = 61
-
-[sub_resource type="LabelSettings" id="LabelSettings_w2473"]
-font = ExtResource("8_437b5")
-font_size = 100
-
-[sub_resource type="Animation" id="Animation_8nfcp"]
-resource_name = "game_begin"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CHECK_IT_UP:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 0.297302),
-"update": 0,
-"values": [Vector2(10, 10), Vector2(1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CHECK_IT_UP:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1.5, 1),
-"update": 0,
-"values": [Vector2(150, 300), Vector2(150, 50)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("CHECK_IT_UP:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.785398, 0.0]
-}
-tracks/3/type = "method"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("CHECK_IT_UP")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"values": [{
-"args": [15.0],
-"method": &"set_blur_intensity"
-}, {
-"args": [0.0],
-"method": &"set_blur_intensity"
-}]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_8e02g"]
-_data = {
-"game_begin": SubResource("Animation_8nfcp")
-}
-
 [node name="main" type="Node"]
 script = ExtResource("1_hfrkx")
 BackgroundCol = SubResource("Gradient_ncgqo")
 
 [node name="Background" type="Node2D" parent="."]
+process_mode = 3
+script = ExtResource("2_vr5km")
 
-[node name="ColorRect" type="ColorRect" parent="Background"]
+[node name="ColorRect" type="TextureRect" parent="Background"]
+modulate = Color(0.380392, 1, 0.886275, 1)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -350.0
-offset_right = 1600.0
-offset_bottom = 1250.0
+offset_left = -1200.0
+offset_top = -550.0
+offset_right = 2800.0
+offset_bottom = 1450.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color(1, 0, 0, 1)
+texture = SubResource("ViewportTexture_r3o2h")
+stretch_mode = 5
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="Background"]
-texture_filter = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -350.0
-offset_right = 1600.0
-offset_bottom = 1250.0
-grow_horizontal = 2
-grow_vertical = 2
-stretch = true
-stretch_shrink = 10
-
-[node name="SubViewport" type="SubViewport" parent="Background/SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="Background/ColorRect"]
 handle_input_locally = false
-screen_space_aa = 1
-size = Vector2i(160, 160)
+size = Vector2i(200, 200)
 render_target_update_mode = 4
 
-[node name="terrain" parent="Background/SubViewportContainer/SubViewport" instance=ExtResource("2_wlpy3")]
+[node name="terrain" parent="Background/ColorRect/SubViewport" instance=ExtResource("3_2lnbl")]
 
-[node name="Camera3D" type="Camera3D" parent="Background/SubViewportContainer/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 4.195, 0)
+[node name="CameraPivot" type="Node3D" parent="Background/ColorRect/SubViewport"]
+
+[node name="Camera3D" type="Camera3D" parent="Background/ColorRect/SubViewport/CameraPivot"]
+transform = Transform3D(1, -8.35189e-23, -4.37114e-08, 4.37114e-08, 1.91069e-15, 1, 0, -1, 1.91069e-15, 0, 4, 0)
 keep_aspect = 0
-environment = SubResource("Environment_mfs8q")
-attributes = SubResource("CameraAttributesPractical_fbmq6")
 current = true
-fov = 53.5
+fov = 63.1
 size = 0.051
-near = 0.025
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Background/SubViewportContainer/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.41405, 0)
-mesh = SubResource("PlaneMesh_ki2sn")
-surface_material_override/0 = SubResource("StandardMaterial3D_4gkwr")
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Background/ColorRect/SubViewport"]
+environment = SubResource("Environment_ts1jf")
 
 [node name="Void" type="Node2D" parent="."]
-visible = false
 position = Vector2(800, 450)
 script = ExtResource("13_7a4jl")
 
 [node name="Slide" type="Node2D" parent="Void"]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Void/Slide"]
+material = SubResource("ShaderMaterial_e81x0")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -424,17 +915,20 @@ pivot_offset = Vector2(1600, 450)
 theme_override_constants/separation = 0
 
 [node name="Panel2" type="Panel" parent="Void/Slide/HBoxContainer"]
+use_parent_material = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.5
 theme_override_styles/panel = SubResource("StyleBoxTexture_w24l0")
 
 [node name="ColorRect" type="ColorRect" parent="Void/Slide/HBoxContainer"]
+use_parent_material = true
 layout_mode = 2
 size_flags_horizontal = 3
 color = Color(0, 0, 0, 1)
 
 [node name="Panel" type="Panel" parent="Void/Slide/HBoxContainer"]
+use_parent_material = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.5
@@ -476,55 +970,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("14_80mxc")
 
-[node name="World" type="Node2D" parent="."]
-script = ExtResource("2_lgqa5")
-
-[node name="inter" parent="World" instance=ExtResource("2_r6xpu")]
-position = Vector2(0, 750)
-
-[node name="Player" type="Node2D" parent="."]
-position = Vector2(800, 750)
-script = ExtResource("3_p36vy")
-
-[node name="GPUParticles2D" type="GPUParticles2D" parent="Player"]
-amount = 50
-process_material = SubResource("ParticleProcessMaterial_u8vtn")
-texture = ExtResource("21_k5y07")
-lifetime = 0.2
-fixed_fps = 200
-local_coords = true
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
-sprite_frames = SubResource("SpriteFrames_s3ucp")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-texture_filter = 1
-position = Vector2(800, 450)
-process_callback = 0
-editor_draw_limits = true
-script = ExtResource("4_tdvwj")
-
-[node name="TestCamera" type="Camera2D" parent="Camera2D"]
-ignore_rotation = false
-enabled = false
-zoom = Vector2(0.1, 0.1)
-
-[node name="EffectsLayer" type="CanvasLayer" parent="Camera2D"]
-scale = Vector2(0.5, 0.5)
-transform = Transform2D(0.5, 0, 0, 0.5, 0, 0)
-
-[node name="SpeedLinesRect" type="ColorRect" parent="Camera2D/EffectsLayer"]
-material = SubResource("ShaderMaterial_jh0xa")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 1600.0
-offset_bottom = 900.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(800, 450)
-
-[node name="UI" type="Control" parent="Camera2D"]
+[node name="UI" type="Control" parent="Void/Slide"]
 z_index = 10
 z_as_relative = false
 layout_mode = 3
@@ -539,90 +985,174 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource("15_0s21d")
 
-[node name="CHECK_IT_UP" type="HBoxContainer" parent="Camera2D/UI"]
+[node name="CHECK_IT_UP" type="CenterContainer" parent="Void/Slide/UI"]
 texture_filter = 1
-material = SubResource("ShaderMaterial_3hlsx")
+material = SubResource("ShaderMaterial_tg0f7")
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.094
-anchor_top = 0.056
-anchor_right = 0.906
-anchor_bottom = 0.389
-offset_left = -0.400009
-offset_top = 249.6
-offset_right = 0.400024
-offset_bottom = 249.901
-rotation = 0.785398
-scale = Vector2(10, 10)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -620.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1e-05, 1e-05)
 pivot_offset = Vector2(650, 150)
-theme_override_constants/separation = 50
 script = SubResource("GDScript_hn8ls")
+alpha = 0.0
+pixelate = 0
 
-[node name="Label_CHECK" type="Label" parent="Camera2D/UI/CHECK_IT_UP"]
+[node name="CenterContainer" type="HBoxContainer" parent="Void/Slide/UI/CHECK_IT_UP"]
 use_parent_material = true
 layout_mode = 2
-size_flags_horizontal = 3
+theme_override_constants/separation = 100
+
+[node name="Label_CHECK" type="Label" parent="Void/Slide/UI/CHECK_IT_UP/CenterContainer"]
+use_parent_material = true
+layout_mode = 2
+size_flags_stretch_ratio = 1.55
 text = "CHECK"
 label_settings = SubResource("LabelSettings_sc68o")
 horizontal_alignment = 1
 
-[node name="Label_IT" type="Label" parent="Camera2D/UI/CHECK_IT_UP"]
+[node name="Label_IT" type="Label" parent="Void/Slide/UI/CHECK_IT_UP/CenterContainer"]
 use_parent_material = true
 layout_mode = 2
-size_flags_horizontal = 3
-text = "IT"
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.0
+text = "it"
 label_settings = SubResource("LabelSettings_sc68o")
 horizontal_alignment = 1
 
-[node name="Label_UP" type="Label" parent="Camera2D/UI/CHECK_IT_UP"]
+[node name="Label_UP" type="Label" parent="Void/Slide/UI/CHECK_IT_UP/CenterContainer"]
 use_parent_material = true
 layout_mode = 2
-size_flags_horizontal = 3
-text = "UP ! "
+size_flags_horizontal = 2
+text = "UP !"
 label_settings = SubResource("LabelSettings_sc68o")
 horizontal_alignment = 1
 
-[node name="VSeparator" type="VSeparator" parent="Camera2D/UI/CHECK_IT_UP"]
-layout_mode = 2
-theme_override_styles/separator = SubResource("StyleBoxEmpty_l44pw")
-
-[node name="Control" type="CenterContainer" parent="Camera2D/UI/CHECK_IT_UP"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Camera2D/UI/CHECK_IT_UP/Control"]
-position = Vector2(0, 143)
-scale = Vector2(2, 2)
-sprite_frames = SubResource("SpriteFrames_ixbic")
-
-[node name="MotivationLabel_Label" type="Label" parent="Camera2D/UI"]
+[node name="MotivationLabel_Label" type="Label" parent="Void/Slide/UI"]
 visible = false
-offset_left = 350.0
-offset_top = 600.0
-offset_right = 1250.0
-offset_bottom = 673.0
-text = "GO RIGHT TO CONTINUE"
+layout_mode = 0
+offset_left = 352.0
+offset_top = 792.0
+offset_right = 1252.0
+offset_bottom = 888.0
+text = "CHECK IT UP"
 label_settings = SubResource("LabelSettings_064kb")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelEnd_Label" type="Label" parent="Camera2D/UI"]
+[node name="LevelEnd_Label" type="Label" parent="Void/Slide/UI"]
 visible = false
+material = SubResource("ShaderMaterial_p0ylt")
+layout_mode = 0
 offset_left = 50.0
-offset_top = 100.0
 offset_right = 1550.0
-offset_bottom = 273.0
-text = "GO FASTER"
+offset_bottom = 288.0
+rotation = 0.785398
+scale = Vector2(10, 10)
+pivot_offset = Vector2(750, 144)
+text = "DUMBASS"
 label_settings = SubResource("LabelSettings_w2473")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera2D/UI"]
+[node name="PressRight_Label" type="Label" parent="Void/Slide/UI"]
+modulate = Color(1, 1, 1, 0.86653)
+layout_mode = 0
+offset_left = 832.0
+offset_top = 712.0
+offset_right = 1224.0
+offset_bottom = 784.0
+theme_override_font_sizes/font_size = 37
+text = "➤  ➤  ➤  ➤  ➤  ➤  ➤  ➤"
+vertical_alignment = 1
+clip_text = true
+visible_characters = 19
+visible_ratio = 0.86653
+
+[node name="CHECKMARK" type="AnimatedSprite2D" parent="Void/Slide/UI"]
+visible = false
+position = Vector2(800, 520)
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_ixbic")
+animation = &"CHECK"
+frame = 8
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Void/Slide/UI"]
+position = Vector2(800, 520)
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_tfwf1")
+lifetime = 0.5
+explosiveness = 1.0
+
+[node name="AnimationPlayerGlobal" type="AnimationPlayer" parent="Void/Slide/UI"]
 libraries = {
 "": SubResource("AnimationLibrary_8e02g")
 }
 
-[connection signal="property_list_changed" from="Void/Slide/ReferenceRect/SpeedLinesRectTop" to="Void/Slide/ReferenceRect/SpeedLinesRectTop" method="parameters_changed" flags=18]
-[connection signal="property_list_changed" from="Void/Slide/ReferenceRect/SpeedLinesRectMid" to="Void/Slide/ReferenceRect/SpeedLinesRectMid" method="parameters_changed" flags=18]
-[connection signal="property_list_changed" from="Void/Slide/ReferenceRect/SpeedLinesRectBottom" to="Void/Slide/ReferenceRect/SpeedLinesRectBottom" method="parameters_changed" flags=18]
+[node name="AnimationTree" type="AnimationTree" parent="Void/Slide/UI"]
+active = false
+libraries = {
+"": SubResource("AnimationLibrary_8e02g")
+}
+tree_root = SubResource("AnimationNodeStateMachine_einhv")
+anim_player = NodePath("../AnimationPlayerGlobal")
+
+[node name="World" type="Node2D" parent="."]
+script = ExtResource("2_lgqa5")
+
+[node name="inter" parent="World" instance=ExtResource("2_r6xpu")]
+position = Vector2(0, 750)
+
+[node name="Player" type="Node2D" parent="."]
+position = Vector2(800, 750)
+script = ExtResource("3_p36vy")
+state = 4
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Player"]
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_u8vtn")
+texture = ExtResource("21_k5y07")
+lifetime = 0.2
+fixed_fps = 200
+local_coords = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
+sprite_frames = SubResource("SpriteFrames_s3ucp")
+
+[node name="ShockwaveLayer" type="CanvasLayer" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+texture_filter = 1
+position = Vector2(800, 450)
+editor_draw_limits = true
+script = ExtResource("4_tdvwj")
+
+[node name="TestCamera" type="Camera2D" parent="Camera2D"]
+ignore_rotation = false
+enabled = false
+zoom = Vector2(0.1, 0.1)
+
+[node name="EffectsLayer" type="CanvasLayer" parent="Camera2D"]
+scale = Vector2(0.5, 0.5)
+transform = Transform2D(0.5, 0, 0, 0.5, 0, 0)
+
+[node name="SpeedLinesRect" type="ColorRect" parent="Camera2D/EffectsLayer"]
+visible = false
+material = SubResource("ShaderMaterial_jh0xa")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1600.0
+offset_bottom = 900.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(800, 450)
+
+[connection signal="property_list_changed" from="Void/Slide/ReferenceRect/SpeedLinesRectTop" to="Void/Slide/ReferenceRect/SpeedLinesRectTop" method="parameters_changed"]
+[connection signal="property_list_changed" from="Void/Slide/ReferenceRect/SpeedLinesRectMid" to="Void/Slide/ReferenceRect/SpeedLinesRectMid" method="parameters_changed"]
+[connection signal="property_list_changed" from="Void/Slide/ReferenceRect/SpeedLinesRectBottom" to="Void/Slide/ReferenceRect/SpeedLinesRectBottom" method="parameters_changed"]
