@@ -33,8 +33,6 @@ func _enter_tree():
 	
 	curve = rlg._calculate_random_path()
 	
-	print(curve.get_point_position(curve.point_count - 1))
-	
 	_fill_path()
 	
 func _fill_path():
@@ -133,18 +131,24 @@ func _hide_path(node : int, progress : float) -> void:
 			i += 1
 		else :
 			i += 1
+
+func get_length() -> Array[float] :
+	var array : Array[float] = []
+	for i in range(1,curve.get_point_count() - 2) :
+		array.append((curve.get_point_position(i) - curve.get_point_position(i+1)).length())
+	return array
 "
 
 [node name="level" type="Node2D"]
 script = ExtResource("1_aer3t")
 difficulty = 10
 
-[node name="Path2D" type="Path2D" parent="."]
+[node name="LevelPath2D" type="Path2D" parent="."]
 position = Vector2(0, -100)
 curve = SubResource("Curve2D_57smi")
 script = SubResource("GDScript_vy5vq")
 
-[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+[node name="PathFollow2D" type="PathFollow2D" parent="LevelPath2D"]
 position = Vector2(106.398, 550)
 progress = 156.4
 

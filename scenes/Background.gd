@@ -1,4 +1,5 @@
 extends Node2D
+class_name Background
 
 @onready var camera_pivot : Node3D = $ColorRect/SubViewport/CameraPivot
 @onready var terrain : Node3D = $ColorRect/SubViewport/terrain
@@ -44,3 +45,7 @@ func _physics_process(delta) -> void :
 #		Vector3.ZERO,
 #		a_camera * delta
 #	)
+
+func game_over() -> void :
+	var tween := create_tween()
+	tween.tween_property(self,"modulate",Color(0.0,0.0,0.0,0.0),1.0)

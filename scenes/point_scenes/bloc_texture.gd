@@ -25,9 +25,9 @@ func _ready() -> void :
 	
 func _update(new_prog : float = 1.0) -> void:
 	if is_corner :
-		texture = load("res://assets/textures/paths/corner_basic.png")
+		texture = load("res://assets/textures/paths/CornersArray.tres").get_random_texture()
 	else :
-		texture = load("res://assets/textures/paths/line_basic.png")
+		texture = load("res://assets/textures/paths/LinesArray.tres").get_random_texture()
 
 func _goodbye() -> void :
 	if not pos_base :

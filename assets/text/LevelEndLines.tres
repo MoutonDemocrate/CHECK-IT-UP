@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="TextLines" load_steps=2 format=3 uid="uid://cmvk5sndv3xef"]
+
+[ext_resource type="Script" path="res://scenes/resources/TextLines.gd" id="1_nbujv"]
+
+[resource]
+script = ExtResource("1_nbujv")
+text_lines = {
+"default": ["CHECK IT UP.", "CHECK IT UP !", "CHECK IT UUUUUUUUUP", "YOU CHECKED IT UP", "HELL YEAH !", "YOU CRUSHED IT. BADLY.", "USE THE FORCE LUKE", "YOU KEEP GETTING AWAY WITH IT", "SIIIIIIICKKKKK", "YOU'RE THE CHAMPION", "YOU'RE THE WINNER", "YOU'RE THE FUCKING BEST", "KEEP IT UP", "KEEP IT CLEAN", "KEEP IT FRESH", "STAY OFF THE HOOK", "HIT EM WITH IT", "HIT EM WITH THE TACTICS", "PUNK EM", "YOU'RE THE ONE."]
+}

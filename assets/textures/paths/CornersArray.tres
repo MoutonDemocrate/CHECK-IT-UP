@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="TextureArray" load_steps=10 format=3 uid="uid://tjwljf1w57mb"]
+
+[ext_resource type="Script" path="res://scenes/resources/TextureArray.gd" id="1_ftv6i"]
+[ext_resource type="Texture2D" uid="uid://dmu5cx47r2f7x" path="res://assets/textures/paths/corner_basic.png" id="2_e41hc"]
+[ext_resource type="Texture2D" uid="uid://qc6eq3koqhw0" path="res://assets/textures/paths/corner_1.png" id="3_0bb63"]
+[ext_resource type="Texture2D" uid="uid://dcf8rihf0ce83" path="res://assets/textures/paths/corner_2.png" id="4_w3pve"]
+[ext_resource type="Texture2D" uid="uid://cw74xk7x6efrp" path="res://assets/textures/paths/corner_3.png" id="5_1r6i8"]
+[ext_resource type="Texture2D" uid="uid://b010m4k5sivpq" path="res://assets/textures/paths/corner_4.png" id="6_3cxpv"]
+[ext_resource type="Texture2D" uid="uid://bq63vubjaerli" path="res://assets/textures/paths/corner_5.png" id="7_215pe"]
+[ext_resource type="Texture2D" uid="uid://mb35wxihl3j3" path="res://assets/textures/paths/corner_6.png" id="8_mgfs4"]
+[ext_resource type="Texture2D" uid="uid://c0ntbsomncev3" path="res://assets/textures/paths/corner_7.png" id="9_5yvrm"]
+
+[resource]
+script = ExtResource("1_ftv6i")
+textures = Array[Texture2D]([ExtResource("2_e41hc"), ExtResource("3_0bb63"), ExtResource("4_w3pve"), ExtResource("5_1r6i8"), ExtResource("6_3cxpv"), ExtResource("7_215pe"), ExtResource("8_mgfs4"), ExtResource("9_5yvrm")])

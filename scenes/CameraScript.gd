@@ -11,14 +11,14 @@ var zoom_base : float = 1.0
 
 var pos_base : Vector2 = Vector2(800,450)
 var inertia : Vector2 = Vector2(0,0)
-var shake : Vector2 = Vector2(0,0)
+var shake_strength : float = 0.0
 
 @onready var SpeedLinesRect = $EffectsLayer/SpeedLinesRect
 var sl_alpha_tween : Tween
 
 func _ready() -> void :
 	_sl_set_inv_speed(50,0.0)
-	_sl_appear(0.0)
+	_sl_dissolve(0.01)
 
 func set_pos_base(pos : Vector2) -> void :
 	pos_base = pos
@@ -33,8 +33,10 @@ func _lerp_to_pos(pos : Vector2) :
 func _inertia(direction : Vector2, force : int) -> void :
 	inertia = direction*force
 
-func _shake() -> void :
-	pass
+func _shake(s : float = 20.0, duration : float = 0.2) -> void :
+	shake_strength = s
+	var tween : Tween = create_tween()
+	tween.tween_property(self,"shake_strength",0.0,duration)
 
 func _physics_process(_delta) -> void :
 	zoom = lerp(zoom, Vector2(zoom_base, zoom_base), a_zoom*_delta)
@@ -45,6 +47,7 @@ func _physics_process(_delta) -> void :
 		position.y = $"../Player".global_position.y
 	$"../Void".global_position = self.global_position
 	inertia = lerp(inertia, Vector2.ZERO, a_inertia*_delta)
+	var shake = Vector2(randf()-0.5,randf()-0.5).normalized() * shake_strength
 	position += inertia + shake
 
 func set_sl_alpha(a : float) -> void:

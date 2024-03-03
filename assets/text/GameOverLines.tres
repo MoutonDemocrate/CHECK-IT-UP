@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="TextLines" load_steps=2 format=3 uid="uid://byuo8uaadlu5r"]
+
+[ext_resource type="Script" path="res://scenes/resources/TextLines.gd" id="1_ixjwj"]
+
+[resource]
+script = ExtResource("1_ixjwj")
+text_lines = {
+	"default": [
+		"YOU ATE A FUCKING WALL",
+		"YOU CRASHED, IDIOT",
+		"TRY HARDER NEXT TIME",
+		"SKILL ISSUE ???",
+		"YOU... KINDA SUCK",
+		"TRY BEING BETTER",
+		"YOUR PARENTS ARE DISSAPOINTED"
+	]
+}

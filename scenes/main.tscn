@@ -1,4 +1,4 @@
-[gd_scene load_steps=102 format=3 uid="uid://8m6o74ud0t8o"]
+[gd_scene load_steps=132 format=3 uid="uid://8m6o74ud0t8o"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_hfrkx"]
 [ext_resource type="Texture2D" uid="uid://b3uh0body4qu5" path="res://assets/player/default.png" id="1_r7gxw"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bna7646swxqlu" path="res://scenes/inter.tscn" id="2_r6xpu"]
 [ext_resource type="Script" path="res://scenes/Background.gd" id="2_vr5km"]
 [ext_resource type="PackedScene" uid="uid://dvstcfs3dg8bk" path="res://assets/models/terrain.tscn" id="3_2lnbl"]
+[ext_resource type="Shader" path="res://assets/shaders/heightmap.gdshader" id="3_hdv1v"]
 [ext_resource type="Script" path="res://scenes/player.gd" id="3_p36vy"]
 [ext_resource type="Script" path="res://scenes/CameraScript.gd" id="4_tdvwj"]
 [ext_resource type="Shader" path="res://assets/shaders/stars.gdshader" id="5_bgvg7"]
@@ -16,12 +17,29 @@
 [ext_resource type="Script" path="res://scenes/point_scenes/speed_lines_rect.gd" id="14_80mxc"]
 [ext_resource type="Script" path="res://scenes/SpeedLinesContainer.gd" id="14_bi13k"]
 [ext_resource type="Script" path="res://scenes/UI.gd" id="15_0s21d"]
+[ext_resource type="PackedScene" uid="uid://bhloyarqul1e3" path="res://scenes/point_scenes/bonk.tscn" id="17_0whm5"]
 [ext_resource type="Texture2D" uid="uid://cb2sy2tsic8p2" path="res://assets/textures/ui/logo/check_it_up_case_ANIM.png" id="17_xthpe"]
 [ext_resource type="Texture2D" uid="uid://d36n203yaq58b" path="res://assets/textures/ui/logo/check_it_up_check_ANIM.png" id="18_0v2vd"]
 [ext_resource type="Texture2D" uid="uid://bcadj2xve5q2a" path="res://assets/textures/particles/Spark.png" id="21_k5y07"]
+[ext_resource type="Script" path="res://scenes/Progress.gd" id="21_ldkga"]
+[ext_resource type="Script" path="res://scenes/MusicPlayer.gd" id="22_hdhtd"]
+[ext_resource type="Shader" path="res://assets/shaders/black_screen.gdshader" id="23_uf38s"]
+[ext_resource type="Script" path="res://scenes/GameOverLayer.gd" id="23_xxfof"]
 
 [sub_resource type="Gradient" id="Gradient_ncgqo"]
 colors = PackedColorArray(0, 0.25, 0.225, 1, 0.39, 1, 0.928833, 1)
+
+[sub_resource type="Gradient" id="Gradient_lrc57"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.484663)
+colors = PackedColorArray(0.45, 0, 1, 1, 0, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_w82rt"]
+gradient = SubResource("Gradient_lrc57")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_37amp"]
+shader = ExtResource("3_hdv1v")
+shader_parameter/gradient = SubResource("GradientTexture1D_w82rt")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_r3o2h"]
 viewport_path = NodePath("Background/ColorRect/SubViewport")
@@ -95,6 +113,8 @@ gradient = SubResource("Gradient_o3mpk")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sy8bl"]
 texture = SubResource("GradientTexture1D_4640t")
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uor3i"]
+
 [sub_resource type="Shader" id="Shader_lfjx0"]
 code = "shader_type canvas_item;
 
@@ -139,7 +159,7 @@ shader = SubResource("Shader_lfjx0")
 shader_parameter/line_color_a = Color(0.34902, 0.34902, 0.34902, 1)
 shader_parameter/line_color_b = Color(0, 0.364706, 0.384314, 1)
 shader_parameter/line_threshold = 0.8
-shader_parameter/inverse_speed = 200.0
+shader_parameter/inverse_speed = 1000.0
 shader_parameter/line_length = 125.0
 shader_parameter/angle = 0.0
 shader_parameter/alpha = 1.0
@@ -188,8 +208,8 @@ noise = SubResource("FastNoiseLite_dd0jd")
 shader = SubResource("Shader_1wyo1")
 shader_parameter/line_color_a = Color(0.6, 0.6, 0.6, 1)
 shader_parameter/line_color_b = Color(0, 0.568627, 0.592157, 1)
-shader_parameter/line_threshold = 0.75
-shader_parameter/inverse_speed = 80.0
+shader_parameter/line_threshold = 0.8
+shader_parameter/inverse_speed = 300.0
 shader_parameter/line_length = 100.0
 shader_parameter/angle = 0.0
 shader_parameter/alpha = 1.0
@@ -212,7 +232,7 @@ shader = ExtResource("7_ivdtm")
 shader_parameter/line_color_a = Color(0.713726, 0.713726, 0.713726, 1)
 shader_parameter/line_color_b = Color(0, 0.8, 0.835294, 1)
 shader_parameter/line_threshold = 0.75
-shader_parameter/inverse_speed = 50.0
+shader_parameter/inverse_speed = 100.0
 shader_parameter/line_length = 300.0
 shader_parameter/angle = 0.0
 shader_parameter/alpha = 1.0
@@ -256,6 +276,23 @@ font_size = 200
 [sub_resource type="LabelSettings" id="LabelSettings_064kb"]
 font = ExtResource("13_oh5di")
 font_size = 71
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="GDScript" id="GDScript_cgkdm"]
+resource_name = "MotivationLabel"
+script/source = "extends Label
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	randomise_text()
+
+func randomise_text(args : Array = []) -> void :
+	print(\"Args : \" ,args)
+	var level_end_lines : TextLines = load(\"res://assets/text/MotivationLines.tres\")
+	self.text = level_end_lines._random_line(args)
+"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_p0ylt"]
 shader = ExtResource("13_fixur")
@@ -267,6 +304,54 @@ shader_parameter/alpha = 1.0
 [sub_resource type="LabelSettings" id="LabelSettings_w2473"]
 font = ExtResource("13_oh5di")
 font_size = 120
+
+[sub_resource type="GDScript" id="GDScript_5qsj1"]
+resource_name = "LevelEndLabel"
+script/source = "extends Label
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	randomise_text()
+
+func randomise_text() -> void :
+	var level_end_lines : TextLines = load(\"res://assets/text/LevelEndLines.tres\")
+	self.text = level_end_lines._random_line()
+"
+
+[sub_resource type="Gradient" id="Gradient_f7cc5"]
+colors = PackedColorArray(0, 1, 0, 1, 0, 0.329412, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_4iebo"]
+gradient = SubResource("Gradient_f7cc5")
+
+[sub_resource type="Gradient" id="Gradient_20yby"]
+offsets = PackedFloat32Array(0, 0.0384615, 0.646154, 1)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_dnagj"]
+gradient = SubResource("Gradient_20yby")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tfwf1"]
+lifetime_randomness = 0.46
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 30.0
+angle_min = -301.4
+angle_max = 267.9
+spread = 30.0
+flatness = 0.473
+initial_velocity_min = 100.0
+initial_velocity_max = 500.0
+gravity = Vector3(0, 0, 0)
+damping_min = 50.0
+damping_max = 100.0
+scale_min = 5.0
+scale_max = 10.0
+color_ramp = SubResource("GradientTexture1D_dnagj")
+color_initial_ramp = SubResource("GradientTexture1D_4iebo")
+hue_variation_min = -0.15
+hue_variation_max = 0.06
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jmbsq"]
 atlas = ExtResource("17_xthpe")
@@ -422,37 +507,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="Gradient" id="Gradient_f7cc5"]
-colors = PackedColorArray(0, 1, 0, 1, 0, 0.329412, 0, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_4iebo"]
-gradient = SubResource("Gradient_f7cc5")
-
-[sub_resource type="Gradient" id="Gradient_20yby"]
-offsets = PackedFloat32Array(0, 0.0384615, 0.646154, 1)
-colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_dnagj"]
-gradient = SubResource("Gradient_20yby")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tfwf1"]
-lifetime_randomness = 0.46
-particle_flag_disable_z = true
-angle_min = -301.4
-angle_max = 267.9
-spread = 20.0
-initial_velocity_min = 50.0
-initial_velocity_max = 200.0
-gravity = Vector3(0, 0, 0)
-damping_min = 50.0
-damping_max = 100.0
-scale_min = 3.4
-scale_max = 7.9
-color_ramp = SubResource("GradientTexture1D_dnagj")
-color_initial_ramp = SubResource("GradientTexture1D_4iebo")
-hue_variation_min = -0.15
-hue_variation_max = 0.06
-
 [sub_resource type="Animation" id="Animation_6i4et"]
 resource_name = "RESET"
 tracks/0/type = "value"
@@ -465,7 +519,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(10, 10)]
+"values": [Vector2(1, 1)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -477,7 +531,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.785398]
+"values": [0.0]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -513,7 +567,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false]
+"values": [true]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -527,10 +581,202 @@ tracks/5/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CHECKMARK:animation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"CHECK"]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("CHECKMARK:frame")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("GPUParticles2D_CHECK1:emitting")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("GPUParticles2D_CHECK1:position")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(800, 520)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("GPUParticles2D_CHECK1:rotation")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("CHECK_IT_UP:alpha")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("CHECK_IT_UP:visible")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("CHECK_IT_UP:pixelate")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("GPUParticles2D_CHECK2:emitting")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("GPUParticles2D_CHECK2:position")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(978, 345)]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("GPUParticles2D_CHECK2:rotation")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.872665]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("CHECKMARK:position")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(800, 481)]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("MotivationLabel_Label:visible")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("MotivationLabel_Label:modulate")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("../../../Player:state")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+tracks/21/type = "value"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("CHECKMARK:visible")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_8nfcp"]
 resource_name = "game_begin"
-length = 3.0
+length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -567,94 +813,174 @@ tracks/2/keys = {
 "update": 0,
 "values": [0.785398, 0.0]
 }
-tracks/3/type = "method"
+tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("CHECKMARK")
+tracks/3/path = NodePath("../../../Player:state")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 1.2, 1.8),
-"transitions": PackedFloat32Array(1, 1, 1),
-"values": [{
-"args": [&"default", 1.0, false],
-"method": &"play"
-}, {
-"args": [&"CASE", 1.0, false],
-"method": &"play"
-}, {
-"args": [&"CHECK", 1.0, false],
-"method": &"play"
-}]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("../../../Player:state")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 2.6),
+"times": PackedFloat32Array(0, 2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [3, 4]
 }
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("CHECK_IT_UP:alpha")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CHECK_IT_UP:alpha")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
 "times": PackedFloat32Array(0.1, 1),
 "transitions": PackedFloat32Array(1, 2),
 "update": 0,
 "values": [0.0, 1.0]
 }
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("CHECK_IT_UP:pixelate")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CHECK_IT_UP:pixelate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 0.329877),
 "update": 0,
 "values": [16, 1]
 }
-
-[sub_resource type="Animation" id="Animation_20blm"]
-resource_name = "press_right_loop"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PressRight_Label:visible_ratio")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [0.0, 1.0, 0.0]
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CHECKMARK:animation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 1.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [&"CASE", &"CHECK"]
 }
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("PressRight_Label:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("CHECKMARK:frame")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(1, 1.175, 1.2, 1.35, 1.6, 1.7),
+"transitions": PackedFloat32Array(1, 1e+06, 1, 1, 1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+"values": [0, 9, 0, 4, 4, 8]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("GPUParticles2D_CHECK1:emitting")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(1.35),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("GPUParticles2D_CHECK1:position")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0.2, 1.35),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(800, 520), Vector2(759, 635)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("GPUParticles2D_CHECK1:rotation")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(1.35),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.731293]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("CHECK_IT_UP:visible")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("GPUParticles2D_CHECK2:emitting")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(1.7),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("GPUParticles2D_CHECK2:position")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(1.7),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(978, 345)]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("GPUParticles2D_CHECK2:rotation")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(1.7),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.872665]
+}
+tracks/15/type = "method"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("../../../Camera2D")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(1, 1.35, 1.7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [20.0, 0.2],
+"method": &"_shake"
+}, {
+"args": [40.0, 0.3],
+"method": &"_shake"
+}, {
+"args": [50.0, 0.8],
+"method": &"_shake"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_fpo3s"]
 resource_name = "level_end"
-length = 3.0
+length = 1.8
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -662,7 +988,7 @@ tracks/0/path = NodePath("MotivationLabel_Label:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 2),
+"times": PackedFloat32Array(0, 1.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
@@ -722,7 +1048,7 @@ tracks/5/path = NodePath("CHECKMARK:animation")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.5, 0.501428, 1.6),
+"times": PackedFloat32Array(0, 0.5, 0.501428, 1.1),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [&"CASE", &"CASE", &"CHECK", &"CHECK"]
@@ -734,10 +1060,10 @@ tracks/6/path = NodePath("CHECKMARK:frame")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.5, 0.501428, 1.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.5, 0.501428, 0.65, 1, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [0, 9, 0, 8]
+"values": [0, 9, 0, 4, 4, 8]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
@@ -751,6 +1077,174 @@ tracks/7/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("GPUParticles2D_CHECK1:emitting")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0.65),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("CHECKMARK:position")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(800, 520)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("GPUParticles2D_CHECK1:position")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0.65),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(750, 628)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("GPUParticles2D_CHECK1:rotation")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0.65),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.698132]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("GPUParticles2D_CHECK2:emitting")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(1.1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("GPUParticles2D_CHECK2:position")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(1.1),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(978, 345)]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("GPUParticles2D_CHECK2:rotation")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(1.1),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.872665]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("MotivationLabel_Label:modulate")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(1.2, 1.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("../../../Player:state")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(1.8),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("CHECKMARK:visible")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/18/type = "method"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("../../../Camera2D")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0.5, 0.65, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [20.0, 0.2],
+"method": &"_shake"
+}, {
+"args": [40.0, 0.3],
+"method": &"_shake"
+}, {
+"args": [40.0, 0.6],
+"method": &"_shake"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_20blm"]
+resource_name = "press_right_loop"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PressRight_Label:visible_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 1.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PressRight_Label:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8e02g"]
 _data = {
@@ -759,40 +1253,6 @@ _data = {
 "level_end": SubResource("Animation_fpo3s"),
 "press_right_loop": SubResource("Animation_20blm")
 }
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fkt4f"]
-animation = &"game_begin"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1t45r"]
-animation = &"level_end"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_h42oy"]
-animation = &"press_right_loop"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_rlbt5"]
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qknh3"]
-switch_mode = 2
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_72nyu"]
-advance_mode = 0
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_yci7v"]
-switch_mode = 2
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_einhv"]
-states/End/position = Vector2(1012, 161.333)
-states/Start/position = Vector2(72, 99.2597)
-states/game_begin/node = SubResource("AnimationNodeAnimation_fkt4f")
-states/game_begin/position = Vector2(246.667, 57.8353)
-states/level_end/node = SubResource("AnimationNodeAnimation_1t45r")
-states/level_end/position = Vector2(705.333, 57.3049)
-states/press_right_loop/node = SubResource("AnimationNodeAnimation_h42oy")
-states/press_right_loop/position = Vector2(466.667, 57.945)
-transitions = ["Start", "game_begin", SubResource("AnimationNodeStateMachineTransition_rlbt5"), "level_end", "press_right_loop", SubResource("AnimationNodeStateMachineTransition_qknh3"), "press_right_loop", "level_end", SubResource("AnimationNodeStateMachineTransition_72nyu"), "game_begin", "press_right_loop", SubResource("AnimationNodeStateMachineTransition_yci7v")]
 
 [sub_resource type="Gradient" id="Gradient_iet15"]
 interpolation_mode = 2
@@ -813,9 +1273,51 @@ spread = 25.0
 initial_velocity_min = 1000.0
 initial_velocity_max = 2000.0
 gravity = Vector3(0, 0, 0)
-scale_min = 0.3
-scale_max = 0.5
+scale_min = 0.6
 color_ramp = SubResource("GradientTexture1D_5wcrk")
+
+[sub_resource type="Curve" id="Curve_4qa6s"]
+_data = [Vector2(0, 1), 0.0, -1.01321, 0, 0, Vector2(1, 0), -1.01099, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_laoxs"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.0418848, 0.806283, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 0.15, 0.15, 0.15, 1, 1, 1, 1, 0)
+
+[sub_resource type="GDScript" id="GDScript_610co"]
+resource_name = "Tail"
+script/source = "extends Line2D
+
+var point_queue : Array[Vector2] = []
+@export var combo : int = 0
+
+@onready var player : Player = $\"..\"
+var fake_trail : bool = false
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	var max_length := (combo+1) * 10
+	if (player.state == player.PlayerState.INTER_RED or player.state == player.PlayerState.INTER_GREEN) and not fake_trail :
+		for i in range(0, max_length) :
+			point_queue.push_front(player.global_position + player.base_speed*delta*Vector2.LEFT*(max_length-i-1)/4)
+		fake_trail = true
+	elif not (player.state == player.PlayerState.INTER_RED or player.state == player.PlayerState.INTER_GREEN) :
+		var pos = player.global_position
+		
+		point_queue.push_front(pos)
+		
+		if fake_trail :
+			fake_trail = false
+		
+	if point_queue.size() > max_length :
+		point_queue.pop_back()
+	
+	clear_points()
+	
+	for point in point_queue:
+		add_point(point)
+"
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_s3ucp"]
 animations = [{
@@ -827,6 +1329,56 @@ animations = [{
 "name": &"default",
 "speed": 5.0
 }]
+
+[sub_resource type="Gradient" id="Gradient_iblly"]
+colors = PackedColorArray(1, 0, 0, 1, 1, 1, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0lart"]
+gradient = SubResource("Gradient_iblly")
+use_hdr = true
+
+[sub_resource type="Gradient" id="Gradient_t4au2"]
+offsets = PackedFloat32Array(0, 0.0368098, 0.546012, 0.901841, 0.98773, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 0.950355, 0.950355, 0.950355, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_tct5c"]
+gradient = SubResource("Gradient_t4au2")
+use_hdr = true
+
+[sub_resource type="Curve" id="Curve_hver0"]
+max_value = 100.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 100), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_xubvg"]
+curve = SubResource("Curve_hver0")
+
+[sub_resource type="Curve" id="Curve_dpbdi"]
+_data = [Vector2(0, 0.483516), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_udass"]
+curve = SubResource("Curve_dpbdi")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jyqxj"]
+particle_flag_disable_z = true
+particle_flag_damping_as_friction = true
+spread = 180.0
+initial_velocity_min = 200.0
+initial_velocity_max = 600.0
+linear_accel_min = -200.0
+linear_accel_max = 84.4
+radial_accel_min = -85.4
+radial_accel_max = 88.07
+tangential_accel_min = 100.0
+tangential_accel_max = 600.0
+damping_max = 0.02
+damping_curve = SubResource("CurveTexture_xubvg")
+scale_min = 10.0
+scale_max = 15.0
+scale_curve = SubResource("CurveTexture_udass")
+color_ramp = SubResource("GradientTexture1D_tct5c")
+color_initial_ramp = SubResource("GradientTexture1D_0lart")
 
 [sub_resource type="Gradient" id="Gradient_028eg"]
 
@@ -851,16 +1403,316 @@ shader_parameter/angle = 0.0
 shader_parameter/alpha = 1.0
 shader_parameter/noise = SubResource("NoiseTexture2D_py2uu")
 
+[sub_resource type="Gradient" id="Gradient_xm7ts"]
+interpolation_mode = 2
+interpolation_color_space = 2
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_o0rfb"]
+gradient = SubResource("Gradient_xm7ts")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qdlsi"]
+bg_color = Color(0, 0, 0, 0.392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rt4xs"]
+bg_color = Color(0, 1, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_dvebj"]
+font = ExtResource("13_oh5di")
+font_size = 100
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8dq4k"]
+shader = ExtResource("23_uf38s")
+shader_parameter/ratio = 0.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_idm2k"]
+font = ExtResource("13_oh5di")
+font_size = 500
+
+[sub_resource type="LabelSettings" id="LabelSettings_54aj5"]
+font = ExtResource("13_oh5di")
+font_size = 200
+
+[sub_resource type="LabelSettings" id="LabelSettings_x3db1"]
+font = ExtResource("13_oh5di")
+font_size = 150
+
+[sub_resource type="LabelSettings" id="LabelSettings_8vare"]
+font = ExtResource("13_oh5di")
+font_size = 100
+
+[sub_resource type="Animation" id="Animation_lojpu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BlackScreen:material:shader_parameter/ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("GameOver_Label:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Idiot_Label:visible_ratio")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Score_Label:visible_ratio")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Continue_Label:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("GameOver_Label:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Continue_Label:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("GameOver_Label:visible_ratio")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Continue_Label:visible_ratio")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath(".:retry_available")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_v7stn"]
+resource_name = "game_over"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BlackScreen:material:shader_parameter/ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.1, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("GameOver_Label:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Idiot_Label:visible_ratio")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.5, 2.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 1.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Score_Label:visible_ratio")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 2.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 1.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Continue_Label:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 3.4, 4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("GameOver_Label:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Continue_Label:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(3.4),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("GameOver_Label:visible_ratio")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Continue_Label:visible_ratio")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 3.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 1.0]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath(".:retry_available")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ameh8"]
+_data = {
+"RESET": SubResource("Animation_lojpu"),
+"game_over": SubResource("Animation_v7stn")
+}
+
+[sub_resource type="Environment" id="Environment_t7b4d"]
+glow_enabled = true
+
 [node name="main" type="Node"]
 script = ExtResource("1_hfrkx")
 BackgroundCol = SubResource("Gradient_ncgqo")
+difficulty_density = 2.208
 
 [node name="Background" type="Node2D" parent="."]
 process_mode = 3
+z_index = -2
 script = ExtResource("2_vr5km")
 
 [node name="ColorRect" type="TextureRect" parent="Background"]
 modulate = Color(0.380392, 1, 0.886275, 1)
+material = SubResource("ShaderMaterial_37amp")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -877,7 +1729,7 @@ stretch_mode = 5
 
 [node name="SubViewport" type="SubViewport" parent="Background/ColorRect"]
 handle_input_locally = false
-size = Vector2i(200, 200)
+size = Vector2i(300, 300)
 render_target_update_mode = 4
 
 [node name="terrain" parent="Background/ColorRect/SubViewport" instance=ExtResource("3_2lnbl")]
@@ -906,9 +1758,9 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -1600.0
-offset_top = -450.0
+offset_top = -610.0
 offset_right = 1600.0
-offset_bottom = 450.0
+offset_bottom = 610.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(1600, 450)
@@ -935,7 +1787,6 @@ size_flags_stretch_ratio = 0.5
 theme_override_styles/panel = SubResource("StyleBoxTexture_sy8bl")
 
 [node name="ReferenceRect" type="PanelContainer" parent="Void/Slide"]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -947,6 +1798,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_uor3i")
 script = ExtResource("14_bi13k")
 
 [node name="SpeedLinesRectTop" type="ColorRect" parent="Void/Slide/ReferenceRect"]
@@ -971,7 +1823,8 @@ size_flags_vertical = 3
 script = ExtResource("14_80mxc")
 
 [node name="UI" type="Control" parent="Void/Slide"]
-z_index = 10
+visibility_layer = 3
+z_index = 890
 z_as_relative = false
 layout_mode = 3
 anchors_preset = 15
@@ -994,14 +1847,11 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = -620.0
+offset_bottom = -590.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1e-05, 1e-05)
 pivot_offset = Vector2(650, 150)
 script = SubResource("GDScript_hn8ls")
-alpha = 0.0
-pixelate = 0
 
 [node name="CenterContainer" type="HBoxContainer" parent="Void/Slide/UI/CHECK_IT_UP"]
 use_parent_material = true
@@ -1036,32 +1886,32 @@ horizontal_alignment = 1
 [node name="MotivationLabel_Label" type="Label" parent="Void/Slide/UI"]
 visible = false
 layout_mode = 0
-offset_left = 352.0
+offset_left = 23.0
 offset_top = 792.0
-offset_right = 1252.0
+offset_right = 1581.0
 offset_bottom = 888.0
-text = "CHECK IT UP"
+text = "CHECK IT UP NOW"
 label_settings = SubResource("LabelSettings_064kb")
 horizontal_alignment = 1
 vertical_alignment = 1
+script = SubResource("GDScript_cgkdm")
 
 [node name="LevelEnd_Label" type="Label" parent="Void/Slide/UI"]
-visible = false
 material = SubResource("ShaderMaterial_p0ylt")
 layout_mode = 0
 offset_left = 50.0
 offset_right = 1550.0
 offset_bottom = 288.0
-rotation = 0.785398
-scale = Vector2(10, 10)
 pivot_offset = Vector2(750, 144)
-text = "DUMBASS"
+text = "DUMBASS
+IDIOT FUCKER"
 label_settings = SubResource("LabelSettings_w2473")
 horizontal_alignment = 1
 vertical_alignment = 1
+script = SubResource("GDScript_5qsj1")
 
 [node name="PressRight_Label" type="Label" parent="Void/Slide/UI"]
-modulate = Color(1, 1, 1, 0.86653)
+modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = 832.0
 offset_top = 712.0
@@ -1071,36 +1921,37 @@ theme_override_font_sizes/font_size = 37
 text = "➤  ➤  ➤  ➤  ➤  ➤  ➤  ➤"
 vertical_alignment = 1
 clip_text = true
-visible_characters = 19
-visible_ratio = 0.86653
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="GPUParticles2D_CHECK2" type="GPUParticles2D" parent="Void/Slide/UI"]
+position = Vector2(978, 345)
+rotation = -0.872665
+emitting = false
+amount = 300
+process_material = SubResource("ParticleProcessMaterial_tfwf1")
+one_shot = true
+explosiveness = 1.0
+
+[node name="GPUParticles2D_CHECK1" type="GPUParticles2D" parent="Void/Slide/UI"]
+position = Vector2(800, 520)
+emitting = false
+amount = 200
+process_material = SubResource("ParticleProcessMaterial_tfwf1")
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
 
 [node name="CHECKMARK" type="AnimatedSprite2D" parent="Void/Slide/UI"]
-visible = false
-position = Vector2(800, 520)
+position = Vector2(800, 481)
 scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_ixbic")
 animation = &"CHECK"
-frame = 8
-
-[node name="GPUParticles2D" type="GPUParticles2D" parent="Void/Slide/UI"]
-position = Vector2(800, 520)
-amount = 20
-process_material = SubResource("ParticleProcessMaterial_tfwf1")
-lifetime = 0.5
-explosiveness = 1.0
 
 [node name="AnimationPlayerGlobal" type="AnimationPlayer" parent="Void/Slide/UI"]
 libraries = {
 "": SubResource("AnimationLibrary_8e02g")
 }
-
-[node name="AnimationTree" type="AnimationTree" parent="Void/Slide/UI"]
-active = false
-libraries = {
-"": SubResource("AnimationLibrary_8e02g")
-}
-tree_root = SubResource("AnimationNodeStateMachine_einhv")
-anim_player = NodePath("../AnimationPlayerGlobal")
 
 [node name="World" type="Node2D" parent="."]
 script = ExtResource("2_lgqa5")
@@ -1108,10 +1959,13 @@ script = ExtResource("2_lgqa5")
 [node name="inter" parent="World" instance=ExtResource("2_r6xpu")]
 position = Vector2(0, 750)
 
+[node name="Bonk" parent="World" instance=ExtResource("17_0whm5")]
+position = Vector2(902, 679)
+
 [node name="Player" type="Node2D" parent="."]
 position = Vector2(800, 750)
 script = ExtResource("3_p36vy")
-state = 4
+combo_window = 0.5
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="Player"]
 amount = 50
@@ -1121,8 +1975,27 @@ lifetime = 0.2
 fixed_fps = 200
 local_coords = true
 
+[node name="Tail" type="Line2D" parent="Player"]
+top_level = true
+width = 12.0
+width_curve = SubResource("Curve_4qa6s")
+gradient = SubResource("Gradient_laoxs")
+antialiased = true
+script = SubResource("GDScript_610co")
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
 sprite_frames = SubResource("SpriteFrames_s3ucp")
+
+[node name="DeathParticles" type="GPUParticles2D" parent="Player"]
+emitting = false
+amount = 5000
+process_material = SubResource("ParticleProcessMaterial_jyqxj")
+lifetime = 5.0
+one_shot = true
+explosiveness = 0.95
+randomness = 1.0
+fixed_fps = 60
+trail_lifetime = 0.5
 
 [node name="ShockwaveLayer" type="CanvasLayer" parent="."]
 
@@ -1138,11 +2011,12 @@ enabled = false
 zoom = Vector2(0.1, 0.1)
 
 [node name="EffectsLayer" type="CanvasLayer" parent="Camera2D"]
+layer = 0
 scale = Vector2(0.5, 0.5)
 transform = Transform2D(0.5, 0, 0, 0.5, 0, 0)
 
 [node name="SpeedLinesRect" type="ColorRect" parent="Camera2D/EffectsLayer"]
-visible = false
+visibility_layer = 2
 material = SubResource("ShaderMaterial_jh0xa")
 anchors_preset = 15
 anchor_right = 1.0
@@ -1153,6 +2027,105 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(800, 450)
 
+[node name="ProgressManager" type="MarginContainer" parent="Camera2D"]
+z_index = -1
+offset_left = -800.0
+offset_top = -450.0
+offset_right = 800.0
+offset_bottom = -297.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+script = ExtResource("21_ldkga")
+gradient = SubResource("GradientTexture1D_o0rfb")
+
+[node name="ProgressBar" type="ProgressBar" parent="Camera2D/ProgressManager"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/background = SubResource("StyleBoxFlat_qdlsi")
+theme_override_styles/fill = SubResource("StyleBoxFlat_rt4xs")
+value = 90.0
+show_percentage = false
+
+[node name="CenterContainer" type="CenterContainer" parent="Camera2D/ProgressManager"]
+layout_mode = 2
+
+[node name="TimeLabel" type="Label" parent="Camera2D/ProgressManager/CenterContainer"]
+layout_mode = 2
+text = "2.45"
+label_settings = SubResource("LabelSettings_dvebj")
+
+[node name="GameOverLayer" type="CanvasLayer" parent="Camera2D"]
+layer = 2
+scale = Vector2(0.5, 0.5)
+transform = Transform2D(0.5, 0, 0, 0.5, 0, 0)
+script = ExtResource("23_xxfof")
+
+[node name="BlackScreen" type="ColorRect" parent="Camera2D/GameOverLayer"]
+material = SubResource("ShaderMaterial_8dq4k")
+offset_right = 3200.0
+offset_bottom = 1800.0
+color = Color(0, 0, 0, 1)
+
+[node name="GameOver_Label" type="Label" parent="Camera2D/GameOverLayer"]
+modulate = Color(1, 1, 1, 0)
+offset_right = 3200.0
+offset_bottom = 750.0
+text = "GAMe OVER"
+label_settings = SubResource("LabelSettings_idm2k")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Idiot_Label" type="Label" parent="Camera2D/GameOverLayer"]
+offset_top = 750.0
+offset_right = 3200.0
+offset_bottom = 1074.0
+text = "YOUR PARENTS ARE DISSAPOINTED"
+label_settings = SubResource("LabelSettings_54aj5")
+horizontal_alignment = 1
+vertical_alignment = 1
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Score_Label" type="Label" parent="Camera2D/GameOverLayer"]
+offset_top = 1074.0
+offset_right = 3200.0
+offset_bottom = 1398.0
+text = "YOUR SCORE IS 90."
+label_settings = SubResource("LabelSettings_x3db1")
+horizontal_alignment = 1
+vertical_alignment = 1
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Continue_Label" type="Label" parent="Camera2D/GameOverLayer"]
+modulate = Color(1, 1, 1, 0)
+offset_top = 1398.0
+offset_right = 3200.0
+offset_bottom = 1800.0
+text = "PRESS RIGHT TO RETRY
+PRESS ANYTHING ELSE TO QUIT"
+label_settings = SubResource("LabelSettings_8vare")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera2D/GameOverLayer"]
+libraries = {
+"": SubResource("AnimationLibrary_ameh8")
+}
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -0.81
+autoplay = true
+bus = &"Music"
+script = ExtResource("22_hdhtd")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_t7b4d")
+
 [connection signal="property_list_changed" from="Void/Slide/ReferenceRect/SpeedLinesRectTop" to="Void/Slide/ReferenceRect/SpeedLinesRectTop" method="parameters_changed"]
 [connection signal="property_list_changed" from="Void/Slide/ReferenceRect/SpeedLinesRectMid" to="Void/Slide/ReferenceRect/SpeedLinesRectMid" method="parameters_changed"]
 [connection signal="property_list_changed" from="Void/Slide/ReferenceRect/SpeedLinesRectBottom" to="Void/Slide/ReferenceRect/SpeedLinesRectBottom" method="parameters_changed"]
+[connection signal="finished" from="MusicPlayer" to="MusicPlayer" method="_on_finished"]

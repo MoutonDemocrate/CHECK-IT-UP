@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="TextureArray" load_steps=10 format=3 uid="uid://bwalfu7itvrae"]
+
+[ext_resource type="Script" path="res://scenes/resources/TextureArray.gd" id="1_xdpig"]
+[ext_resource type="Texture2D" uid="uid://t8t540jim4mo" path="res://assets/textures/paths/line_basic.png" id="2_hylso"]
+[ext_resource type="Texture2D" uid="uid://bbjslxq72cmqn" path="res://assets/textures/paths/line_1.png" id="3_48hke"]
+[ext_resource type="Texture2D" uid="uid://f3wnq3n175cd" path="res://assets/textures/paths/line_2.png" id="4_gcw3p"]
+[ext_resource type="Texture2D" uid="uid://duhpipr2tmvnc" path="res://assets/textures/paths/line_3.png" id="5_l1dvb"]
+[ext_resource type="Texture2D" uid="uid://c3gbx1u4et3bo" path="res://assets/textures/paths/line_4.png" id="6_w0a4j"]
+[ext_resource type="Texture2D" uid="uid://dekoma4plp8wa" path="res://assets/textures/paths/line_5.png" id="7_8m6i4"]
+[ext_resource type="Texture2D" uid="uid://b2dy2a3dfxar0" path="res://assets/textures/paths/line_6.png" id="8_m7xl2"]
+[ext_resource type="Texture2D" uid="uid://oc1bquhg8kq1" path="res://assets/textures/paths/line_7.png" id="9_agd8g"]
+
+[resource]
+script = ExtResource("1_xdpig")
+textures = Array[Texture2D]([ExtResource("2_hylso"), ExtResource("3_48hke"), ExtResource("4_gcw3p"), ExtResource("5_l1dvb"), ExtResource("6_w0a4j"), ExtResource("7_8m6i4"), ExtResource("8_m7xl2"), ExtResource("9_agd8g")])
