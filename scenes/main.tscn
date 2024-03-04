@@ -1,4 +1,4 @@
-[gd_scene load_steps=132 format=3 uid="uid://8m6o74ud0t8o"]
+[gd_scene load_steps=133 format=3 uid="uid://8m6o74ud0t8o"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_hfrkx"]
 [ext_resource type="Texture2D" uid="uid://b3uh0body4qu5" path="res://assets/player/default.png" id="1_r7gxw"]
@@ -1691,18 +1691,40 @@ tracks/9/keys = {
 "values": [false, true]
 }
 
+[sub_resource type="Animation" id="Animation_jfesc"]
+resource_name = "on_game_begin"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BlackScreen:material:shader_parameter/ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.1]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ameh8"]
 _data = {
 "RESET": SubResource("Animation_lojpu"),
-"game_over": SubResource("Animation_v7stn")
+"game_over": SubResource("Animation_v7stn"),
+"on_game_begin": SubResource("Animation_jfesc")
 }
 
 [sub_resource type="Environment" id="Environment_t7b4d"]
 glow_enabled = true
 
-[node name="main" type="Node"]
+[node name="main" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_hfrkx")
 BackgroundCol = SubResource("Gradient_ncgqo")
+game_difficulty = null
+leeway_level = null
+level_number = null
 difficulty_density = 2.208
 
 [node name="Background" type="Node2D" parent="."]
@@ -1843,13 +1865,9 @@ script = ExtResource("15_0s21d")
 [node name="CHECK_IT_UP" type="CenterContainer" parent="Void/Slide/UI"]
 texture_filter = 1
 material = SubResource("ShaderMaterial_tg0f7")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = -590.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+offset_right = 1600.0
+offset_bottom = 300.0
 pivot_offset = Vector2(650, 150)
 script = SubResource("GDScript_hn8ls")
 
@@ -2115,6 +2133,7 @@ vertical_alignment = 1
 libraries = {
 "": SubResource("AnimationLibrary_ameh8")
 }
+autoplay = "on_game_begin"
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 volume_db = -0.81

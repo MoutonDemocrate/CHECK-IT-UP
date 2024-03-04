@@ -1,4 +1,4 @@
-extends Node
+extends Control
 
 @export var BackgroundCol : Gradient
 @export var game_difficulty : int = 0

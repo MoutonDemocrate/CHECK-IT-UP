@@ -1,6 +1,21 @@
-[gd_scene load_steps=7 format=3 uid="uid://dqhfrd4ov3ii4"]
+[gd_scene load_steps=8 format=3 uid="uid://dqhfrd4ov3ii4"]
 
 [ext_resource type="FontFile" uid="uid://bgkhf3ustndfv" path="res://assets/fonts/theyrecomingtotakemeaway.ttf" id="1_xvtq7"]
+
+[sub_resource type="GDScript" id="GDScript_0q4n5"]
+resource_name = "Controls"
+script/source = "extends Control
+
+@onready var AnimPlayer : AnimationPlayer = $VBoxContainer/AnimationPlayer
+
+func _ready():
+	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+	AnimPlayer.play(\"rules\")
+
+func out() -> void:
+	print(\"TRANSITIONING TO GAMEPLAY...\")
+	Transition.transition(\"res://scenes/main.tscn\",2.0,0.0)
+"
 
 [sub_resource type="LabelSettings" id="LabelSettings_nuk5f"]
 font = ExtResource("1_xvtq7")
@@ -45,13 +60,13 @@ tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
+"update": 0,
 "values": [0]
 }
 
 [sub_resource type="Animation" id="Animation_t8xan"]
 resource_name = "rules"
-length = 5.5
+length = 6.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -59,7 +74,7 @@ tracks/0/path = NodePath("Directions:visible_ratio")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(2.14577, 2.94577),
+"times": PackedFloat32Array(0.5, 1.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.0, 1.0]
@@ -71,7 +86,7 @@ tracks/1/path = NodePath("Score:visible_ratio")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(2.14577, 4.14577, 4.94577),
+"times": PackedFloat32Array(0.5, 2.5, 3.3),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.0, 1.0]
@@ -83,10 +98,24 @@ tracks/2/path = NodePath("CheckItUp:visible_characters")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(2.14577, 6.14577, 6.39577, 6.84577, 6.94577, 7.44577, 7.64577),
+"times": PackedFloat32Array(0.5, 4.5, 4.8, 5.2, 5.3, 5.8, 6),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [0, 0, 6, 6, 10, 10, 14]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("..")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(6.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"out"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3nsv3"]
@@ -102,6 +131,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = SubResource("GDScript_0q4n5")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1

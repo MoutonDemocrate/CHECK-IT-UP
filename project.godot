@@ -11,12 +11,17 @@ config_version=5
 [application]
 
 config/name="CHECK IT UP"
-run/main_scene="res://scenes/main.tscn"
+config/version="1.0"
+run/main_scene="res://scenes/Controls.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/image="res://assets/textures/ui/logo/check_it_up_logo.png"
 boot_splash/use_filter=false
 config/icon="res://icon.png"
+
+[autoload]
+
+Transition="*res://scenes/Transition.tscn"
 
 [display]
 
