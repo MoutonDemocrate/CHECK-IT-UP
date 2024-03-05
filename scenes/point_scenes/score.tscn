@@ -1,0 +1,63 @@
+[gd_scene load_steps=5 format=3 uid="uid://2hmb7stqifxh"]
+
+[ext_resource type="FontFile" uid="uid://bgkhf3ustndfv" path="res://assets/fonts/theyrecomingtotakemeaway.ttf" id="1_ngjfo"]
+
+[sub_resource type="GDScript" id="GDScript_m6icp"]
+resource_name = "Score"
+script/source = "@tool
+extends HBoxContainer
+class_name Score
+
+@export_range(0,10000000) var rank : int = 0
+@export var playerName : String = \"\"
+@export_range(0,99999) var score : int = 0
+
+@onready var RankLabel : Label = $RankLabel
+@onready var NameLabel : Label = $NameLabel
+@onready var ScoreLabel : Label = $ScoreLabel
+
+func _ready() -> void:
+	update()
+
+func update() -> void:
+	RankLabel.text = \"#\" + str(rank)
+	NameLabel.text = playerName.to_upper()
+	ScoreLabel.text = \"%05d\" % score
+
+"
+
+[sub_resource type="LabelSettings" id="LabelSettings_hik1l"]
+font = ExtResource("1_ngjfo")
+font_size = 75
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kjysp"]
+
+[node name="Score" type="HBoxContainer"]
+script = SubResource("GDScript_m6icp")
+
+[node name="RankLabel" type="Label" parent="."]
+layout_mode = 2
+text = "#1"
+label_settings = SubResource("LabelSettings_hik1l")
+
+[node name="VSeparator" type="VSeparator" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 80
+theme_override_styles/separator = SubResource("StyleBoxEmpty_kjysp")
+
+[node name="NameLabel" type="Label" parent="."]
+layout_mode = 2
+text = "LAÉRIAN"
+label_settings = SubResource("LabelSettings_hik1l")
+
+[node name="VSeparator2" type="VSeparator" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 80
+theme_override_styles/separator = SubResource("StyleBoxEmpty_kjysp")
+
+[node name="ScoreLabel" type="Label" parent="."]
+layout_mode = 2
+text = "00022"
+label_settings = SubResource("LabelSettings_hik1l")

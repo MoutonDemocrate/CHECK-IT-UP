@@ -1,0 +1,458 @@
+[gd_scene load_steps=22 format=3 uid="uid://bdr8tg0p6p6g5"]
+
+[ext_resource type="Script" path="res://scenes/score_enter.gd" id="1_eucob"]
+[ext_resource type="FontFile" uid="uid://bgkhf3ustndfv" path="res://assets/fonts/theyrecomingtotakemeaway.ttf" id="1_ppebo"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gitt8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_btuxn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pesm7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_npvx1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1leym"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wgigs"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ww68k"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_imm7a"]
+font = ExtResource("1_ppebo")
+font_size = 100
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4q6ig"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 15
+border_width_top = 15
+border_width_right = 15
+border_width_bottom = 15
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_24umx"]
+font = ExtResource("1_ppebo")
+font_size = 150
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wmy2w"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_t4omg"]
+font = ExtResource("1_ppebo")
+font_size = 75
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mcyin"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_5ix6o"]
+font = ExtResource("1_ppebo")
+font_size = 75
+
+[sub_resource type="Gradient" id="Gradient_b11sc"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0.0324675, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_kwns3"]
+gradient = SubResource("Gradient_b11sc")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="Gradient" id="Gradient_0tec0"]
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hob5h"]
+gradient = SubResource("Gradient_0tec0")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_400w0"]
+font = ExtResource("1_ppebo")
+font_size = 50
+
+[node name="ScoreEnter" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_eucob")
+
+[node name="TabContainer" type="TabContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/tab_selected = SubResource("StyleBoxEmpty_gitt8")
+theme_override_styles/tab_hovered = SubResource("StyleBoxEmpty_btuxn")
+theme_override_styles/tab_unselected = SubResource("StyleBoxEmpty_pesm7")
+theme_override_styles/tab_disabled = SubResource("StyleBoxEmpty_npvx1")
+theme_override_styles/tab_focus = SubResource("StyleBoxEmpty_1leym")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_wgigs")
+theme_override_styles/tabbar_background = SubResource("StyleBoxEmpty_ww68k")
+current_tab = 1
+tabs_visible = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="TabContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+text = "ENTER YOUR NAME, LOSER"
+label_settings = SubResource("LabelSettings_imm7a")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 30
+
+[node name="HBoxName" type="HBoxContainer" parent="TabContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Panel1" type="PanelContainer" parent="TabContainer/VBoxContainer/VBoxContainer/HBoxName"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_4q6ig")
+
+[node name="Label1" type="Label" parent="TabContainer/VBoxContainer/VBoxContainer/HBoxName/Panel1"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+label_settings = SubResource("LabelSettings_24umx")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel2" type="PanelContainer" parent="TabContainer/VBoxContainer/VBoxContainer/HBoxName"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_4q6ig")
+
+[node name="Label1" type="Label" parent="TabContainer/VBoxContainer/VBoxContainer/HBoxName/Panel2"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+label_settings = SubResource("LabelSettings_24umx")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel3" type="PanelContainer" parent="TabContainer/VBoxContainer/VBoxContainer/HBoxName"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_4q6ig")
+
+[node name="Label1" type="Label" parent="TabContainer/VBoxContainer/VBoxContainer/HBoxName/Panel3"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+label_settings = SubResource("LabelSettings_24umx")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel4" type="PanelContainer" parent="TabContainer/VBoxContainer/VBoxContainer/HBoxName"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_4q6ig")
+
+[node name="Label1" type="Label" parent="TabContainer/VBoxContainer/VBoxContainer/HBoxName/Panel4"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+label_settings = SubResource("LabelSettings_24umx")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel5" type="PanelContainer" parent="TabContainer/VBoxContainer/VBoxContainer/HBoxName"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_4q6ig")
+
+[node name="Label1" type="Label" parent="TabContainer/VBoxContainer/VBoxContainer/HBoxName/Panel5"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+label_settings = SubResource("LabelSettings_24umx")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel6" type="PanelContainer" parent="TabContainer/VBoxContainer/VBoxContainer/HBoxName"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_4q6ig")
+
+[node name="Label1" type="Label" parent="TabContainer/VBoxContainer/VBoxContainer/HBoxName/Panel6"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+label_settings = SubResource("LabelSettings_24umx")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel7" type="PanelContainer" parent="TabContainer/VBoxContainer/VBoxContainer/HBoxName"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_4q6ig")
+
+[node name="Label1" type="Label" parent="TabContainer/VBoxContainer/VBoxContainer/HBoxName/Panel7"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+label_settings = SubResource("LabelSettings_24umx")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel8" type="PanelContainer" parent="TabContainer/VBoxContainer/VBoxContainer/HBoxName"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_4q6ig")
+
+[node name="Label1" type="Label" parent="TabContainer/VBoxContainer/VBoxContainer/HBoxName/Panel8"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+label_settings = SubResource("LabelSettings_24umx")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel9" type="PanelContainer" parent="TabContainer/VBoxContainer/VBoxContainer/HBoxName"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_4q6ig")
+
+[node name="Label1" type="Label" parent="TabContainer/VBoxContainer/VBoxContainer/HBoxName/Panel9"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+label_settings = SubResource("LabelSettings_24umx")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel10" type="PanelContainer" parent="TabContainer/VBoxContainer/VBoxContainer/HBoxName"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_4q6ig")
+
+[node name="Label1" type="Label" parent="TabContainer/VBoxContainer/VBoxContainer/HBoxName/Panel10"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+label_settings = SubResource("LabelSettings_24umx")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxSelect" type="HBoxContainer" parent="TabContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VSeparator" type="VSeparator" parent="TabContainer/VBoxContainer/VBoxContainer/HBoxSelect"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/separator = SubResource("StyleBoxEmpty_wmy2w")
+
+[node name="SelectPanel" type="PanelContainer" parent="TabContainer/VBoxContainer/VBoxContainer/HBoxSelect"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_4q6ig")
+
+[node name="Label" type="Label" parent="TabContainer/VBoxContainer/VBoxContainer/HBoxSelect/SelectPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+label_settings = SubResource("LabelSettings_24umx")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSeparator2" type="VSeparator" parent="TabContainer/VBoxContainer/VBoxContainer/HBoxSelect"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/separator = SubResource("StyleBoxEmpty_wmy2w")
+
+[node name="InstructionsLabel" type="Label" parent="TabContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+text = "USE LEFT/RIGHT TO SELECT
+UP TO CONFIRM, DOWN TO DELETE
+ONCE YOU'RE DONE, SELECT ☑"
+label_settings = SubResource("LabelSettings_t4omg")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxScoreboard" type="VBoxContainer" parent="TabContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="TabContainer/VBoxScoreboard"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_bottom = 30
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/VBoxScoreboard/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="VBoxScores" type="VBoxContainer" parent="TabContainer/VBoxScoreboard/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HSeparator" type="HSeparator" parent="TabContainer/VBoxScoreboard/MarginContainer/ScrollContainer/VBoxScores"]
+layout_mode = 2
+theme_override_constants/separation = 75
+theme_override_styles/separator = SubResource("StyleBoxEmpty_mcyin")
+
+[node name="DummyLabel" type="Label" parent="TabContainer/VBoxScoreboard/MarginContainer/ScrollContainer/VBoxScores"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+text = "#1   LAÉRIAN   00022"
+label_settings = SubResource("LabelSettings_5ix6o")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DummyLabel2" type="Label" parent="TabContainer/VBoxScoreboard/MarginContainer/ScrollContainer/VBoxScores"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+text = "#1   LAÉRIAN   00022"
+label_settings = SubResource("LabelSettings_5ix6o")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DummyLabel3" type="Label" parent="TabContainer/VBoxScoreboard/MarginContainer/ScrollContainer/VBoxScores"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+text = "#1   LAÉRIAN   00022"
+label_settings = SubResource("LabelSettings_5ix6o")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DummyLabel4" type="Label" parent="TabContainer/VBoxScoreboard/MarginContainer/ScrollContainer/VBoxScores"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+text = "#1   LAÉRIAN   00022"
+label_settings = SubResource("LabelSettings_5ix6o")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DummyLabel5" type="Label" parent="TabContainer/VBoxScoreboard/MarginContainer/ScrollContainer/VBoxScores"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+text = "#1   LAÉRIAN   00022"
+label_settings = SubResource("LabelSettings_5ix6o")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DummyLabel6" type="Label" parent="TabContainer/VBoxScoreboard/MarginContainer/ScrollContainer/VBoxScores"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+text = "#1   LAÉRIAN   00022"
+label_settings = SubResource("LabelSettings_5ix6o")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DummyLabel7" type="Label" parent="TabContainer/VBoxScoreboard/MarginContainer/ScrollContainer/VBoxScores"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+text = "#1   LAÉRIAN   00022"
+label_settings = SubResource("LabelSettings_5ix6o")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DummyLabel8" type="Label" parent="TabContainer/VBoxScoreboard/MarginContainer/ScrollContainer/VBoxScores"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+text = "#1   LAÉRIAN   00022"
+label_settings = SubResource("LabelSettings_5ix6o")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DummyLabel9" type="Label" parent="TabContainer/VBoxScoreboard/MarginContainer/ScrollContainer/VBoxScores"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+text = "#1   LAÉRIAN   00022"
+label_settings = SubResource("LabelSettings_5ix6o")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DummyLabel10" type="Label" parent="TabContainer/VBoxScoreboard/MarginContainer/ScrollContainer/VBoxScores"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+text = "#1   LAÉRIAN   00022"
+label_settings = SubResource("LabelSettings_5ix6o")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DummyLabel11" type="Label" parent="TabContainer/VBoxScoreboard/MarginContainer/ScrollContainer/VBoxScores"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+text = "#1   LAÉRIAN   00022"
+label_settings = SubResource("LabelSettings_5ix6o")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DummyLabel12" type="Label" parent="TabContainer/VBoxScoreboard/MarginContainer/ScrollContainer/VBoxScores"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+text = "#1   LAÉRIAN   00022"
+label_settings = SubResource("LabelSettings_5ix6o")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DummyLabel13" type="Label" parent="TabContainer/VBoxScoreboard/MarginContainer/ScrollContainer/VBoxScores"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+text = "#1   LAÉRIAN   00022"
+label_settings = SubResource("LabelSettings_5ix6o")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DummyLabel14" type="Label" parent="TabContainer/VBoxScoreboard/MarginContainer/ScrollContainer/VBoxScores"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+text = "#1   LAÉRIAN   00022"
+label_settings = SubResource("LabelSettings_5ix6o")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRectDown" type="TextureRect" parent="TabContainer/VBoxScoreboard/MarginContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_vertical = 8
+texture = SubResource("GradientTexture2D_kwns3")
+
+[node name="TextureRectUp" type="TextureRect" parent="TabContainer/VBoxScoreboard/MarginContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_vertical = 0
+texture = SubResource("GradientTexture2D_hob5h")
+
+[node name="Continue_Label" type="Label" parent="TabContainer/VBoxScoreboard"]
+layout_mode = 2
+text = "PRESS RIGHT TO RETRY
+PRESS ANYTHING ELSE TO QUIT"
+label_settings = SubResource("LabelSettings_400w0")
+horizontal_alignment = 1
+vertical_alignment = 1
