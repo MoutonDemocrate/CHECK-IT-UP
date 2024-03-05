@@ -9,6 +9,7 @@ script/source = "extends Control
 @onready var AnimPlayer : AnimationPlayer = $VBoxContainer/AnimationPlayer
 
 func _ready():
+	GlobalData.current_score = 0
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	AnimPlayer.play(\"rules\")
 
@@ -179,3 +180,4 @@ visible_ratio = 0.0
 libraries = {
 "": SubResource("AnimationLibrary_3nsv3")
 }
+speed_scale = 2.0

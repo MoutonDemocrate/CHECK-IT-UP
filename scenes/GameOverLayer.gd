@@ -5,7 +5,7 @@ extends CanvasLayer
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void :
 	for child in get_children():
-		if child is ColorRect :
+		if child.name == "BlackScreen" :
 			child.material.set_shader_parameter("ratio",0)
 		elif child is Label :
 			child.visible_ratio = 0.0
@@ -17,15 +17,20 @@ func update_labels() -> void :
 
 func activate() -> void :
 	update_labels()
+	GlobalData.current_score = $"../..".level_number
 	$AnimationPlayer.play("game_over")
 
-func _input(event : InputEvent):
+func to_the_score_board() -> void :
+	Transition.transition("res://scenes/score_enter.tscn",0.5,0.0)
+
+func _input(event : InputEvent) -> void :
 	if retry_available :
-		if event.is_action_pressed("down") or event.is_action_pressed("up")or event.is_action_pressed("left"):
-			print("PRESSED : NOT RIGHT. QUITTING...")
-			retry_available = false
+		if event.is_action_pressed("left") :
 			get_tree().quit()
-		if event.is_action_pressed("right"):
-			print("PRESSED : RIGHT. RETRYING.")
-			retry_available = false
-			Transition.transition("res://scenes/Controls.tscn",1.0,0.0)
+		elif event.is_action_pressed("right") :
+			to_the_score_board()
+		elif event.is_action_pressed("up") :
+			GlobalData.going_to_scoreboard = true
+			to_the_score_board()
+		elif event.is_action_pressed("down") :
+			Transition.transition("res://scenes/Controls.tscn",0.5,0.0)

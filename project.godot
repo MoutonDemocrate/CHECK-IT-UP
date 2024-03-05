@@ -22,6 +22,7 @@ config/icon="res://icon.png"
 [autoload]
 
 Transition="*res://scenes/Transition.tscn"
+GlobalData="*res://scenes/GlobalData.gd"
 
 [display]
 
