@@ -1,4 +1,4 @@
-[gd_scene load_steps=136 format=3 uid="uid://8m6o74ud0t8o"]
+[gd_scene load_steps=139 format=3 uid="uid://8m6o74ud0t8o"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_hfrkx"]
 [ext_resource type="Texture2D" uid="uid://b3uh0body4qu5" path="res://assets/player/default.png" id="1_r7gxw"]
@@ -27,6 +27,8 @@
 [ext_resource type="Script" path="res://scenes/MusicPlayer.gd" id="22_hdhtd"]
 [ext_resource type="Shader" path="res://assets/shaders/black_screen.gdshader" id="23_uf38s"]
 [ext_resource type="Script" path="res://scenes/GameOverLayer.gd" id="23_xxfof"]
+[ext_resource type="AudioStream" uid="uid://dxiavexfkyylr" path="res://assets/sounds/music/KICK_CHECK_final_-001.wav" id="27_3j8hc"]
+[ext_resource type="AudioStream" uid="uid://dxj20he1ffdsv" path="res://assets/sounds/music/KICK_CHECK_final_-002.wav" id="28_qptp7"]
 
 [sub_resource type="Gradient" id="Gradient_ncgqo"]
 colors = PackedColorArray(0, 0.25, 0.225, 1, 0.39, 1, 0.928833, 1)
@@ -1684,6 +1686,17 @@ _data = {
 "on_game_begin": SubResource("Animation_jfesc")
 }
 
+[sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_syfh0"]
+clip_count = 2
+clip_0/name = &"Kick Check Final -001"
+clip_0/stream = ExtResource("27_3j8hc")
+clip_0/auto_advance = 1
+clip_0/next_clip = 0
+clip_1/name = &"Kick Check Final -002"
+clip_1/stream = ExtResource("28_qptp7")
+clip_1/auto_advance = 1
+clip_1/next_clip = 1
+
 [sub_resource type="Environment" id="Environment_t7b4d"]
 glow_enabled = true
 
@@ -2094,15 +2107,15 @@ visible_characters = 0
 visible_ratio = 0.0
 
 [node name="Input_Label" type="Label" parent="Camera2D/GameOverLayer"]
+offset_left = 976.0
 offset_top = 1410.0
-offset_right = 3200.0
+offset_right = 2224.0
 offset_bottom = 1800.0
-text = "PRESS LEFT TO QUIT
-PRESS RIGHT TO ADD YOUR NAME TO THE SCOREBOARD
-PRESS UP TO JUST SEE THE SCOREBOARD
-PRESS DOWN TO RETRY IMMEDIATELY"
+text = "⬆  SEE THE SCOREBOARD
+⬅  QUIT GAME, like a COWArD
+➡  ADD YOUR NAME TO THE SCOREBOARD
+⬇  RETRY! AND LOSE AGAIN."
 label_settings = SubResource("LabelSettings_os6qj")
-horizontal_alignment = 1
 vertical_alignment = 1
 visible_characters = 0
 visible_ratio = 0.0
@@ -2114,6 +2127,7 @@ libraries = {
 autoplay = "on_game_begin"
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamInteractive_syfh0")
 volume_db = -0.81
 autoplay = true
 bus = &"Music"

@@ -46,12 +46,12 @@ label_settings = SubResource("LabelSettings_hik1l")
 
 [node name="VSeparator3" type="VSeparator" parent="."]
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 4
 theme_override_constants/separation = 80
 theme_override_styles/separator = SubResource("StyleBoxEmpty_kjysp")
 
 [node name="DateLabel" type="Label" parent="."]
 layout_mode = 2
 size_flags_horizontal = 8
-text = "00000"
+text = "??/??/2024"
 label_settings = SubResource("LabelSettings_hik1l")

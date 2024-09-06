@@ -105,7 +105,7 @@ func input_score_board(event : InputEvent) -> void :
 	elif event.get_action_strength("left") >= 0.9 :
 		print("DIDN'T PRESS RIGHT : DIE.")
 		get_tree().quit()
-	elif event.is_action_pressed("up") or event.is_action_pressed("down"):
+	elif event.get_action_strength("up") >= 0.9 or event.get_action_strength("down") >= 0.9:
 		var tween := create_tween()
 		if event.get_action_strength("up") >= 0.9 :
 			tween.tween_property(Scroller,"scroll_vertical",clamp(Scroller.scroll_vertical + 75*3,0,VBoxScores.size.y),1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
@@ -118,7 +118,7 @@ func update_scoreboard_version(path : String, version : String) -> void :
 	for score : Resource in old_scoreboard.scores :
 		var new_score : Score = Score.new()
 		new_score.player_name = score.player_name
-		new_score.score = score.score if old_scoreboard.version == "1" and score.score <= 40 else score.score*1000
+		new_score.score = score.score if old_scoreboard.version == "1" and score.score <= 40 else score.score*2000
 		var date : PackedStringArray = Time.get_date_string_from_system().split("-")
 		new_scoreboard.add_score(new_score)
 		new_scoreboard.version = "2"
