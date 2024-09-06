@@ -2,6 +2,7 @@ extends Resource
 class_name ScoreBoard
 
 @export var scores : Array[Score]
+@export var version : String = "1"
 
 func add_score(new_score : Score) -> void :
 	print("Adding score...")

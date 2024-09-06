@@ -1,4 +1,4 @@
-[gd_scene load_steps=133 format=3 uid="uid://8m6o74ud0t8o"]
+[gd_scene load_steps=136 format=3 uid="uid://8m6o74ud0t8o"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_hfrkx"]
 [ext_resource type="Texture2D" uid="uid://b3uh0body4qu5" path="res://assets/player/default.png" id="1_r7gxw"]
@@ -10,6 +10,8 @@
 [ext_resource type="Script" path="res://scenes/player.gd" id="3_p36vy"]
 [ext_resource type="Script" path="res://scenes/CameraScript.gd" id="4_tdvwj"]
 [ext_resource type="Shader" path="res://assets/shaders/stars.gdshader" id="5_bgvg7"]
+[ext_resource type="PackedScene" uid="uid://f6wm525yri50" path="res://assets/models/cube.blend" id="5_sffi4"]
+[ext_resource type="Shader" path="res://assets/models/terrain.gdshader" id="6_ov1iw"]
 [ext_resource type="Shader" path="res://assets/shaders/speed_lines.gdshader" id="7_ivdtm"]
 [ext_resource type="Script" path="res://scenes/Void.gd" id="13_7a4jl"]
 [ext_resource type="Shader" path="res://assets/shaders/blur.gdshader" id="13_fixur"]
@@ -43,6 +45,11 @@ shader_parameter/gradient = SubResource("GradientTexture1D_w82rt")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_r3o2h"]
 viewport_path = NodePath("Background/ColorRect/SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rnftr"]
+render_priority = 0
+shader = ExtResource("6_ov1iw")
+shader_parameter/test_vec = null
 
 [sub_resource type="Environment" id="Environment_ts1jf"]
 background_energy_multiplier = 0.0
@@ -1685,9 +1692,6 @@ layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_hfrkx")
 BackgroundCol = SubResource("Gradient_ncgqo")
-game_difficulty = null
-leeway_level = null
-level_number = null
 difficulty_density = 2.208
 
 [node name="Background" type="Node2D" parent="."]
@@ -1720,6 +1724,13 @@ render_target_update_mode = 4
 [node name="terrain" parent="Background/ColorRect/SubViewport" instance=ExtResource("3_2lnbl")]
 
 [node name="CameraPivot" type="Node3D" parent="Background/ColorRect/SubViewport"]
+
+[node name="cube" parent="Background/ColorRect/SubViewport/CameraPivot" instance=ExtResource("5_sffi4")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 1.95489, 0)
+
+[node name="Cube" parent="Background/ColorRect/SubViewport/CameraPivot/cube" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.019, 0)
+surface_material_override/0 = SubResource("ShaderMaterial_rnftr")
 
 [node name="Camera3D" type="Camera3D" parent="Background/ColorRect/SubViewport/CameraPivot"]
 transform = Transform3D(1, -8.35189e-23, -4.37114e-08, 4.37114e-08, 1.91069e-15, 1, 0, -1, 1.91069e-15, 0, 4, 0)
@@ -2115,3 +2126,5 @@ environment = SubResource("Environment_t7b4d")
 [connection signal="property_list_changed" from="Void/Slide/ReferenceRect/SpeedLinesRectMid" to="Void/Slide/ReferenceRect/SpeedLinesRectMid" method="parameters_changed"]
 [connection signal="property_list_changed" from="Void/Slide/ReferenceRect/SpeedLinesRectBottom" to="Void/Slide/ReferenceRect/SpeedLinesRectBottom" method="parameters_changed"]
 [connection signal="finished" from="MusicPlayer" to="MusicPlayer" method="_on_finished"]
+
+[editable path="Background/ColorRect/SubViewport/CameraPivot/cube"]

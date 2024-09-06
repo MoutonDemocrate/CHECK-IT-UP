@@ -22,10 +22,15 @@ func _ready() -> void:
 	if not FileAccess.file_exists("user://scoreboard.tres") :
 		var scoreboard = ScoreBoard.new()
 		var score = Score.new()
-		score.score = 22
+		score.score = 44000
 		score.player_name = "MoutonDMCR"
+		score.date = ""
 		scoreboard.add_score(score)
 		ResourceSaver.save(scoreboard, "user://scoreboard.tres")
+	else :
+		var scoreboard : ScoreBoard = load("user://scoreboard.tres")
+		if scoreboard.version == "1" :
+			update_scoreboard_version("user://scoreboard.tres", "2")
 	
 	if GlobalData.going_to_scoreboard :
 		GlobalData.going_to_scoreboard = false
@@ -39,7 +44,7 @@ func _input(event : InputEvent):
 		input_score_board(event)
 
 func input_name_enter(event : InputEvent) -> void :
-	if event.is_action_pressed("up") :
+	if event.get_action_strength("up") >= 0.9 :
 		if char_list[select_index] == "☑":
 			name_entered()
 			return
@@ -48,15 +53,15 @@ func input_name_enter(event : InputEvent) -> void :
 			playerName[10] = ''
 		update_name()
 	
-	if event.is_action_pressed("down") :
+	if event.get_action_strength("down") >= 0.9 :
 		if playerName != "":
 			playerName = playerName.left(playerName.length()-1)
 		update_name()
 	
 	if event.is_action_pressed("left") or event.is_action_pressed("right") :
-		if event.is_action_pressed("left") :
+		if event.get_action_strength("left") >= 0.9 :
 			select_index = (select_index - 1) % char_list.length()
-		if event.is_action_pressed("right") :
+		if event.get_action_strength("right") >= 0.9 :
 			select_index = (select_index + 1) % char_list.length()
 		SelectLabel.text = char_list[select_index]
 
@@ -89,19 +94,32 @@ func fill_scores() -> void:
 		ScoreLabel.rank = i + 1
 		ScoreLabel.playerName = score.player_name
 		ScoreLabel.score = score.score
+		ScoreLabel.date = score.date
 		VBoxScores.add_child(ScoreLabel)
 		ScoreLabel.update()
 
 func input_score_board(event : InputEvent) -> void :
-	if event.is_action_pressed("right") :
+	if event.get_action_strength("right") >= 0.9 :
 		print("PRESSED RIGHT ! ANOTHER ROUND IT IS.")
 		Transition.transition("res://scenes/Controls.tscn",1.0,0.0)
-	elif event.is_action_pressed("left"):
+	elif event.get_action_strength("left") >= 0.9 :
 		print("DIDN'T PRESS RIGHT : DIE.")
 		get_tree().quit()
 	elif event.is_action_pressed("up") or event.is_action_pressed("down"):
 		var tween := create_tween()
-		if event.is_action_pressed("up") :
+		if event.get_action_strength("up") >= 0.9 :
 			tween.tween_property(Scroller,"scroll_vertical",clamp(Scroller.scroll_vertical + 75*3,0,VBoxScores.size.y),1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
-		if event.is_action_pressed("down") :
+		if event.get_action_strength("down") >= 0.9 :
 			tween.tween_property(Scroller,"scroll_vertical",clamp(Scroller.scroll_vertical - 75*3,0,VBoxScores.size.y),1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+
+func update_scoreboard_version(path : String, version : String) -> void :
+	var old_scoreboard : Resource = load(path)
+	var new_scoreboard : ScoreBoard = ScoreBoard.new()
+	for score : Resource in old_scoreboard.scores :
+		var new_score : Score = Score.new()
+		new_score.player_name = score.player_name
+		new_score.score = score.score if old_scoreboard.version == "1" and score.score <= 40 else score.score*1000
+		var date : PackedStringArray = Time.get_date_string_from_system().split("-")
+		new_scoreboard.add_score(new_score)
+		new_scoreboard.version = "2"
+	ResourceSaver.save(new_scoreboard, path)

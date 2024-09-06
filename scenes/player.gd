@@ -1,6 +1,9 @@
 class_name Player
 extends Node2D
 
+@onready var progress_manager : ProgressManager = $"../Camera2D/ProgressManager"
+@onready var background : Background = $"../Background"
+
 ## Base speed of the player
 @export var base_speed : float = 3000.0
 ## Speed bonus gained per combo level
@@ -31,6 +34,8 @@ enum PlayerState {GOING, GOING_LAST_NODE, CORNER, INTER_RED, INTER_GREEN, INTER_
 var corner_timer : float = 0.0
 
 @onready var speed := base_speed
+
+var cube_index := 0
 
 func _ready():
 	first_node.connect($"../World"._hide_inter)
@@ -129,12 +134,17 @@ func _physics_process(_delta):
 				$"../Camera2D"._sl_set_angle(direction)
 				$"../Camera2D"._sl_appear()
 				
+				background.cube_impulse([Vector3(1,0,0),Vector3(0,1,0),Vector3(0,0,1)][cube_index], 25.0*[1,-1][int(float(cube_index)/3.0*2.0)])
+				cube_index = wrap(cube_index + 1, 0, 3)
+				
 				if corner_timer <= combo_window :
 					add_combo()
 				
 				corner_timer = 0.0
 				
 				if node - 1 == level_nodes_count :
+					progress_manager.stop()
+					GlobalData.current_score += 100 * clampf(progress_manager.time_left / (progress_manager.total_time/2), 0, 1)
 					$"../Camera2D".follow_player = true
 					$"../Camera2D"._lerp_zoom(1.0)
 					reset_combo(true)

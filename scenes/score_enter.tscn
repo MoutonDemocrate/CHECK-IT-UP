@@ -3,19 +3,19 @@
 [ext_resource type="Script" path="res://scenes/score_enter.gd" id="1_eucob"]
 [ext_resource type="FontFile" uid="uid://bgkhf3ustndfv" path="res://assets/fonts/theyrecomingtotakemeaway.ttf" id="1_ppebo"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1leym"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_npvx1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ww68k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wgigs"]
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gitt8"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_btuxn"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pesm7"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_npvx1"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1leym"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wgigs"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ww68k"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_imm7a"]
 font = ExtResource("1_ppebo")
@@ -97,13 +97,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/tab_focus = SubResource("StyleBoxEmpty_1leym")
+theme_override_styles/tab_disabled = SubResource("StyleBoxEmpty_npvx1")
+theme_override_styles/tabbar_background = SubResource("StyleBoxEmpty_ww68k")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_wgigs")
 theme_override_styles/tab_selected = SubResource("StyleBoxEmpty_gitt8")
 theme_override_styles/tab_hovered = SubResource("StyleBoxEmpty_btuxn")
 theme_override_styles/tab_unselected = SubResource("StyleBoxEmpty_pesm7")
-theme_override_styles/tab_disabled = SubResource("StyleBoxEmpty_npvx1")
-theme_override_styles/tab_focus = SubResource("StyleBoxEmpty_1leym")
-theme_override_styles/panel = SubResource("StyleBoxEmpty_wgigs")
-theme_override_styles/tabbar_background = SubResource("StyleBoxEmpty_ww68k")
 current_tab = 2
 tabs_visible = false
 
@@ -111,6 +111,7 @@ tabs_visible = false
 visible = false
 layout_mode = 2
 theme_override_constants/separation = 10
+metadata/_tab_index = 0
 
 [node name="Label" type="Label" parent="TabContainer/VBoxContainer"]
 layout_mode = 2
@@ -303,9 +304,11 @@ text = "SAVING..."
 label_settings = SubResource("LabelSettings_xrol7")
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_tab_index = 1
 
 [node name="VBoxScoreboard" type="VBoxContainer" parent="TabContainer"]
 layout_mode = 2
+metadata/_tab_index = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="TabContainer/VBoxScoreboard"]
 layout_mode = 2

@@ -11,27 +11,10 @@ var pos_node : Vector2
 
 func _ready():
 	
-	print(\"TESTING RIGHT\")
-	pos_player = Vector2(3,0)
-	direction = Vector2.RIGHT
-	pos_node = Vector2(5,0)
-	print(\"1    \",_calc_if_ahead(), \" : false\")
-	pos_player = Vector2(7,0)
-	print(\"2    \",_calc_if_ahead(), \" : true\")
-	
-	print(\"TESTING LEFT\")
-	pos_player = Vector2(7,0)
-	direction = Vector2.LEFT
-	pos_node = Vector2(5,0)
-	print(\"1    \",_calc_if_ahead(), \" : false\")
-	pos_player = Vector2(3,0)
-	print(\"2    \",_calc_if_ahead(), \" : true\")
-	
-	
-	print(_calc_if_ahead())
-
-func _calc_if_ahead():
-	return (direction.x and (direction.x*pos_player.x >= direction.x*pos_node.x)) or (direction.y and (direction.y*pos_player.y >= pos_node.y))
+	var scoreboard = load(\"user://scoreboard.tres\")
+	for score:Resource in scoreboard.scores :
+		print(score.get_property_list())
+		print(score.get_method_list())
 "
 
 [node name="test_scene" type="Node"]

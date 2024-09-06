@@ -4,8 +4,16 @@ class_name Background
 @onready var camera_pivot : Node3D = $ColorRect/SubViewport/CameraPivot
 @onready var terrain : Node3D = $ColorRect/SubViewport/terrain
 
+@onready var cube_pivot : Node3D = $ColorRect/SubViewport/CameraPivot/cube/Cube
+
 var camera_pos : Vector3 = Vector3.ZERO
 var a_camera : float = 10.0
+
+var time : float = 0.0
+var a_cube : float = 4.0
+var cube_angular_velocity : Vector3 = Vector3.ZERO
+var idle_angular_velocity : Vector3
+
 
 func _next_terrain() -> void :
 	var terrain_list = terrain.get_children()
@@ -40,6 +48,20 @@ func _physics_process(delta) -> void :
 	camera_pivot.rotation.x = lerpf(camera_pivot.rotation.x, camera_pos.z, a_camera * delta)
 	camera_pivot.rotation.z = lerpf(camera_pivot.rotation.z, camera_pos.x, a_camera * delta)
 	
+	time += delta
+	
+	idle_angular_velocity = Vector3(
+		cos(time),
+		cos(time + 2*PI/3),
+		cos(time + 4*PI/3)
+	)
+	
+	cube_angular_velocity = lerp(cube_angular_velocity, idle_angular_velocity, a_cube * delta)
+	
+	cube_pivot.rotate_object_local(Vector3(1,0,0), cube_angular_velocity.x*delta)
+	cube_pivot.rotate_object_local(Vector3(0,1,0), cube_angular_velocity.y*delta)
+	cube_pivot.rotate_object_local(Vector3(0,0,1), cube_angular_velocity.z*delta)
+	
 #	camera_pos = lerp(
 #		camera_pos,
 #		Vector3.ZERO,
@@ -49,3 +71,6 @@ func _physics_process(delta) -> void :
 func game_over() -> void :
 	var tween := create_tween()
 	tween.tween_property(self,"modulate",Color(0.0,0.0,0.0,0.0),1.0)
+
+func cube_impulse(axis_vector : Vector3, force : float) -> void:
+	cube_angular_velocity = axis_vector.normalized()*force

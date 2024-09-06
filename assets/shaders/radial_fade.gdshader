@@ -11,7 +11,7 @@ void fragment() {
 	if ((flip*atan(UV.x,(1.0 - UV.y)) < flip*angle)) {
 		col.a = 0.0;
 	}
-	
+
 	COLOR = col ;
 	/*COLOR = vec4(col.r, col.g, col.b, floor(col.a*2.0 - 1.0)) ; */
 }

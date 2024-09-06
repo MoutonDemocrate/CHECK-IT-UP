@@ -6,6 +6,8 @@ extends Control
 @export var level_number : int = 0
 
 @export_range(0.8,2.5) var difficulty_density : float = 1.2
+## Describes how easier the game is from base difficulty
+@export var easy_patch := 2
 
 var level_got_bigger : bool = false
 
@@ -19,6 +21,7 @@ func _ready():
 
 func level_up() -> void :
 	level_number += 1
+	GlobalData.current_score += 1000
 	if level_got_bigger :
 		leeway_level += 1
 		level_got_bigger = false
@@ -38,8 +41,8 @@ func calculate_runtime() -> float :
 	print("Runtime : ", runtime,
 		" - Leeway Level : ", leeway_level,
 		" - Leeway factor : ", f(leeway_level, 1),
-		" - Final runtime : ", f(leeway_level, runtime))
-	return f(leeway_level, runtime)
+		" - Final runtime : ", f(leeway_level, runtime)*easy_patch)
+	return f(leeway_level, runtime)*easy_patch
 	
 func init_new_level() -> void :
 	var runtime := calculate_runtime()

@@ -7,7 +7,7 @@ uniform float line_thickness : hint_range(0, 10) = 1.0;
 
 vec4 outline(sampler2D tex,vec2 fragCoord, vec2 pixelsize) {
 	vec2 size = pixelsize * line_thickness;
-	
+
 	float outline = texture(tex, fragCoord + vec2(-size.x, 0)).a;
 	outline += texture(tex, fragCoord + vec2(0, size.y)).a;
 	outline += texture(tex, fragCoord + vec2(size.x, 0)).a;
@@ -17,7 +17,7 @@ vec4 outline(sampler2D tex,vec2 fragCoord, vec2 pixelsize) {
 	outline += texture(tex, fragCoord + vec2(-size.x, -size.y)).a;
 	outline += texture(tex, fragCoord + vec2(size.x, -size.y)).a;
 	outline = min(outline, 1.0);
-	
+
 	vec4 color = texture(tex, fragCoord);
 	return mix(color, line_color, outline - color.a);
 }

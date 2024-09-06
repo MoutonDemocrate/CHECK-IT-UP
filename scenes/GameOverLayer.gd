@@ -13,11 +13,10 @@ func _ready() -> void :
 func update_labels() -> void :
 	var IdiotLines : TextLines = load("res://assets/text/GameOverLines.tres")
 	$Idiot_Label.text = IdiotLines._random_line()
-	$Score_Label.text = "YOUR SCORE IS " + str($"../..".level_number) + "."
+	$Score_Label.text = "YOUR SCORE IS " + str(GlobalData.current_score) + "."
 
 func activate() -> void :
 	update_labels()
-	GlobalData.current_score = $"../..".level_number
 	$AnimationPlayer.play("game_over")
 
 func to_the_score_board() -> void :

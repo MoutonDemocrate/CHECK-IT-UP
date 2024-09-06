@@ -10,7 +10,7 @@ void fragment() {
 	if (UV.x*flip < progress*flip) {
 		col.a = 0.0;
 	}
-	
+
 	COLOR = col ;
 	/*COLOR = vec4(col.r, col.g, col.b, floor(col.a*2.0 - 1.0)) ; */
 }
