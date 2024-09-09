@@ -91,6 +91,10 @@ kill={
 ]
 }
 
+[internationalization]
+
+locale/translations=PackedStringArray("res://assets/lang/en_english.translation")
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0

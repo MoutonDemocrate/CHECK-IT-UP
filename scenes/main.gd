@@ -5,7 +5,7 @@ extends Control
 @export var leeway_level : int = 0
 @export var level_number : int = 0
 
-@export_range(0.8,2.5) var difficulty_density : float = 1.2
+@export_range(0.8,2.5) var difficulty_density : float = 0.8
 ## Describes how easier the game is from base difficulty
 @export var easy_patch := 2
 
@@ -38,11 +38,12 @@ func calculate_runtime() -> float :
 	var speed_bonus : float = $Player.speed_bonus
 	for i in range(0, game_difficulty*2 - 1) :
 		runtime += length[i] / (base_speed + speed_bonus*(i+1))
+	leeway_level*=easy_patch
 	print("Runtime : ", runtime,
 		" - Leeway Level : ", leeway_level,
-		" - Leeway factor : ", f(leeway_level, 1),
-		" - Final runtime : ", f(leeway_level, runtime)*easy_patch)
-	return f(leeway_level, runtime)*easy_patch
+		" - Leeway : ", f(leeway_level, 1),
+		" - Final runtime : ", f(leeway_level, runtime))
+	return f(leeway_level, runtime)
 	
 func init_new_level() -> void :
 	var runtime := calculate_runtime()
@@ -51,7 +52,7 @@ func init_new_level() -> void :
 
 ## Returns the leeway 
 func f(leeway : float, runtime : float) -> float :
-	return  (1 + 4*(1/((leeway/difficulty_density)+1)))*max(runtime,1.0)
+	return  (1 + 2*(1/((leeway/difficulty_density)+1)))*max(runtime,1.0)
 
 func game_over() -> void :
 	Music.game_over()
