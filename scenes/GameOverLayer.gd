@@ -11,8 +11,10 @@ func _ready() -> void :
 			child.visible_ratio = 0.0
 
 func update_labels() -> void :
-	var IdiotLines : TextLines = load("res://assets/text/GameOverLines.tres")
-	$Idiot_Label.text = IdiotLines._random_line()
+	var idiotlines : VoiceLines = load("res://assets/text/GameOverVoicelines.tres")
+	var line : VoiceLine = idiotlines.random_line()
+	$Idiot_Label.text = line.text
+	%IdiotPlayer.stream = line.voice
 	$Score_Label.text = "YOUR SCORE IS " + str(GlobalData.current_score) + "."
 
 func activate() -> void :

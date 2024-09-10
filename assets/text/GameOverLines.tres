@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="TextLines" load_steps=2 format=3 uid="uid://byuo8uaadlu5r"]
-
-[ext_resource type="Script" path="res://scenes/resources/TextLines.gd" id="1_ixjwj"]
-
-[resource]
-script = ExtResource("1_ixjwj")
-text_lines = {
-"default": ["YOU ATE A FUCKING WALL", "YOU CRASHED, IDIOT", "JUST, TRY HARDER NEXT TIME", "SKILL ISSUE ???", "YOU... KINDA SUCK", "TRY... BEING BETTER ?", "YOUR PARENTS ARE DISSAPOINTED", "THE TIMER IS THERE FOR A REASON", "*lmao* DUMBASS", "MY GRANDMA COULD BEAT YA", "THIS AINT YOUR GRANNY'S STATION", "SO LIKE, NO ?", "WRONG INPUT :( STUPID :(", "WE'VE SEEN BETTER, HONESTLY.", "PLUG IN YOUR KEYBOARD BEFORE PLAYING"]
-}

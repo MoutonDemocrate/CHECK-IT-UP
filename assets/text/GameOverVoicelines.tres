@@ -1,0 +1,170 @@
+[gd_resource type="Resource" script_class="VoiceLines" load_steps=57 format=3 uid="uid://5ak7jxpd1nhw"]
+
+[ext_resource type="Script" path="res://scenes/resources/VoiceLines.gd" id="1_o8367"]
+[ext_resource type="Script" path="res://scenes/resources/Voiceline.gd" id="2_l7krx"]
+[ext_resource type="AudioStream" uid="uid://dahaq6k6ibcqc" path="res://assets/sounds/sfx/voicelines/my_grandma_could_beat_ya.ogg" id="3_g0jm2"]
+[ext_resource type="AudioStream" uid="uid://c6wyuqo565qsb" path="res://assets/sounds/sfx/voicelines/skill_issue.ogg" id="4_tsdxd"]
+[ext_resource type="AudioStream" uid="uid://b12ittfiejhj5" path="res://assets/sounds/sfx/voicelines/so_like_no.ogg" id="5_fdxqh"]
+[ext_resource type="AudioStream" uid="uid://cyan5qyl283nn" path="res://assets/sounds/sfx/voicelines/the_timer_is_there_for_a_reason.ogg" id="6_bvtun"]
+[ext_resource type="AudioStream" uid="uid://caonyj5te2v8v" path="res://assets/sounds/sfx/voicelines/this_aint_yo_grannys_station.ogg" id="7_b2alj"]
+[ext_resource type="AudioStream" uid="uid://bt1suvovaaaf5" path="res://assets/sounds/sfx/voicelines/this_game_isnt_for_everyone.ogg" id="8_a1xlq"]
+[ext_resource type="AudioStream" uid="uid://wisf1hw7qchw" path="res://assets/sounds/sfx/voicelines/try_being_better.ogg" id="9_gpp37"]
+[ext_resource type="AudioStream" uid="uid://bf5e4mwwjof2f" path="res://assets/sounds/sfx/voicelines/weve_seen_better.ogg" id="10_abrtb"]
+[ext_resource type="AudioStream" uid="uid://wbf1bg1m7ai5" path="res://assets/sounds/sfx/voicelines/wouldnt_fight_for_your_custody.ogg" id="11_y4mt0"]
+[ext_resource type="AudioStream" uid="uid://dvdu5jufqf8im" path="res://assets/sounds/sfx/voicelines/wrong_input_stupid.ogg" id="12_7ghpd"]
+[ext_resource type="AudioStream" uid="uid://8eaa0tu2no3d" path="res://assets/sounds/sfx/voicelines/your_parents_are_dissapointed.ogg" id="13_ejqf4"]
+[ext_resource type="AudioStream" uid="uid://devufsbx01qul" path="res://assets/sounds/sfx/voicelines/you_crashed_idiot.ogg" id="14_saq21"]
+[ext_resource type="AudioStream" uid="uid://dkl23wd3maj04" path="res://assets/sounds/sfx/voicelines/you_dont_need_me_to_say_it.ogg" id="15_8432v"]
+[ext_resource type="AudioStream" uid="uid://bcn42ukuvspyc" path="res://assets/sounds/sfx/voicelines/you_kinda_suck.ogg" id="16_41muw"]
+[ext_resource type="AudioStream" uid="uid://clgdupoj1wybr" path="res://assets/sounds/sfx/voicelines/you_lost_the_game.ogg" id="17_uj0xd"]
+[ext_resource type="AudioStream" uid="uid://cn3vquuu5f5qm" path="res://assets/sounds/sfx/voicelines/achievement_unlocked_you_suck.ogg" id="18_xuj5n"]
+[ext_resource type="AudioStream" uid="uid://dfrntw7b4x5lc" path="res://assets/sounds/sfx/voicelines/ate_a_wall.ogg" id="19_15wky"]
+[ext_resource type="AudioStream" uid="uid://b5n8dj5wgotg0" path="res://assets/sounds/sfx/voicelines/back_so_soon.ogg" id="20_o2ode"]
+[ext_resource type="AudioStream" uid="uid://b8i236tfvye0o" path="res://assets/sounds/sfx/voicelines/check_if_your_keyboard_is_plugged_in.ogg" id="21_utvuy"]
+[ext_resource type="AudioStream" uid="uid://bhcn8bqpmxftw" path="res://assets/sounds/sfx/voicelines/dont_show_that_to_your_mom.ogg" id="22_2xohn"]
+[ext_resource type="AudioStream" uid="uid://c4vmtyiwcemle" path="res://assets/sounds/sfx/voicelines/eat_sand_idiot.ogg" id="23_lbdo7"]
+[ext_resource type="AudioStream" uid="uid://c8rvnwoq22rld" path="res://assets/sounds/sfx/voicelines/end_it_here_lost_cause.ogg" id="24_r6gly"]
+[ext_resource type="AudioStream" uid="uid://btcqmewry26ak" path="res://assets/sounds/sfx/voicelines/i_aint_gonna_sugarcoat_it.ogg" id="25_2iov6"]
+[ext_resource type="AudioStream" uid="uid://pwoc4r2dy855" path="res://assets/sounds/sfx/voicelines/just_start_praying.ogg" id="26_sxusq"]
+[ext_resource type="AudioStream" uid="uid://bw3jdjk8jy6t6" path="res://assets/sounds/sfx/voicelines/just_stop_its_getting_hard_to_watch.ogg" id="27_o6fis"]
+[ext_resource type="AudioStream" uid="uid://cablqqo4a2ht3" path="res://assets/sounds/sfx/voicelines/just_try_harder.ogg" id="28_prypn"]
+[ext_resource type="AudioStream" uid="uid://cu43mfibc3io" path="res://assets/sounds/sfx/voicelines/lmao_dumbass.ogg" id="29_64n7t"]
+
+[sub_resource type="Resource" id="Resource_m02k5"]
+script = ExtResource("2_l7krx")
+text = "MY GRANDMA COULD BEAT YA"
+voice = ExtResource("3_g0jm2")
+
+[sub_resource type="Resource" id="Resource_rl4ab"]
+script = ExtResource("2_l7krx")
+text = "SKILL ISSUE ???"
+voice = ExtResource("4_tsdxd")
+
+[sub_resource type="Resource" id="Resource_qpb67"]
+script = ExtResource("2_l7krx")
+text = "SO LIKE ? NO ?"
+voice = ExtResource("5_fdxqh")
+
+[sub_resource type="Resource" id="Resource_0mqs7"]
+script = ExtResource("2_l7krx")
+text = "THE TIMER IS THERE FOR A REASON"
+voice = ExtResource("6_bvtun")
+
+[sub_resource type="Resource" id="Resource_1kmj6"]
+script = ExtResource("2_l7krx")
+text = "THIS AINT YO GRANNY'S STATION"
+voice = ExtResource("7_b2alj")
+
+[sub_resource type="Resource" id="Resource_md1vg"]
+script = ExtResource("2_l7krx")
+text = "JSYK THIS GAME ISN'T FOR EVERYONE"
+voice = ExtResource("8_a1xlq")
+
+[sub_resource type="Resource" id="Resource_63apg"]
+script = ExtResource("2_l7krx")
+text = "WE'VE SEEN BETTER. HONESTLY."
+voice = ExtResource("10_abrtb")
+
+[sub_resource type="Resource" id="Resource_x3e6n"]
+script = ExtResource("2_l7krx")
+text = "TRY... BEING BETTER ?"
+voice = ExtResource("9_gpp37")
+
+[sub_resource type="Resource" id="Resource_vo2e7"]
+script = ExtResource("2_l7krx")
+text = "I WOULDN'T FIGHT FOR YOUR CUSTODY"
+voice = ExtResource("11_y4mt0")
+
+[sub_resource type="Resource" id="Resource_ur0qu"]
+script = ExtResource("2_l7krx")
+text = "WRONG INPUT :( STUPID :("
+voice = ExtResource("12_7ghpd")
+
+[sub_resource type="Resource" id="Resource_iqjod"]
+script = ExtResource("2_l7krx")
+text = "YOUR PARENTS ARE DISSAPOINTED"
+voice = ExtResource("13_ejqf4")
+
+[sub_resource type="Resource" id="Resource_jrdxf"]
+script = ExtResource("2_l7krx")
+text = "YOU CRASHED, IDIOT"
+voice = ExtResource("14_saq21")
+
+[sub_resource type="Resource" id="Resource_jnioq"]
+script = ExtResource("2_l7krx")
+text = "YKW, YOU DON'T NEED ME TO SAY IT"
+voice = ExtResource("15_8432v")
+
+[sub_resource type="Resource" id="Resource_iij74"]
+script = ExtResource("2_l7krx")
+text = "YOU... KINDA SUCK"
+voice = ExtResource("16_41muw")
+
+[sub_resource type="Resource" id="Resource_6rxko"]
+script = ExtResource("2_l7krx")
+text = "YOU LOST (the game)"
+voice = ExtResource("17_uj0xd")
+
+[sub_resource type="Resource" id="Resource_pqhj8"]
+script = ExtResource("2_l7krx")
+text = "ACHIEVEMENT UNLOCKED : YOU SUCK"
+voice = ExtResource("18_xuj5n")
+
+[sub_resource type="Resource" id="Resource_cjhyh"]
+script = ExtResource("2_l7krx")
+text = "YOU ATE A FUCKING WALL"
+voice = ExtResource("19_15wky")
+
+[sub_resource type="Resource" id="Resource_2ihbc"]
+script = ExtResource("2_l7krx")
+text = "BACK SO SOON ?"
+voice = ExtResource("20_o2ode")
+
+[sub_resource type="Resource" id="Resource_50eik"]
+script = ExtResource("2_l7krx")
+text = "JUST, CHECK IF YOUR KEYBOARD IS PLUGGED IN ?"
+voice = ExtResource("21_utvuy")
+
+[sub_resource type="Resource" id="Resource_dybjw"]
+script = ExtResource("2_l7krx")
+text = "DON'T SHOW THAT TO YOUR MOM"
+voice = ExtResource("22_2xohn")
+
+[sub_resource type="Resource" id="Resource_m1grk"]
+script = ExtResource("2_l7krx")
+text = "EAT SAND IDIOT"
+voice = ExtResource("23_lbdo7")
+
+[sub_resource type="Resource" id="Resource_fvth7"]
+script = ExtResource("2_l7krx")
+text = "END IT HERE. LOST CAUSE."
+voice = ExtResource("24_r6gly")
+
+[sub_resource type="Resource" id="Resource_jm0ap"]
+script = ExtResource("2_l7krx")
+text = "I AINT GONNA SUGARCOAT IT : YOU SUCK"
+voice = ExtResource("25_2iov6")
+
+[sub_resource type="Resource" id="Resource_iwwpw"]
+script = ExtResource("2_l7krx")
+text = "AT THIS POINT, JUST START PRAYING"
+voice = ExtResource("26_sxusq")
+
+[sub_resource type="Resource" id="Resource_0ro08"]
+script = ExtResource("2_l7krx")
+text = "JUST STOP. iT'S GETTING HARD TO WATCH"
+voice = ExtResource("27_o6fis")
+
+[sub_resource type="Resource" id="Resource_fg7g1"]
+script = ExtResource("2_l7krx")
+text = "JUST... TRY HARDER NEXT TIME"
+voice = ExtResource("28_prypn")
+
+[sub_resource type="Resource" id="Resource_ckbv0"]
+script = ExtResource("2_l7krx")
+text = "*lmao* DUMBASS"
+voice = ExtResource("29_64n7t")
+
+[resource]
+script = ExtResource("1_o8367")
+voicelines = Array[ExtResource("2_l7krx")]([SubResource("Resource_m02k5"), SubResource("Resource_rl4ab"), SubResource("Resource_qpb67"), SubResource("Resource_0mqs7"), SubResource("Resource_1kmj6"), SubResource("Resource_md1vg"), SubResource("Resource_63apg"), SubResource("Resource_x3e6n"), SubResource("Resource_vo2e7"), SubResource("Resource_ur0qu"), SubResource("Resource_iqjod"), SubResource("Resource_jrdxf"), SubResource("Resource_jnioq"), SubResource("Resource_iij74"), SubResource("Resource_6rxko"), SubResource("Resource_pqhj8"), SubResource("Resource_cjhyh"), SubResource("Resource_2ihbc"), SubResource("Resource_50eik"), SubResource("Resource_dybjw"), SubResource("Resource_m1grk"), SubResource("Resource_fvth7"), SubResource("Resource_jm0ap"), SubResource("Resource_iwwpw"), SubResource("Resource_0ro08"), SubResource("Resource_fg7g1"), SubResource("Resource_ckbv0")])

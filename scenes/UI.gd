@@ -3,6 +3,10 @@ extends Control
 @onready var AnimPlayer : AnimationPlayer = $AnimationPlayerGlobal
 @onready var LevelEndLabel : Label = $LevelEnd_Label
 
+@onready var voiceline_player : AudioStreamPlayer = %EffectsPlayer
+
+@onready var player : Player  = $"../../../Player"
+
 func _ready() -> void:
 	LevelEndLabel.hide()
 	AnimPlayer.play("game_begin")
@@ -12,4 +16,8 @@ func inter_anim() -> void :
 	AnimPlayer.clear_queue()
 	AnimPlayer.stop()
 	AnimPlayer.play("level_end")
-	AnimPlayer.queue("press_right_loop")
+	await get_tree().create_timer(0.4).timeout
+	voiceline_player.play()
+	await voiceline_player.finished
+	player._set_player_green()
+	AnimPlayer.play("press_right_loop")

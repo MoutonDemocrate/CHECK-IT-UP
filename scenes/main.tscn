@@ -1,4 +1,4 @@
-[gd_scene load_steps=139 format=3 uid="uid://8m6o74ud0t8o"]
+[gd_scene load_steps=141 format=3 uid="uid://8m6o74ud0t8o"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_hfrkx"]
 [ext_resource type="Texture2D" uid="uid://b3uh0body4qu5" path="res://assets/player/default.png" id="1_r7gxw"]
@@ -29,6 +29,8 @@
 [ext_resource type="Script" path="res://scenes/GameOverLayer.gd" id="23_xxfof"]
 [ext_resource type="AudioStream" uid="uid://dxiavexfkyylr" path="res://assets/sounds/music/KICK_CHECK_final_-001.wav" id="27_3j8hc"]
 [ext_resource type="AudioStream" uid="uid://dxj20he1ffdsv" path="res://assets/sounds/music/KICK_CHECK_final_-002.wav" id="28_qptp7"]
+[ext_resource type="AudioStream" uid="uid://bnec6s4rtgbnx" path="res://assets/sounds/sfx/voicelines/game_over.ogg" id="30_1yfmc"]
+[ext_resource type="AudioStream" uid="uid://bw3jdjk8jy6t6" path="res://assets/sounds/sfx/voicelines/just_stop_its_getting_hard_to_watch.ogg" id="31_6yhk4"]
 
 [sub_resource type="Gradient" id="Gradient_ncgqo"]
 colors = PackedColorArray(0, 0.25, 0.225, 1, 0.39, 1, 0.928833, 1)
@@ -299,8 +301,8 @@ func _ready():
 
 func randomise_text(args : Array = []) -> void :
 	print(\"Args : \" ,args)
-	var level_end_lines : TextLines = load(\"res://assets/text/MotivationLines.tres\")
-	self.text = level_end_lines._random_line(args)
+	#var motivation_lines : DictLineBundle = load(\"res://assets/text/LevelEndVoicelines.tres\")
+	self.text = \"Motivation !\" #motivation_lines.random_line(args)
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_p0ylt"]
@@ -318,14 +320,17 @@ font_size = 120
 resource_name = "LevelEndLabel"
 script/source = "extends Label
 
+@onready var level_end_audioplayer : AudioStreamPlayer = %EffectsPlayer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	randomise_text()
 
 func randomise_text() -> void :
-	var level_end_lines : TextLines = load(\"res://assets/text/LevelEndLines.tres\")
-	self.text = level_end_lines._random_line()
+	var level_end_lines : VoiceLines = load(\"res://assets/text/LevelEndVoicelines.tres\")
+	var voiceline : VoiceLine = level_end_lines.random_line()
+	self.text = voiceline.text
+	level_end_audioplayer.stream = voiceline.voice
 "
 
 [sub_resource type="Gradient" id="Gradient_f7cc5"]
@@ -1189,10 +1194,10 @@ tracks/16/path = NodePath("../../../Player:state")
 tracks/16/interp = 1
 tracks/16/loop_wrap = true
 tracks/16/keys = {
-"times": PackedFloat32Array(1.8),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
 "update": 1,
-"values": [4]
+"values": []
 }
 tracks/17/type = "value"
 tracks/17/imported = false
@@ -1551,10 +1556,34 @@ tracks/7/keys = {
 "update": 0,
 "values": [0.0]
 }
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("%GameOverPlayer:playing")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("%IdiotPlayer:playing")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_v7stn"]
 resource_name = "game_over"
-length = 4.0
+length = 8.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1586,7 +1615,7 @@ tracks/2/path = NodePath("Idiot_Label:visible_ratio")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 1.5, 2.3),
+"times": PackedFloat32Array(0, 2.9, 5.13333),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.0, 1.0]
@@ -1598,7 +1627,7 @@ tracks/3/path = NodePath("Score_Label:visible_ratio")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 2.5, 3),
+"times": PackedFloat32Array(0, 6.86667, 7.36667),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.0, 1.0]
@@ -1634,7 +1663,7 @@ tracks/6/path = NodePath(".:retry_available")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 3.6),
+"times": PackedFloat32Array(0, 8),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
@@ -1657,10 +1686,34 @@ tracks/8/path = NodePath("Input_Label:visible_ratio")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(3, 3.6),
+"times": PackedFloat32Array(7.4, 8),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.0, 1.0]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("%GameOverPlayer:playing")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0.733333),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("%IdiotPlayer:playing")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(2.9),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_jfesc"]
@@ -1691,7 +1744,7 @@ clip_count = 2
 clip_0/name = &"Kick Check Final -001"
 clip_0/stream = ExtResource("27_3j8hc")
 clip_0/auto_advance = 1
-clip_0/next_clip = 0
+clip_0/next_clip = 1
 clip_1/name = &"Kick Check Final -002"
 clip_1/stream = ExtResource("28_qptp7")
 clip_1/auto_advance = 1
@@ -2128,10 +2181,20 @@ autoplay = "on_game_begin"
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamInteractive_syfh0")
-volume_db = -0.81
 autoplay = true
 bus = &"Music"
 script = ExtResource("22_hdhtd")
+
+[node name="EffectsPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+
+[node name="GameOverPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("30_1yfmc")
+
+[node name="IdiotPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("31_6yhk4")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_t7b4d")
@@ -2139,6 +2202,5 @@ environment = SubResource("Environment_t7b4d")
 [connection signal="property_list_changed" from="Void/Slide/ReferenceRect/SpeedLinesRectTop" to="Void/Slide/ReferenceRect/SpeedLinesRectTop" method="parameters_changed"]
 [connection signal="property_list_changed" from="Void/Slide/ReferenceRect/SpeedLinesRectMid" to="Void/Slide/ReferenceRect/SpeedLinesRectMid" method="parameters_changed"]
 [connection signal="property_list_changed" from="Void/Slide/ReferenceRect/SpeedLinesRectBottom" to="Void/Slide/ReferenceRect/SpeedLinesRectBottom" method="parameters_changed"]
-[connection signal="finished" from="MusicPlayer" to="MusicPlayer" method="_on_finished"]
 
 [editable path="Background/ColorRect/SubViewport/CameraPivot/cube"]
