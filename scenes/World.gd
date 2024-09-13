@@ -47,3 +47,7 @@ func _inter_activities():
 	_load_next_level()
 	
 	$"../Background"._next_terrain()
+
+func game_over(duration : float = 1.0) -> void:
+	var tween := create_tween()
+	tween.tween_property(self,"modulate",Color(0.0,0.0,0.0,0.0),duration)

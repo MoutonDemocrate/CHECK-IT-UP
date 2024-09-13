@@ -2,12 +2,13 @@ extends Control
 
 @export var BackgroundCol : Gradient
 @export var game_difficulty : int = 0
-@export var leeway_level : int = 0
+@export var leeway_level : float = 0
 @export var level_number : int = 0
 
-@export_range(0.8,2.5) var difficulty_density : float = 0.8
+# AS A CUBIC
+@export var difficulty_density : float = 5.5
 ## Describes how easier the game is from base difficulty
-@export var easy_patch := 2
+@export var easy_patch := 1
 
 var level_got_bigger : bool = false
 
@@ -25,7 +26,7 @@ func level_up() -> void :
 	if level_got_bigger :
 		leeway_level += 1
 		level_got_bigger = false
-		print("LEEWAY DIMINISHED")
+		print("LEEWAY LEVEL + 1")
 	else :
 		level_got_bigger = true
 		game_difficulty += 1
@@ -40,10 +41,10 @@ func calculate_runtime() -> float :
 		runtime += length[i] / (base_speed + speed_bonus*(i+1))
 	leeway_level*=easy_patch
 	print("Runtime : ", runtime,
-		" - Leeway Level : ", leeway_level,
-		" - Leeway : ", f(leeway_level, 1),
-		" - Final runtime : ", f(leeway_level, runtime))
-	return f(leeway_level, runtime)
+		"\n - Leeway Level : ", leeway_level,
+		"\n - Leeway : ", leeway(leeway_level),
+		"\n - Final runtime : ", leeway(leeway_level)+max(runtime,1.0))
+	return leeway(leeway_level)+max(runtime,1.0)
 	
 func init_new_level() -> void :
 	var runtime := calculate_runtime()
@@ -51,12 +52,16 @@ func init_new_level() -> void :
 	ProgManager.initialise(runtime)
 
 ## Returns the leeway 
-func f(leeway : float, runtime : float) -> float :
-	return  (1 + 2*(1/((leeway/difficulty_density)+1)))*max(runtime,1.0)
+func leeway(leeway_l : float) -> float :
+	return (4.0*(1.0/((pow(leeway_l,2.0)/pow(difficulty_density,3.0))+1.0)))
 
 func game_over() -> void :
-	Music.game_over()
+	Music.game_over(10)
 	player.game_over()
-	background.game_over()
-	await get_tree().create_timer(0.5).timeout
+	background.game_over(1.0)
+	world.game_over(2.0)
+	var tween := create_tween()
+	tween.set_parallel(true)
+	tween.tween_property($Camera2D/EffectsLayer,"modulate",0.0,1.0)
+	await get_tree().create_timer(3).timeout
 	$Camera2D/GameOverLayer.activate()

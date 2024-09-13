@@ -24,6 +24,8 @@ func _process(delta):
 		
 		if time_left <= 0 :
 			time_left = 0.0
+			TimeLabel.text = str(snappedf(time_left, 0.01))
+			ProgBar.value = (time_left/total_time) * 100
 			active = false
 			$"../..".game_over()
 

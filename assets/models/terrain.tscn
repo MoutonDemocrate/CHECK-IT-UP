@@ -8,7 +8,7 @@ render_priority = 0
 shader = ExtResource("2_yn1lv")
 shader_parameter/test_vec = null
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ol0lj"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tqr78"]
 render_priority = 0
 shader = ExtResource("2_yn1lv")
 shader_parameter/test_vec = null
@@ -22,7 +22,7 @@ surface_material_override/0 = SubResource("ShaderMaterial_x31nu")
 visible = false
 
 [node name="StrataMountain" parent="." index="2"]
-surface_material_override/0 = SubResource("ShaderMaterial_ol0lj")
+surface_material_override/0 = SubResource("ShaderMaterial_tqr78")
 
 [node name="fBmValley" parent="." index="3"]
 visible = false

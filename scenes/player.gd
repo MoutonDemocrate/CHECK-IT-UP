@@ -144,7 +144,7 @@ func _physics_process(_delta):
 				
 				if node - 1 == level_nodes_count :
 					progress_manager.stop()
-					GlobalData.current_score += 100 * clampf(progress_manager.time_left / (progress_manager.total_time/2), 0, 1)
+					GlobalData.current_score += 100.0 * clampf(progress_manager.time_left / (progress_manager.total_time/2), 0, 1)
 					$"../Camera2D".follow_player = true
 					$"../Camera2D"._lerp_zoom(1.0)
 					reset_combo(true)

@@ -68,9 +68,9 @@ func _physics_process(delta) -> void :
 #		a_camera * delta
 #	)
 
-func game_over() -> void :
+func game_over(duration:float = 1.0) -> void :
 	var tween := create_tween()
-	tween.tween_property(self,"modulate",Color(0.0,0.0,0.0,0.0),1.0)
+	tween.tween_property(self,"modulate",Color(0.0,0.0,0.0,0.0),duration)
 
 func cube_impulse(axis_vector : Vector3, force : float) -> void:
 	cube_angular_velocity = axis_vector.normalized()*force

@@ -1,8 +1,12 @@
-[gd_resource type="AudioBusLayout" load_steps=2 format=3 uid="uid://c2vmeh1t2no4r"]
+[gd_resource type="AudioBusLayout" load_steps=3 format=3 uid="uid://c2vmeh1t2no4r"]
 
 [sub_resource type="AudioEffectSpectrumAnalyzer" id="AudioEffectSpectrumAnalyzer_rwdpv"]
 resource_name = "SpectrumAnalyzer"
+buffer_length = 1.1
 fft_size = 1
+
+[sub_resource type="AudioEffectPitchShift" id="AudioEffectPitchShift_0u67l"]
+resource_name = "PitchShift"
 
 [resource]
 bus/0/volume_db = -4.24723
@@ -10,7 +14,9 @@ bus/1/name = &"Music"
 bus/1/solo = false
 bus/1/mute = false
 bus/1/bypass_fx = false
-bus/1/volume_db = 0.0
+bus/1/volume_db = -2.71024
 bus/1/send = &"Master"
 bus/1/effect/0/effect = SubResource("AudioEffectSpectrumAnalyzer_rwdpv")
-bus/1/effect/0/enabled = false
+bus/1/effect/0/enabled = true
+bus/1/effect/1/effect = SubResource("AudioEffectPitchShift_0u67l")
+bus/1/effect/1/enabled = false
