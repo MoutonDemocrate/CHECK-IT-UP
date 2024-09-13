@@ -27,7 +27,7 @@ func to_the_score_board() -> void :
 func _input(event : InputEvent) -> void :
 	if retry_available :
 		if event.is_action_pressed("left") :
-			get_tree().quit()
+			KillSwitch.kill()
 		elif event.is_action_pressed("right") :
 			to_the_score_board()
 		elif event.is_action_pressed("up") :

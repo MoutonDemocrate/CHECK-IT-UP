@@ -21,16 +21,18 @@ func _ready() -> void:
 	SelectLabel.text = char_list[select_index]
 	if not FileAccess.file_exists("user://scoreboard.tres") :
 		var scoreboard = ScoreBoard.new()
-		var score = Score.new()
-		score.score = 44000
-		score.player_name = "MoutonDMCR"
-		score.date = ""
-		scoreboard.add_score(score)
+		var hehe := Score.new()
+		hehe.player_name = "MoutonDev"
+		hehe.date = "9/9/2024"
+		hehe.score = 25000
+		scoreboard.add_score(hehe)
+		scoreboard.version = "4"
 		ResourceSaver.save(scoreboard, "user://scoreboard.tres")
 	else :
 		var scoreboard : ScoreBoard = load("user://scoreboard.tres")
-		if scoreboard.version == "1" :
-			update_scoreboard_version("user://scoreboard.tres", "2")
+		if scoreboard.version != "4" :
+			print("Updating scoreboard...")
+			update_scoreboard_version("user://scoreboard.tres", "4")
 	
 	if GlobalData.going_to_scoreboard :
 		GlobalData.going_to_scoreboard = false
@@ -78,6 +80,8 @@ func name_entered() -> void :
 	var score : Score = Score.new()
 	score.player_name = playerName
 	score.score = GlobalData.current_score
+	var date : PackedStringArray = Time.get_date_string_from_system().split("-") # YYYY-MM-DD
+	score.date = date[2]+"/"+date[1]+"/"+date[0]
 	scoreboard.add_score(score)
 	ResourceSaver.save(scoreboard, "user://scoreboard.tres")
 	await get_tree().create_timer(0.2).timeout
@@ -115,11 +119,18 @@ func input_score_board(event : InputEvent) -> void :
 func update_scoreboard_version(path : String, version : String) -> void :
 	var old_scoreboard : Resource = load(path)
 	var new_scoreboard : ScoreBoard = ScoreBoard.new()
-	for score : Resource in old_scoreboard.scores :
-		var new_score : Score = Score.new()
-		new_score.player_name = score.player_name
-		new_score.score = score.score if old_scoreboard.version == "1" and score.score <= 40 else score.score*2000
-		var date : PackedStringArray = Time.get_date_string_from_system().split("-")
-		new_scoreboard.add_score(new_score)
-		new_scoreboard.version = "2"
+	if version == "3" :
+		for score : Resource in old_scoreboard.scores :
+			var new_score : Score = Score.new()
+			new_score.player_name = score.player_name
+			new_score.score = score.score if old_scoreboard.version == "1" and score.score <= 40 else score.score*2000
+			new_scoreboard.add_score(new_score)
+			new_scoreboard.version = "2"
+	if version == "4" :
+		new_scoreboard.version = "4"
+		var hehe := Score.new()
+		hehe.player_name = "MoutonDev"
+		hehe.date = "9/9/2024"
+		hehe.score = 25000
+		new_scoreboard.add_score(hehe)
 	ResourceSaver.save(new_scoreboard, path)

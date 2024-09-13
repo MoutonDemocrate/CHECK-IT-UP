@@ -3,6 +3,7 @@ extends Node2D
 
 @onready var progress_manager : ProgressManager = $"../Camera2D/ProgressManager"
 @onready var background : Background = $"../Background"
+@onready var sfxplayer : SFXPlayer = %SFXplayer
 
 ## Base speed of the player
 @export var base_speed : float = 3000.0
@@ -105,6 +106,7 @@ func _physics_process(_delta):
 				Bonk.global_position = self.global_position
 				Bonk.activate([direction])
 				state = PlayerState.CORNER
+				sfxplayer.play_vol_pan(sfxplayer.SFX_CORNER.pick_random(), 5.0,0.0)
 				node += 1
 				next_node = $"../World".level.get_path_point_global(node)
 				direction_to_next_node = calculate_next_node_direction()

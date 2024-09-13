@@ -10,8 +10,9 @@ config_version=5
 
 [application]
 
-config/name="CHECK IT UP"
+config/name="CHECK IT UP!"
 config/version="1.1"
+config/tags=PackedStringArray("arcade")
 run/main_scene="res://scenes/Controls.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 boot_splash/bg_color=Color(0, 0, 0, 1)

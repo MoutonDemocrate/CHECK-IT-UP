@@ -1,4 +1,4 @@
-[gd_scene load_steps=145 format=3 uid="uid://8m6o74ud0t8o"]
+[gd_scene load_steps=158 format=3 uid="uid://8m6o74ud0t8o"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_hfrkx"]
 [ext_resource type="Texture2D" uid="uid://b3uh0body4qu5" path="res://assets/player/default.png" id="1_r7gxw"]
@@ -20,8 +20,12 @@
 [ext_resource type="Script" path="res://scenes/SpeedLinesContainer.gd" id="14_bi13k"]
 [ext_resource type="Script" path="res://scenes/UI.gd" id="15_0s21d"]
 [ext_resource type="PackedScene" uid="uid://bhloyarqul1e3" path="res://scenes/point_scenes/bonk.tscn" id="17_0whm5"]
+[ext_resource type="AudioStream" uid="uid://cmqa6ig57qjlh" path="res://assets/sounds/sfx/check_1.wav" id="17_7yfx8"]
+[ext_resource type="Shader" path="res://assets/shaders/credits.gdshader" id="17_a6yrj"]
 [ext_resource type="Texture2D" uid="uid://cb2sy2tsic8p2" path="res://assets/textures/ui/logo/check_it_up_case_ANIM.png" id="17_xthpe"]
 [ext_resource type="Texture2D" uid="uid://d36n203yaq58b" path="res://assets/textures/ui/logo/check_it_up_check_ANIM.png" id="18_0v2vd"]
+[ext_resource type="AudioStream" uid="uid://bq34bs0g7724v" path="res://assets/sounds/sfx/check_2.wav" id="18_58msu"]
+[ext_resource type="Texture2D" uid="uid://dof3m4nfew66s" path="res://assets/credits/credits.png" id="18_wjot3"]
 [ext_resource type="Texture2D" uid="uid://bcadj2xve5q2a" path="res://assets/textures/particles/Spark.png" id="21_k5y07"]
 [ext_resource type="Script" path="res://scenes/Progress.gd" id="21_ldkga"]
 [ext_resource type="Script" path="res://scenes/MusicPlayer.gd" id="22_hdhtd"]
@@ -31,6 +35,14 @@
 [ext_resource type="AudioStream" uid="uid://dxj20he1ffdsv" path="res://assets/sounds/music/KICK_CHECK_final_-002.wav" id="28_qptp7"]
 [ext_resource type="AudioStream" uid="uid://bnec6s4rtgbnx" path="res://assets/sounds/sfx/voicelines/game_over.ogg" id="30_1yfmc"]
 [ext_resource type="AudioStream" uid="uid://bw3jdjk8jy6t6" path="res://assets/sounds/sfx/voicelines/just_stop_its_getting_hard_to_watch.ogg" id="31_6yhk4"]
+[ext_resource type="Script" path="res://scenes/effects_player.gd" id="32_oyf81"]
+[ext_resource type="AudioStream" uid="uid://p0mau176aycr" path="res://assets/sounds/sfx/26894__vexst__semi-kick-21.wav" id="33_xmmuf"]
+[ext_resource type="AudioStream" uid="uid://clarr6npulsrj" path="res://assets/sounds/sfx/26895__vexst__semi-kick-22.wav" id="34_18uq5"]
+[ext_resource type="AudioStream" uid="uid://c55ieucwdsfbw" path="res://assets/sounds/sfx/26879__vexst__closed-hi-hat-1.wav" id="35_c3v5m"]
+[ext_resource type="AudioStream" uid="uid://5dfeb4iw6b1s" path="res://assets/sounds/sfx/Whoosh Ethereal Designed Bass Low End-001.wav" id="36_0v4io"]
+[ext_resource type="AudioStream" uid="uid://drpcy2ivp47i2" path="res://assets/sounds/sfx/Whoosh Ethereal Designed Bass Low End-003.wav" id="37_e82r8"]
+[ext_resource type="AudioStream" uid="uid://rydnocc5fmfc" path="res://assets/sounds/sfx/voicelines/check_it_up_fast.ogg" id="40_h8u57"]
+[ext_resource type="Script" path="res://scenes/voice_player.gd" id="41_dinnr"]
 
 [sub_resource type="Gradient" id="Gradient_ncgqo"]
 colors = PackedColorArray(0, 0.25, 0.225, 1, 0.39, 1, 0.928833, 1)
@@ -321,7 +333,7 @@ font_size = 120
 resource_name = "LevelEndLabel"
 script/source = "extends Label
 
-@onready var level_end_audioplayer : AudioStreamPlayer = %EffectsPlayer
+@onready var level_end_audioplayer : AudioStreamPlayer = %VoicePlayer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -789,6 +801,18 @@ tracks/21/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/22/type = "value"
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("%VoicePlayer:playing")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_8nfcp"]
 resource_name = "game_begin"
@@ -800,7 +824,7 @@ tracks/0/path = NodePath("CHECK_IT_UP:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 0.8),
 "transitions": PackedFloat32Array(1, 0.297302),
 "update": 0,
 "values": [Vector2(10, 10), Vector2(1, 1)]
@@ -812,7 +836,7 @@ tracks/1/path = NodePath("CHECK_IT_UP:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 0.8),
 "transitions": PackedFloat32Array(1.5, 1),
 "update": 0,
 "values": [Vector2(150, 300), Vector2(0, 0)]
@@ -824,7 +848,7 @@ tracks/2/path = NodePath("CHECK_IT_UP:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 0.8),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.785398, 0.0]
@@ -848,7 +872,7 @@ tracks/4/path = NodePath("CHECK_IT_UP:alpha")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0.1, 1),
+"times": PackedFloat32Array(0.1, 0.8),
 "transitions": PackedFloat32Array(1, 2),
 "update": 0,
 "values": [0.0, 1.0]
@@ -860,7 +884,7 @@ tracks/5/path = NodePath("CHECK_IT_UP:pixelate")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 0.8),
 "transitions": PackedFloat32Array(1, 0.329877),
 "update": 0,
 "values": [16, 1]
@@ -991,6 +1015,49 @@ tracks/15/keys = {
 }, {
 "args": [50.0, 0.8],
 "method": &"_shake"
+}]
+}
+tracks/16/type = "method"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("%SFXplayer")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(1.34943, 1.7),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [ExtResource("17_7yfx8"), -2.0, 0.0],
+"method": &"play_vol_pan"
+}, {
+"args": [ExtResource("18_58msu"), -2.0, 0.0],
+"method": &"play_vol_pan"
+}]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("%VoicePlayer:playing")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 1,
+"values": []
+}
+tracks/18/type = "method"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("%VoicePlayer")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0.366667),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"check_it_up"
 }]
 }
 
@@ -1233,6 +1300,23 @@ tracks/18/keys = {
 "method": &"_shake"
 }]
 }
+tracks/19/type = "method"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("%SFXplayer")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0.650565, 1.1),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [ExtResource("17_7yfx8"), -3.0, 0.0],
+"method": &"play_vol_pan"
+}, {
+"args": [ExtResource("18_58msu"), -3.0, 0.0],
+"method": &"play_vol_pan"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_20blm"]
 resource_name = "press_right_loop"
@@ -1269,6 +1353,9 @@ _data = {
 "level_end": SubResource("Animation_fpo3s"),
 "press_right_loop": SubResource("Animation_20blm")
 }
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kmvle"]
+shader = ExtResource("17_a6yrj")
 
 [sub_resource type="Gradient" id="Gradient_iet15"]
 interpolation_mode = 2
@@ -1939,8 +2026,12 @@ script = ExtResource("15_0s21d")
 texture_filter = 1
 material = SubResource("ShaderMaterial_tg0f7")
 layout_mode = 0
-offset_right = 1600.0
-offset_bottom = 300.0
+offset_left = 150.0
+offset_top = 300.0
+offset_right = 1750.0
+offset_bottom = 600.0
+rotation = 0.785398
+scale = Vector2(10, 10)
 pivot_offset = Vector2(650, 150)
 script = SubResource("GDScript_hn8ls")
 
@@ -2043,6 +2134,17 @@ animation = &"CHECK"
 libraries = {
 "": SubResource("AnimationLibrary_8e02g")
 }
+
+[node name="Credits" type="Node2D" parent="."]
+position = Vector2(0, 900)
+
+[node name="TextureRect" type="TextureRect" parent="Credits"]
+texture_filter = 4
+material = SubResource("ShaderMaterial_kmvle")
+offset_right = 1600.0
+offset_bottom = 900.0
+texture = ExtResource("18_wjot3")
+expand_mode = 3
 
 [node name="World" type="Node2D" parent="."]
 script = ExtResource("2_lgqa5")
@@ -2219,16 +2321,32 @@ autoplay = true
 bus = &"Music"
 script = ExtResource("22_hdhtd")
 
-[node name="EffectsPlayer" type="AudioStreamPlayer" parent="."]
+[node name="SFXplayer" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
+max_polyphony = 16
+bus = &"SFX"
+script = ExtResource("32_oyf81")
+SFX_CORNER = Array[AudioStream]([ExtResource("33_xmmuf"), ExtResource("34_18uq5"), ExtResource("35_c3v5m"), ExtResource("35_c3v5m")])
+SFX_CHECK_1 = ExtResource("17_7yfx8")
+SFX_CHECK_2 = ExtResource("18_58msu")
+SFX_SLIDE_IN = ExtResource("36_0v4io")
+SFX_SLIDE_OUT = ExtResource("37_e82r8")
+
+[node name="VoicePlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("40_h8u57")
+bus = &"AnnouncerVoice"
+script = ExtResource("41_dinnr")
 
 [node name="GameOverPlayer" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("30_1yfmc")
+bus = &"AnnouncerVoice"
 
 [node name="IdiotPlayer" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("31_6yhk4")
+bus = &"IdiotVoice"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_t7b4d")

@@ -3,7 +3,7 @@ extends Control
 @onready var AnimPlayer : AnimationPlayer = $AnimationPlayerGlobal
 @onready var LevelEndLabel : Label = $LevelEnd_Label
 
-@onready var voiceline_player : AudioStreamPlayer = %EffectsPlayer
+@onready var voiceline_player : AudioStreamPlayer = %VoicePlayer
 
 @onready var player : Player  = $"../../../Player"
 
