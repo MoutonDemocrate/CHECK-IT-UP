@@ -3,8 +3,8 @@ uses: KikimoraGames/itch-publish@v0.0.3
 
 on: push
 env:
-  ITCH_USERNAME: my-username
-  ITCH_GAME_ID: my-game-id
+  ITCH_USERNAME: MoutonDemocrate
+  ITCH_GAME_ID: 2660727
 jobs:
   upload:
     name: Upload to Itch
@@ -25,7 +25,7 @@ jobs:
           path: build/${{ matrix.channel }}
       - uses: KikimoraGames/itch-publish@v0.0.3
         with:
-          butlerApiKey: ${{secrets.BUTLER_API_KEY}}
+          butlerApiKey: ${{secrets.vwjRK5VdoZj5MVX3qjHh3DMPoCs5EKWaEsTmReSq}}
           gameData: ./build/${{ matrix.template }}
           itchUsername: ${{env.ITCH_USERNAME}}
           itchGameId: ${{ env.ITCH_GAME_ID }}
