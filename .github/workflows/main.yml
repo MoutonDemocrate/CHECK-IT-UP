@@ -1,0 +1,33 @@
+name: Itch.io - Publish
+uses: KikimoraGames/itch-publish@v0.0.3
+
+on: push
+env:
+  ITCH_USERNAME: MoutonDemocrate
+  ITCH_GAME_ID: 2660727
+jobs:
+  upload:
+    name: Upload to Itch
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        channel:
+          - windows
+          - webgl
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy - Itch.io ${{ matrix.template }}
+    steps:
+      - uses: actions/download-artifact@v2.0.8
+        with:
+          name: ${{ matrix.channel }}
+          path: build/${{ matrix.channel }}
+      - uses: KikimoraGames/itch-publish@v0.0.3
+        with:
+          butlerApiKey: ${{secrets.vwjRK5VdoZj5MVX3qjHh3DMPoCs5EKWaEsTmReSq}}
+          gameData: ./build/${{ matrix.template }}
+          itchUsername: ${{env.ITCH_USERNAME}}
+          itchGameId: ${{ env.ITCH_GAME_ID }}
+          buildChannel: ${{ matrix.channel }}
+          buildNumber: ${{ needs.version.outputs.version_hash }}
