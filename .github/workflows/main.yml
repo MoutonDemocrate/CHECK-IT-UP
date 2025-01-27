@@ -6,7 +6,7 @@ env:
   ITCH_USERNAME: my-username
   ITCH_GAME_ID: my-game-id
 jobs:
-  deploy:
+  upload:
     name: Upload to Itch
     runs-on: ubuntu-latest
     strategy:
@@ -15,6 +15,7 @@ jobs:
         channel:
           - windows
           - webgl
+  deploy:
     runs-on: ubuntu-latest
     name: Deploy - Itch.io ${{ matrix.template }}
     steps:
