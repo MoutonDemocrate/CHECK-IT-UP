@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="VoiceLines" load_steps=57 format=3 uid="uid://5ak7jxpd1nhw"]
 
-[ext_resource type="Script" path="res://scenes/resources/VoiceLines.gd" id="1_o8367"]
-[ext_resource type="Script" path="res://scenes/resources/Voiceline.gd" id="2_l7krx"]
+[ext_resource type="Script" uid="uid://geyijjqhyljx" path="res://scenes/resources/VoiceLines.gd" id="1_o8367"]
+[ext_resource type="Script" uid="uid://bylxdgmgh4h4l" path="res://scenes/resources/Voiceline.gd" id="2_l7krx"]
 [ext_resource type="AudioStream" uid="uid://dahaq6k6ibcqc" path="res://assets/sounds/sfx/voicelines/my_grandma_could_beat_ya.ogg" id="3_g0jm2"]
 [ext_resource type="AudioStream" uid="uid://c6wyuqo565qsb" path="res://assets/sounds/sfx/voicelines/skill_issue.ogg" id="4_tsdxd"]
 [ext_resource type="AudioStream" uid="uid://b12ittfiejhj5" path="res://assets/sounds/sfx/voicelines/so_like_no.ogg" id="5_fdxqh"]

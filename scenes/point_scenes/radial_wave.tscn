@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://cqmqpyuumoma5"]
 
-[ext_resource type="Script" path="res://scenes/point_scenes/radial_wave.gd" id="1_enbrx"]
-[ext_resource type="Shader" path="res://scenes/point_scenes/radial_wave.gdshader" id="2_oco5a"]
+[ext_resource type="Script" uid="uid://8eosclrvdchk" path="res://scenes/point_scenes/radial_wave.gd" id="1_enbrx"]
+[ext_resource type="Shader" uid="uid://2bntrtwxdwvh" path="res://scenes/point_scenes/radial_wave.gdshader" id="2_oco5a"]
 
 [sub_resource type="Gradient" id="Gradient_ekqqr"]
 

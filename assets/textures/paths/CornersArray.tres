@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="TextureArray" load_steps=10 format=3 uid="uid://tjwljf1w57mb"]
 
-[ext_resource type="Script" path="res://scenes/resources/TextureArray.gd" id="1_ftv6i"]
+[ext_resource type="Script" uid="uid://c1b841ty84x8l" path="res://scenes/resources/TextureArray.gd" id="1_ftv6i"]
 [ext_resource type="Texture2D" uid="uid://dmu5cx47r2f7x" path="res://assets/textures/paths/corner_basic.png" id="2_e41hc"]
 [ext_resource type="Texture2D" uid="uid://qc6eq3koqhw0" path="res://assets/textures/paths/corner_1.png" id="3_0bb63"]
 [ext_resource type="Texture2D" uid="uid://dcf8rihf0ce83" path="res://assets/textures/paths/corner_2.png" id="4_w3pve"]

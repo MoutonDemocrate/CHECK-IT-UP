@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://dnqcwj84cpetv"]
 
-[ext_resource type="Shader" path="res://assets/shaders/speed_lines.gdshader" id="1_d1y8n"]
-[ext_resource type="Script" path="res://scenes/point_scenes/speed_lines_rect.gd" id="2_ujena"]
+[ext_resource type="Shader" uid="uid://c50schjpe7k6t" path="res://assets/shaders/speed_lines.gdshader" id="1_d1y8n"]
+[ext_resource type="Script" uid="uid://0csyxb5qdy3l" path="res://scenes/point_scenes/speed_lines_rect.gd" id="2_ujena"]
 
 [sub_resource type="Gradient" id="Gradient_jks7s"]
 
@@ -17,6 +17,7 @@ noise = SubResource("FastNoiseLite_x66qw")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_p20g6"]
 shader = ExtResource("1_d1y8n")
+shader_parameter/noise = SubResource("NoiseTexture2D_15mbu")
 shader_parameter/line_color_a = Color(0.854902, 0.854902, 0.854902, 1)
 shader_parameter/line_color_b = Color(0, 0.698039, 0.729412, 1)
 shader_parameter/line_threshold = 0.75
@@ -24,7 +25,6 @@ shader_parameter/inverse_speed = 50.0
 shader_parameter/line_length = 100.0
 shader_parameter/angle = 0.0
 shader_parameter/alpha = 1.0
-shader_parameter/noise = SubResource("NoiseTexture2D_15mbu")
 
 [node name="SpeedLinesRect" type="ColorRect"]
 material = SubResource("ShaderMaterial_p20g6")

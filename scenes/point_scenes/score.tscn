@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://2hmb7stqifxh"]
 
-[ext_resource type="Script" path="res://scenes/point_scenes/ScoreItem.gd" id="1_8d1ut"]
+[ext_resource type="Script" uid="uid://biebpu77281rp" path="res://scenes/point_scenes/ScoreItem.gd" id="1_8d1ut"]
 [ext_resource type="FontFile" uid="uid://bgkhf3ustndfv" path="res://assets/fonts/theyrecomingtotakemeaway.ttf" id="1_ngjfo"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_hik1l"]

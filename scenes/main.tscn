@@ -1,48 +1,48 @@
 [gd_scene load_steps=158 format=3 uid="uid://8m6o74ud0t8o"]
 
-[ext_resource type="Script" path="res://scenes/main.gd" id="1_hfrkx"]
+[ext_resource type="Script" uid="uid://chybtth7butss" path="res://scenes/main.gd" id="1_hfrkx"]
 [ext_resource type="Texture2D" uid="uid://b3uh0body4qu5" path="res://assets/player/default.png" id="1_r7gxw"]
-[ext_resource type="Script" path="res://scenes/World.gd" id="2_lgqa5"]
+[ext_resource type="Script" uid="uid://c3osxe7i2ly3l" path="res://scenes/World.gd" id="2_lgqa5"]
 [ext_resource type="PackedScene" uid="uid://bna7646swxqlu" path="res://scenes/inter.tscn" id="2_r6xpu"]
-[ext_resource type="Script" path="res://scenes/Background.gd" id="2_vr5km"]
+[ext_resource type="Script" uid="uid://bg3lhfj5ouxwk" path="res://scenes/Background.gd" id="2_vr5km"]
 [ext_resource type="PackedScene" uid="uid://dvstcfs3dg8bk" path="res://assets/models/terrain.tscn" id="3_2lnbl"]
-[ext_resource type="Shader" path="res://assets/shaders/heightmap.gdshader" id="3_hdv1v"]
-[ext_resource type="Script" path="res://scenes/player.gd" id="3_p36vy"]
-[ext_resource type="Script" path="res://scenes/CameraScript.gd" id="4_tdvwj"]
-[ext_resource type="Shader" path="res://assets/shaders/stars.gdshader" id="5_bgvg7"]
+[ext_resource type="Shader" uid="uid://bi1lxgpmheyfs" path="res://assets/shaders/heightmap.gdshader" id="3_hdv1v"]
+[ext_resource type="Script" uid="uid://c30ti1bhvy2hd" path="res://scenes/player.gd" id="3_p36vy"]
+[ext_resource type="Script" uid="uid://dyh8wb6el7sda" path="res://scenes/CameraScript.gd" id="4_tdvwj"]
+[ext_resource type="Shader" uid="uid://xqr8rtsvsrvi" path="res://assets/shaders/stars.gdshader" id="5_bgvg7"]
 [ext_resource type="PackedScene" uid="uid://f6wm525yri50" path="res://assets/models/cube.blend" id="5_sffi4"]
-[ext_resource type="Shader" path="res://assets/models/terrain.gdshader" id="6_ov1iw"]
-[ext_resource type="Shader" path="res://assets/shaders/speed_lines.gdshader" id="7_ivdtm"]
-[ext_resource type="Script" path="res://scenes/Void.gd" id="13_7a4jl"]
-[ext_resource type="Shader" path="res://assets/shaders/blur.gdshader" id="13_fixur"]
+[ext_resource type="Shader" uid="uid://dac6ng6mc0gcw" path="res://assets/models/terrain.gdshader" id="6_ov1iw"]
+[ext_resource type="Shader" uid="uid://c50schjpe7k6t" path="res://assets/shaders/speed_lines.gdshader" id="7_ivdtm"]
+[ext_resource type="Script" uid="uid://c5lsei7bh3cl6" path="res://scenes/Void.gd" id="13_7a4jl"]
+[ext_resource type="Shader" uid="uid://dlkk71a2vpw53" path="res://assets/shaders/blur.gdshader" id="13_fixur"]
 [ext_resource type="FontFile" uid="uid://bgkhf3ustndfv" path="res://assets/fonts/theyrecomingtotakemeaway.ttf" id="13_oh5di"]
-[ext_resource type="Script" path="res://scenes/point_scenes/speed_lines_rect.gd" id="14_80mxc"]
-[ext_resource type="Script" path="res://scenes/SpeedLinesContainer.gd" id="14_bi13k"]
-[ext_resource type="Script" path="res://scenes/UI.gd" id="15_0s21d"]
+[ext_resource type="Script" uid="uid://0csyxb5qdy3l" path="res://scenes/point_scenes/speed_lines_rect.gd" id="14_80mxc"]
+[ext_resource type="Script" uid="uid://be4n664luvdkc" path="res://scenes/SpeedLinesContainer.gd" id="14_bi13k"]
+[ext_resource type="Script" uid="uid://dpt4pys8lpryr" path="res://scenes/UI.gd" id="15_0s21d"]
 [ext_resource type="PackedScene" uid="uid://bhloyarqul1e3" path="res://scenes/point_scenes/bonk.tscn" id="17_0whm5"]
 [ext_resource type="AudioStream" uid="uid://cmqa6ig57qjlh" path="res://assets/sounds/sfx/check_1.wav" id="17_7yfx8"]
-[ext_resource type="Shader" path="res://assets/shaders/credits.gdshader" id="17_a6yrj"]
+[ext_resource type="Shader" uid="uid://kbv7auh62q82" path="res://assets/shaders/credits.gdshader" id="17_a6yrj"]
 [ext_resource type="Texture2D" uid="uid://cb2sy2tsic8p2" path="res://assets/textures/ui/logo/check_it_up_case_ANIM.png" id="17_xthpe"]
 [ext_resource type="Texture2D" uid="uid://d36n203yaq58b" path="res://assets/textures/ui/logo/check_it_up_check_ANIM.png" id="18_0v2vd"]
 [ext_resource type="AudioStream" uid="uid://bq34bs0g7724v" path="res://assets/sounds/sfx/check_2.wav" id="18_58msu"]
 [ext_resource type="Texture2D" uid="uid://dof3m4nfew66s" path="res://assets/credits/credits.png" id="18_wjot3"]
 [ext_resource type="Texture2D" uid="uid://bcadj2xve5q2a" path="res://assets/textures/particles/Spark.png" id="21_k5y07"]
-[ext_resource type="Script" path="res://scenes/Progress.gd" id="21_ldkga"]
-[ext_resource type="Script" path="res://scenes/MusicPlayer.gd" id="22_hdhtd"]
-[ext_resource type="Shader" path="res://assets/shaders/black_screen.gdshader" id="23_uf38s"]
-[ext_resource type="Script" path="res://scenes/GameOverLayer.gd" id="23_xxfof"]
+[ext_resource type="Script" uid="uid://c3s0jdnpvdhku" path="res://scenes/Progress.gd" id="21_ldkga"]
+[ext_resource type="Script" uid="uid://cy4c2fx8f8t82" path="res://scenes/MusicPlayer.gd" id="22_hdhtd"]
+[ext_resource type="Shader" uid="uid://dy27y5i17fng7" path="res://assets/shaders/black_screen.gdshader" id="23_uf38s"]
+[ext_resource type="Script" uid="uid://dwklbxbfyiavv" path="res://scenes/GameOverLayer.gd" id="23_xxfof"]
 [ext_resource type="AudioStream" uid="uid://dxiavexfkyylr" path="res://assets/sounds/music/KICK_CHECK_final_-001.wav" id="27_3j8hc"]
 [ext_resource type="AudioStream" uid="uid://dxj20he1ffdsv" path="res://assets/sounds/music/KICK_CHECK_final_-002.wav" id="28_qptp7"]
 [ext_resource type="AudioStream" uid="uid://bnec6s4rtgbnx" path="res://assets/sounds/sfx/voicelines/game_over.ogg" id="30_1yfmc"]
 [ext_resource type="AudioStream" uid="uid://bw3jdjk8jy6t6" path="res://assets/sounds/sfx/voicelines/just_stop_its_getting_hard_to_watch.ogg" id="31_6yhk4"]
-[ext_resource type="Script" path="res://scenes/effects_player.gd" id="32_oyf81"]
+[ext_resource type="Script" uid="uid://bvres7aefel7j" path="res://scenes/effects_player.gd" id="32_oyf81"]
 [ext_resource type="AudioStream" uid="uid://p0mau176aycr" path="res://assets/sounds/sfx/26894__vexst__semi-kick-21.wav" id="33_xmmuf"]
 [ext_resource type="AudioStream" uid="uid://clarr6npulsrj" path="res://assets/sounds/sfx/26895__vexst__semi-kick-22.wav" id="34_18uq5"]
 [ext_resource type="AudioStream" uid="uid://c55ieucwdsfbw" path="res://assets/sounds/sfx/26879__vexst__closed-hi-hat-1.wav" id="35_c3v5m"]
 [ext_resource type="AudioStream" uid="uid://5dfeb4iw6b1s" path="res://assets/sounds/sfx/Whoosh Ethereal Designed Bass Low End-001.wav" id="36_0v4io"]
 [ext_resource type="AudioStream" uid="uid://drpcy2ivp47i2" path="res://assets/sounds/sfx/Whoosh Ethereal Designed Bass Low End-003.wav" id="37_e82r8"]
 [ext_resource type="AudioStream" uid="uid://rydnocc5fmfc" path="res://assets/sounds/sfx/voicelines/check_it_up_fast.ogg" id="40_h8u57"]
-[ext_resource type="Script" path="res://scenes/voice_player.gd" id="41_dinnr"]
+[ext_resource type="Script" uid="uid://ywpoxxccbscq" path="res://scenes/voice_player.gd" id="41_dinnr"]
 
 [sub_resource type="Gradient" id="Gradient_ncgqo"]
 colors = PackedColorArray(0, 0.25, 0.225, 1, 0.39, 1, 0.928833, 1)
@@ -65,7 +65,7 @@ viewport_path = NodePath("Background/ColorRect/SubViewport")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rnftr"]
 render_priority = 0
 shader = ExtResource("6_ov1iw")
-shader_parameter/test_vec = null
+shader_parameter/test_vec = Vector3(0, 0, 0)
 
 [sub_resource type="Environment" id="Environment_ts1jf"]
 background_energy_multiplier = 0.0
@@ -109,13 +109,13 @@ noise = SubResource("FastNoiseLite_gwdti")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_e81x0"]
 shader = ExtResource("5_bgvg7")
+shader_parameter/noise = SubResource("NoiseTexture3D_oum83")
+shader_parameter/color_noise = SubResource("NoiseTexture2D_rdw0n")
 shader_parameter/speed = 6.05
 shader_parameter/multi = 2.0
 shader_parameter/movement_speed = 2.0
 shader_parameter/alpha = 0.184
 shader_parameter/edge_strength = 1.807
-shader_parameter/noise = SubResource("NoiseTexture3D_oum83")
-shader_parameter/color_noise = SubResource("NoiseTexture2D_rdw0n")
 
 [sub_resource type="Gradient" id="Gradient_2o1ox"]
 interpolation_mode = 2
@@ -180,6 +180,7 @@ noise = SubResource("FastNoiseLite_sa1i8")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_x702c"]
 shader = SubResource("Shader_lfjx0")
+shader_parameter/noise = SubResource("NoiseTexture2D_ksrf7")
 shader_parameter/line_color_a = Color(0.34902, 0.34902, 0.34902, 1)
 shader_parameter/line_color_b = Color(0, 0.364706, 0.384314, 1)
 shader_parameter/line_threshold = 0.8
@@ -187,7 +188,6 @@ shader_parameter/inverse_speed = 1000.0
 shader_parameter/line_length = 125.0
 shader_parameter/angle = 0.0
 shader_parameter/alpha = 1.0
-shader_parameter/noise = SubResource("NoiseTexture2D_ksrf7")
 
 [sub_resource type="Shader" id="Shader_1wyo1"]
 code = "shader_type canvas_item;
@@ -230,6 +230,7 @@ noise = SubResource("FastNoiseLite_dd0jd")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_x2coy"]
 shader = SubResource("Shader_1wyo1")
+shader_parameter/noise = SubResource("NoiseTexture2D_ntk4t")
 shader_parameter/line_color_a = Color(0.6, 0.6, 0.6, 1)
 shader_parameter/line_color_b = Color(0, 0.568627, 0.592157, 1)
 shader_parameter/line_threshold = 0.8
@@ -237,7 +238,6 @@ shader_parameter/inverse_speed = 300.0
 shader_parameter/line_length = 100.0
 shader_parameter/angle = 0.0
 shader_parameter/alpha = 1.0
-shader_parameter/noise = SubResource("NoiseTexture2D_ntk4t")
 
 [sub_resource type="Gradient" id="Gradient_jks7s"]
 
@@ -253,6 +253,7 @@ noise = SubResource("FastNoiseLite_x66qw")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_p20g6"]
 shader = ExtResource("7_ivdtm")
+shader_parameter/noise = SubResource("NoiseTexture2D_15mbu")
 shader_parameter/line_color_a = Color(0.713726, 0.713726, 0.713726, 1)
 shader_parameter/line_color_b = Color(0, 0.8, 0.835294, 1)
 shader_parameter/line_threshold = 0.75
@@ -260,7 +261,6 @@ shader_parameter/inverse_speed = 100.0
 shader_parameter/line_length = 300.0
 shader_parameter/angle = 0.0
 shader_parameter/alpha = 1.0
-shader_parameter/noise = SubResource("NoiseTexture2D_15mbu")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tg0f7"]
 shader = ExtResource("13_fixur")
@@ -1348,10 +1348,10 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8e02g"]
 _data = {
-"RESET": SubResource("Animation_6i4et"),
-"game_begin": SubResource("Animation_8nfcp"),
-"level_end": SubResource("Animation_fpo3s"),
-"press_right_loop": SubResource("Animation_20blm")
+&"RESET": SubResource("Animation_6i4et"),
+&"game_begin": SubResource("Animation_8nfcp"),
+&"level_end": SubResource("Animation_fpo3s"),
+&"press_right_loop": SubResource("Animation_20blm")
 }
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kmvle"]
@@ -1450,7 +1450,7 @@ gradient = SubResource("Gradient_t4au2")
 use_hdr = true
 
 [sub_resource type="Curve" id="Curve_hver0"]
-max_value = 100.0
+_limits = [0.0, 100.0, 0.0, 1.0]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 100), 0.0, 0.0, 0, 0]
 point_count = 2
 
@@ -1472,7 +1472,7 @@ point_count = 2
 curve = SubResource("Curve_dpbdi")
 
 [sub_resource type="Curve" id="Curve_h4joh"]
-max_value = 3.0
+_limits = [0.0, 3.0, 0.0, 1.0]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
@@ -1515,6 +1515,7 @@ noise = SubResource("FastNoiseLite_e677u")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jh0xa"]
 shader = ExtResource("7_ivdtm")
+shader_parameter/noise = SubResource("NoiseTexture2D_py2uu")
 shader_parameter/line_color_a = Color(1, 1, 1, 1)
 shader_parameter/line_color_b = Color(0.388235, 0.956863, 1, 1)
 shader_parameter/line_threshold = 0.75
@@ -1522,7 +1523,6 @@ shader_parameter/inverse_speed = 10.0
 shader_parameter/line_length = 1000.0
 shader_parameter/angle = 0.0
 shader_parameter/alpha = 1.0
-shader_parameter/noise = SubResource("NoiseTexture2D_py2uu")
 
 [sub_resource type="Gradient" id="Gradient_xm7ts"]
 interpolation_mode = 2
@@ -1841,9 +1841,9 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ameh8"]
 _data = {
-"RESET": SubResource("Animation_lojpu"),
-"game_over": SubResource("Animation_v7stn"),
-"on_game_begin": SubResource("Animation_jfesc")
+&"RESET": SubResource("Animation_lojpu"),
+&"game_over": SubResource("Animation_v7stn"),
+&"on_game_begin": SubResource("Animation_jfesc")
 }
 
 [sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_syfh0"]
@@ -1858,13 +1858,13 @@ clip_1/auto_advance = 1
 clip_1/next_clip = 1
 _transitions = {
 Vector2i(0, 1): {
-"fade_beats": 0,
+"fade_beats": 0.0,
 "fade_mode": 4,
 "from_time": 0,
 "to_time": 1
 },
 Vector2i(1, 1): {
-"fade_beats": 0,
+"fade_beats": 0.0,
 "fade_mode": 4,
 "from_time": 0,
 "to_time": 1

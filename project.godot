@@ -14,10 +14,10 @@ config/name="CHECK IT UP!"
 config/version="1.1"
 config/tags=PackedStringArray("arcade")
 run/main_scene="res://scenes/Controls.tscn"
-config/features=PackedStringArray("4.3", "Forward Plus")
+config/features=PackedStringArray("4.4", "Forward Plus")
 boot_splash/bg_color=Color(0, 0, 0, 1)
-boot_splash/image="res://assets/textures/ui/logo/check_it_up_logo.png"
 boot_splash/use_filter=false
+boot_splash/image="res://assets/textures/ui/logo/check_it_up_logo.png"
 config/icon="res://icon.png"
 
 [autoload]
@@ -100,8 +100,8 @@ locale/translations=PackedStringArray("res://assets/lang/en_english.translation"
 
 textures/canvas_textures/default_texture_filter=0
 textures/vram_compression/import_etc2_astc=true
-environment/defaults/default_clear_color=Color(0, 0, 0, 1)
 anti_aliasing/quality/msaa_2d=1
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)
 anti_aliasing/quality/screen_space_aa=1
 anti_aliasing/quality/use_taa=true
 environment/quality/msaa_2d=0

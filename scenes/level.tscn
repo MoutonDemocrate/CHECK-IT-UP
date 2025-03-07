@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dix54pcanheeh"]
 
-[ext_resource type="Script" path="res://scenes/level.gd" id="1_aer3t"]
-[ext_resource type="Script" path="res://scenes/RandomLevelGenerator.gd" id="2_cm3nc"]
+[ext_resource type="Script" uid="uid://djiqiorabad7f" path="res://scenes/level.gd" id="1_aer3t"]
+[ext_resource type="Script" uid="uid://bh11r73o5k7mq" path="res://scenes/RandomLevelGenerator.gd" id="2_cm3nc"]
 
 [sub_resource type="Curve2D" id="Curve2D_57smi"]
 _data = {

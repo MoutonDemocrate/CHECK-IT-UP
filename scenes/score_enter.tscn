@@ -1,6 +1,6 @@
 [gd_scene load_steps=25 format=3 uid="uid://bdr8tg0p6p6g5"]
 
-[ext_resource type="Script" path="res://scenes/score_enter.gd" id="1_eucob"]
+[ext_resource type="Script" uid="uid://bcxf14w5jw8u6" path="res://scenes/score_enter.gd" id="1_eucob"]
 [ext_resource type="FontFile" uid="uid://bgkhf3ustndfv" path="res://assets/fonts/theyrecomingtotakemeaway.ttf" id="1_ppebo"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1leym"]

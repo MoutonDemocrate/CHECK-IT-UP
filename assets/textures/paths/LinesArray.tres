@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="TextureArray" load_steps=10 format=3 uid="uid://bwalfu7itvrae"]
 
-[ext_resource type="Script" path="res://scenes/resources/TextureArray.gd" id="1_xdpig"]
+[ext_resource type="Script" uid="uid://c1b841ty84x8l" path="res://scenes/resources/TextureArray.gd" id="1_xdpig"]
 [ext_resource type="Texture2D" uid="uid://t8t540jim4mo" path="res://assets/textures/paths/line_basic.png" id="2_hylso"]
 [ext_resource type="Texture2D" uid="uid://bbjslxq72cmqn" path="res://assets/textures/paths/line_1.png" id="3_48hke"]
 [ext_resource type="Texture2D" uid="uid://f3wnq3n175cd" path="res://assets/textures/paths/line_2.png" id="4_gcw3p"]

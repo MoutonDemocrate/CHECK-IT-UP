@@ -2,7 +2,7 @@
 
 [ext_resource type="FontFile" uid="uid://cef20c6oql2my" path="res://assets/fonts/Funkrocker.otf" id="1_1vmcf"]
 [ext_resource type="FontFile" uid="uid://d0q5l1wdxnnnm" path="res://assets/fonts/FREAKSOFNATUREMASSIVE.ttf" id="2_jx87q"]
-[ext_resource type="Shader" path="res://assets/shaders/pixelate.gdshader" id="3_dhlnq"]
+[ext_resource type="Shader" uid="uid://c63jv27knsiw8" path="res://assets/shaders/pixelate.gdshader" id="3_dhlnq"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_sc68o"]
 font = ExtResource("1_1vmcf")

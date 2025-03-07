@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="VoiceLines" load_steps=59 format=3 uid="uid://das3ue0u3katp"]
 
-[ext_resource type="Script" path="res://scenes/resources/VoiceLines.gd" id="1_bnlty"]
-[ext_resource type="Script" path="res://scenes/resources/Voiceline.gd" id="2_7ql1j"]
+[ext_resource type="Script" uid="uid://geyijjqhyljx" path="res://scenes/resources/VoiceLines.gd" id="1_bnlty"]
+[ext_resource type="Script" uid="uid://bylxdgmgh4h4l" path="res://scenes/resources/Voiceline.gd" id="2_7ql1j"]
 [ext_resource type="AudioStream" uid="uid://b7sikg7s2l7he" path="res://assets/sounds/sfx/voicelines/nice_one.ogg" id="3_5655x"]
 [ext_resource type="AudioStream" uid="uid://yne52albimu7" path="res://assets/sounds/sfx/voicelines/oof_god_damn.ogg" id="4_x1wg0"]
 [ext_resource type="AudioStream" uid="uid://dgnv3am18q62i" path="res://assets/sounds/sfx/voicelines/punk_em.ogg" id="5_86anc"]
