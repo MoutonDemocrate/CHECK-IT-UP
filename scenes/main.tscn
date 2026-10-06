@@ -5,12 +5,12 @@
 [ext_resource type="Script" uid="uid://c3osxe7i2ly3l" path="res://scenes/World.gd" id="2_lgqa5"]
 [ext_resource type="PackedScene" uid="uid://bna7646swxqlu" path="res://scenes/inter.tscn" id="2_r6xpu"]
 [ext_resource type="Script" uid="uid://bg3lhfj5ouxwk" path="res://scenes/Background.gd" id="2_vr5km"]
-[ext_resource type="PackedScene" uid="uid://dvstcfs3dg8bk" path="res://assets/models/terrain.tscn" id="3_2lnbl"]
 [ext_resource type="Shader" uid="uid://bi1lxgpmheyfs" path="res://assets/shaders/heightmap.gdshader" id="3_hdv1v"]
 [ext_resource type="Script" uid="uid://c30ti1bhvy2hd" path="res://scenes/player.gd" id="3_p36vy"]
+[ext_resource type="PackedScene" uid="uid://c2yyai8xckt6t" path="res://assets/models/terrain.glb" id="4_chjal"]
 [ext_resource type="Script" uid="uid://dyh8wb6el7sda" path="res://scenes/CameraScript.gd" id="4_tdvwj"]
 [ext_resource type="Shader" uid="uid://xqr8rtsvsrvi" path="res://assets/shaders/stars.gdshader" id="5_bgvg7"]
-[ext_resource type="PackedScene" uid="uid://f6wm525yri50" path="res://assets/models/cube.blend" id="5_sffi4"]
+[ext_resource type="PackedScene" uid="uid://p74od2enmo7f" path="res://assets/models/cube.glb" id="6_chjal"]
 [ext_resource type="Shader" uid="uid://dac6ng6mc0gcw" path="res://assets/models/terrain.gdshader" id="6_ov1iw"]
 [ext_resource type="Shader" uid="uid://c50schjpe7k6t" path="res://assets/shaders/speed_lines.gdshader" id="7_ivdtm"]
 [ext_resource type="Script" uid="uid://c5lsei7bh3cl6" path="res://scenes/Void.gd" id="13_7a4jl"]
@@ -62,7 +62,22 @@ shader_parameter/gradient = SubResource("GradientTexture1D_w82rt")
 [sub_resource type="ViewportTexture" id="ViewportTexture_r3o2h"]
 viewport_path = NodePath("Background/ColorRect/SubViewport")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rnftr"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vc5cj"]
+render_priority = 0
+shader = ExtResource("6_ov1iw")
+shader_parameter/test_vec = Vector3(0, 0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nvyfr"]
+render_priority = 0
+shader = ExtResource("6_ov1iw")
+shader_parameter/test_vec = Vector3(0, 0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cjqg0"]
+render_priority = 0
+shader = ExtResource("6_ov1iw")
+shader_parameter/test_vec = Vector3(0, 0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_txyw0"]
 render_priority = 0
 shader = ExtResource("6_ov1iw")
 shader_parameter/test_vec = Vector3(0, 0, 0)
@@ -1907,16 +1922,40 @@ handle_input_locally = false
 size = Vector2i(900, 900)
 render_target_update_mode = 4
 
-[node name="terrain" parent="Background/ColorRect/SubViewport" unique_id=2103117988 instance=ExtResource("3_2lnbl")]
+[node name="terrain" parent="Background/ColorRect/SubViewport" unique_id=1017419327 instance=ExtResource("4_chjal")]
+
+[node name="BASE" parent="Background/ColorRect/SubViewport/terrain" index="0" unique_id=317388572]
+surface_material_override/0 = SubResource("ShaderMaterial_vc5cj")
+
+[node name="fBmValley" parent="Background/ColorRect/SubViewport/terrain" index="1" unique_id=553858385]
+surface_material_override/0 = SubResource("ShaderMaterial_nvyfr")
+
+[node name="MarbleMoutains" parent="Background/ColorRect/SubViewport/terrain" index="2" unique_id=184897825]
+visible = false
+
+[node name="PlanetTerrain" parent="Background/ColorRect/SubViewport/terrain" index="3" unique_id=29168526]
+visible = false
+
+[node name="SlickrockDistorted" parent="Background/ColorRect/SubViewport/terrain" index="4" unique_id=1732765794]
+visible = false
+
+[node name="StrataLake" parent="Background/ColorRect/SubViewport/terrain" index="5" unique_id=459223855]
+visible = false
+
+[node name="StrataMountain" parent="Background/ColorRect/SubViewport/terrain" index="6" unique_id=415230737]
+visible = false
+
+[node name="voronoiCrackle" parent="Background/ColorRect/SubViewport/terrain" index="7" unique_id=1135199813]
+visible = false
 
 [node name="CameraPivot" type="Node3D" parent="Background/ColorRect/SubViewport" unique_id=1094670865]
 
-[node name="cube" parent="Background/ColorRect/SubViewport/CameraPivot" unique_id=449383277 instance=ExtResource("5_sffi4")]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 1.95489, 0)
+[node name="cube" parent="Background/ColorRect/SubViewport/CameraPivot" unique_id=1091480916 instance=ExtResource("6_chjal")]
 
-[node name="Cube" parent="Background/ColorRect/SubViewport/CameraPivot/cube" index="0" unique_id=255565482]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.019, 0)
-surface_material_override/0 = SubResource("ShaderMaterial_rnftr")
+[node name="Cube" parent="Background/ColorRect/SubViewport/CameraPivot/cube" index="0" unique_id=922561789]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 2.1595373, 0)
+surface_material_override/0 = SubResource("ShaderMaterial_cjqg0")
+surface_material_override/1 = SubResource("ShaderMaterial_txyw0")
 
 [node name="Camera3D" type="Camera3D" parent="Background/ColorRect/SubViewport/CameraPivot" unique_id=1158775234]
 transform = Transform3D(1, -8.35189e-23, -4.37114e-08, 4.37114e-08, 1.91069e-15, 1, 0, -1, 1.91069e-15, 0, 4, 0)
@@ -2351,4 +2390,5 @@ environment = SubResource("Environment_t7b4d")
 [connection signal="property_list_changed" from="Void/Slide/ReferenceRect/SpeedLinesRectMid" to="Void/Slide/ReferenceRect/SpeedLinesRectMid" method="parameters_changed"]
 [connection signal="property_list_changed" from="Void/Slide/ReferenceRect/SpeedLinesRectBottom" to="Void/Slide/ReferenceRect/SpeedLinesRectBottom" method="parameters_changed"]
 
+[editable path="Background/ColorRect/SubViewport/terrain"]
 [editable path="Background/ColorRect/SubViewport/CameraPivot/cube"]

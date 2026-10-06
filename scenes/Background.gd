@@ -36,7 +36,7 @@ func _ready() -> void :
 	for node in $ColorRect/SubViewport/terrain.get_children() :
 		mat.shader = load("res://assets/models/terrain.gdshader")
 		node.material_override = mat.duplicate()
-		
+
 	_next_terrain()
 	$ColorRect/SubViewport/CameraPivot/Camera3D.global_position = Vector3(0,4,0) + camera_pos
 
@@ -47,21 +47,21 @@ func _physics_process(delta) -> void :
 	terrain.rotation.y += 0.002
 	camera_pivot.rotation.x = lerpf(camera_pivot.rotation.x, camera_pos.z, a_camera * delta)
 	camera_pivot.rotation.z = lerpf(camera_pivot.rotation.z, camera_pos.x, a_camera * delta)
-	
+
 	time += delta
-	
+
 	idle_angular_velocity = Vector3(
 		cos(time),
 		cos(time + 2*PI/3),
 		cos(time + 4*PI/3)
 	)
-	
+
 	cube_angular_velocity = lerp(cube_angular_velocity, idle_angular_velocity, a_cube * delta)
-	
+
 	cube_pivot.rotate_object_local(Vector3(1,0,0), cube_angular_velocity.x*delta)
 	cube_pivot.rotate_object_local(Vector3(0,1,0), cube_angular_velocity.y*delta)
 	cube_pivot.rotate_object_local(Vector3(0,0,1), cube_angular_velocity.z*delta)
-	
+
 #	camera_pos = lerp(
 #		camera_pos,
 #		Vector3.ZERO,

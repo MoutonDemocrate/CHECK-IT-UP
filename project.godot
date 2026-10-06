@@ -43,9 +43,9 @@ window/size/borderless=true
 window/stretch/mode="canvas_items"
 display_server/driver.linuxbsd="wayland"
 
-[gui]
+[filesystem]
 
-theme/custom_font="res://assets/fonts/NotoSans-Regular.ttf"
+import/blender/enabled=false
 
 [input]
 
