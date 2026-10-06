@@ -49,13 +49,13 @@ func calculate_runtime() -> float :
 		"\n - Leeway : ", leeway(leeway_level),
 		"\n - Final runtime : ", leeway(leeway_level)+max(runtime,1.0))
 	return leeway(leeway_level)+max(runtime,1.0)
-	
+
 func init_new_level() -> void :
 	var runtime := calculate_runtime()
 	var ProgManager : ProgressManager = $Camera2D/ProgressManager
 	ProgManager.initialise(runtime)
 
-## Returns the leeway 
+## Returns the leeway
 func leeway(leeway_l : float) -> float :
 	return (4.0*(1.0/((pow(leeway_l,2.0)/pow(difficulty_density,3.0))+1.0)))
 
@@ -83,7 +83,7 @@ func _input(event: InputEvent) -> void:
 			tween.tween_property(camera, "pos_base", Vector2(800,450) + Vector2(0,900), 0.2)
 			await tween.finished
 			void_node.follow_camera = false
-			
+
 		elif credits_on and event.is_action_pressed("up") :
 			credits_on = false
 			void_node.speedlines.show()

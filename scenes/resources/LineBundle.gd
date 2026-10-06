@@ -1,4 +1,5 @@
+@abstract
 extends Resource
 class_name LineBundle
 
-func random_line(args := []) : pass
+@abstract func random_line(args := [])

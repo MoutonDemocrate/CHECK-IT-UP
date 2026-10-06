@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="DictLineBundle" format=3 uid="uid://5vmwjhd8tgr"]
+
+[ext_resource type="Script" uid="uid://ca2r3jsqajvhm" path="res://scenes/resources/DictLineBundle.gd" id="1_y6isw"]
+
+[resource]
+script = ExtResource("1_y6isw")
+line_dict = Dictionary[String, Array]({
+"bigger": PackedStringArray("more corners now", "bigger playground now", "same but more", "freestyle this one", "press the keys", "feel the expanse", "fight the expanse", "revolt now", "more through it now", "get complex"),
+"default": PackedStringArray("clock in", "go at it", "spin into it", "like clockwork", "take \'em for a walk", "show what you\'ve got", "be the one", "frantic", "eclectic", "energetic", "feel the power"),
+"faster": PackedStringArray("do it faster now", "more speed", "get running", "start moving fast", "follow the line", "flash shock", "speed is the key", "faster now", "time is ticking", "bomb it down")
+})
+metadata/_custom_type_script = "uid://ca2r3jsqajvhm"

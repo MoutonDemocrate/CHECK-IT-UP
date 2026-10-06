@@ -42,7 +42,7 @@ func _exit() -> void:
 	$Slide/UI/PressRight_Label.hide()
 	$Slide/UI/CHECKMARK.hide()
 	self.hide()
-	
+
 func _process(delta: float) -> void:
 	if follow_camera :
 		position = main.camera.position

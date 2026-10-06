@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="VoiceLines" load_steps=59 format=3 uid="uid://das3ue0u3katp"]
+[gd_resource type="Resource" script_class="VoiceLines" format=3 uid="uid://das3ue0u3katp"]
 
 [ext_resource type="Script" uid="uid://geyijjqhyljx" path="res://scenes/resources/VoiceLines.gd" id="1_bnlty"]
 [ext_resource type="Script" uid="uid://bylxdgmgh4h4l" path="res://scenes/resources/Voiceline.gd" id="2_7ql1j"]

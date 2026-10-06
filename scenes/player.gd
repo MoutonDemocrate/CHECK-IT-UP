@@ -48,7 +48,7 @@ func _ready():
 func change_spark_speed(velocity : float = 1500, spread : float = 500, angle : float = 25) -> void :
 	$GPUParticles2D.process_material.initial_velocity_min = velocity - spread
 	$GPUParticles2D.process_material.initial_velocity_max = velocity + spread
-	
+
 	print($GPUParticles2D.process_material.initial_velocity_min, ", ", $GPUParticles2D.process_material.initial_velocity_max)
 
 func _set_player_green() -> void :
@@ -56,11 +56,11 @@ func _set_player_green() -> void :
 	state = PlayerState.INTER_GREEN
 
 func _physics_process(_delta):
-	
+
 	match state :
 		PlayerState.INTER_RED:
 			pass
-		
+
 		PlayerState.INTER_GREEN:
 			if Input.get_action_strength("right") - Input.get_action_strength("left") > 0 :
 				state = PlayerState.INTER_LEAVING
@@ -77,9 +77,10 @@ func _physics_process(_delta):
 				emit_signal("leaving_inter")
 				$"../Camera2D"._sl_appear(0.5)
 				$"../Void"._exit()
-		
+
 		PlayerState.INTER_LEAVING:
 			position += direction*speed*_delta
+			if $"../Credits".visible : $"../Credits".hide()
 			if position.x >= next_node.x :
 				state = PlayerState.GOING
 				node += 1
@@ -87,7 +88,7 @@ func _physics_process(_delta):
 				$"../Camera2D".follow_player = false
 				$"../Camera2D"._lerp_to_pos($"../World".level.global_position + Vector2(800,450))
 				$"../Background".position = $"../World".level.global_position
-				
+
 		PlayerState.GOING:
 			position += direction*speed*_delta
 			$"../Camera2D"._inertia(direction,-10)
@@ -114,17 +115,17 @@ func _physics_process(_delta):
 				$"../Camera2D"._shake()
 				$"../Background".set_camera_pos(Vector3(direction.x,0,direction.y)*0.6)
 				$GPUParticles2D.emitting = false
-				
+
 			line_progress = ((position - $"../World".level.get_path_point_global(node-1)).dot(direction)/(next_node - $"../World".level.get_path_point_global(node-1)).dot(direction))
 			if is_nan(line_progress) :
 				line_progress = 0.0
 			$"../World".level._hide_path(min(node,level_nodes_count), line_progress)
-		
+
 		PlayerState.CORNER:
 			corner_timer += _delta
 			if (corner_timer > combo_window) and (combo > 0) :
 				reset_combo()
-				
+
 			if direction_to_next_node == Vector2(
 				signf(Input.get_action_strength("right") - Input.get_action_strength("left")),
 				signf(Input.get_action_strength("down") - Input.get_action_strength("up"))
@@ -135,15 +136,15 @@ func _physics_process(_delta):
 				$GPUParticles2D.emitting = true
 				$"../Camera2D"._sl_set_angle(direction)
 				$"../Camera2D"._sl_appear()
-				
+
 				background.cube_impulse([Vector3(1,0,0),Vector3(0,1,0),Vector3(0,0,1)][cube_index], 25.0*[1,-1][int(float(cube_index)/3.0*2.0)])
 				cube_index = wrap(cube_index + 1, 0, 3)
-				
+
 				if corner_timer <= combo_window :
 					add_combo()
-				
+
 				corner_timer = 0.0
-				
+
 				if node - 1 == level_nodes_count :
 					progress_manager.stop()
 					GlobalData.current_score += 100.0 * clampf(progress_manager.time_left / (progress_manager.total_time/2), 0, 1)
@@ -158,15 +159,15 @@ func _physics_process(_delta):
 						$"../Camera2D"._lerp_to_pos($"../World".level.get_path_point_global(level_nodes_count))
 						$"../Camera2D"._lerp_zoom(1.5)
 					state = PlayerState.GOING
-		
+
 		PlayerState.GOING_LAST_NODE:
 			position += direction*speed*_delta
 			if direction.x*position.x >= direction.x*next_node.x :
 				state = PlayerState.INTER_ENTER
 				print("Emitting signal : entering_inter")
 				emit_signal("entering_inter")
-				
-		
+
+
 		PlayerState.INTER_ENTER:
 			position += direction*speed*_delta
 			if position.x >= ($"../World".inter.position.x + 800) :
@@ -179,10 +180,10 @@ func _physics_process(_delta):
 				$"../Camera2D".position = position
 				$"../Camera2D"._lerp_to_pos($"../World".inter.global_position + Vector2(800,-300))
 				$"../Void/Slide/UI".inter_anim()
-		
+
 		PlayerState.DEAD:
 			pass
-		
+
 func calculate_next_node_direction() -> Vector2 :
 	return (next_node - position).normalized()
 
