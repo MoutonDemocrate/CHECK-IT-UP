@@ -1,0 +1,189 @@
+name: Build, Release & Publish
+
+# Runs on any push whose latest commit message starts with "build".
+on:
+  push:
+    branches: ["**"]
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  GODOT_VERSION: 4.7.2
+  PROJECT_PATH: .          # folder containing project.godot
+  EXPORT_NAME: check-it-up # base name of the produced archives
+  ITCH_USER: moutondemocrate
+  ITCH_GAME: check-it-up
+
+jobs:
+  # ---------------------------------------------------------------- #
+  #  BUILD : one matrix leg per target platform                      #
+  # ---------------------------------------------------------------- #
+  build:
+    if: startsWith(github.event.head_commit.message, 'build')
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: linux
+            preset: "Linux"
+            artifact: check-it-up.x86_64
+          - platform: windows
+            preset: "Windows Desktop"
+            artifact: check-it-up.exe
+          - platform: macos
+            preset: "macOS"
+            artifact: check-it-up.zip
+          - platform: web
+            preset: "Web"
+            artifact: index.html
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Restore Godot editor & export templates from cache
+        id: godot-cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/godot-bin
+            ~/.local/share/godot/export_templates
+          key: godot-${{ env.GODOT_VERSION }}
+
+      - name: Install Godot ${{ env.GODOT_VERSION }}
+        if: steps.godot-cache.outputs.cache-hit != 'true'
+        run: |
+          set -euo pipefail
+          BASE="https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}-stable"
+
+          curl -fL -o godot.zip "${BASE}/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          curl -fL -o templates.tpz "${BASE}/Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
+
+          mkdir -p ~/godot-bin
+          unzip -q godot.zip -d ~/godot-bin
+          mv ~/godot-bin/Godot_v${GODOT_VERSION}-stable_linux.x86_64 ~/godot-bin/godot
+          chmod +x ~/godot-bin/godot
+
+          # A .tpz is a zip whose contents live under templates/
+          unzip -q templates.tpz -d /tmp/godot-templates
+          mkdir -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          mv /tmp/godot-templates/templates/* \
+             ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
+
+      - name: Put Godot on PATH
+        run: echo "$HOME/godot-bin" >> "$GITHUB_PATH"
+
+      - name: Import project resources
+        working-directory: ${{ env.PROJECT_PATH }}
+        # Builds the .godot/imported cache. Godot often returns a non-zero
+        # status here even on success, hence the "|| true".
+        run: godot --headless --import || true
+
+      - name: Export "${{ matrix.preset }}"
+        working-directory: ${{ env.PROJECT_PATH }}
+        run: |
+          set -euo pipefail
+          OUT="$GITHUB_WORKSPACE/build/${{ matrix.platform }}"
+          mkdir -p "$OUT"
+          godot --headless --export-release "${{ matrix.preset }}" "$OUT/${{ matrix.artifact }}"
+          ls -la "$OUT"
+
+      - name: Unpack the macOS bundle
+        if: matrix.platform == 'macos'
+        # Godot ships macOS as a .zip; unpack it so every platform folder
+        # holds a ready-to-run payload (and itch gets a proper .app).
+        run: |
+          set -euo pipefail
+          cd build/macos
+          unzip -q "${EXPORT_NAME}.zip"
+          rm "${EXPORT_NAME}.zip"
+
+      - name: Archive for transfer
+        # tar, not upload-artifact alone: artifact upload drops the
+        # executable bit, tar keeps permissions and symlinks intact.
+        run: tar -czf "${{ matrix.platform }}.tar.gz" -C "build/${{ matrix.platform }}" .
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.platform }}
+          path: ${{ matrix.platform }}.tar.gz
+          retention-days: 1
+
+  # ---------------------------------------------------------------- #
+  #  RELEASE : GitHub release + itch.io push                         #
+  # ---------------------------------------------------------------- #
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Unpack build archives
+        run: |
+          set -euo pipefail
+          for f in artifacts/*/*.tar.gz; do
+            name="$(basename "$f" .tar.gz)"
+            mkdir -p "build/$name"
+            tar -xzf "$f" -C "build/$name"
+          done
+          find build -maxdepth 2
+
+      - name: Zip each platform for the release
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          for d in build/*/; do
+            p="$(basename "$d")"
+            (cd "$d" && zip -qry "$GITHUB_WORKSPACE/dist/${EXPORT_NAME}-${p}.zip" .)
+          done
+          ls -la dist
+
+      - name: Read the commit subject and body
+        id: commit
+        run: |
+          {
+            echo "subject<<GHA_DELIM_7f3a"
+            git log -1 --pretty=%s
+            echo "GHA_DELIM_7f3a"
+            echo "body<<GHA_DELIM_7f3a"
+            git log -1 --pretty=%b
+            echo "GHA_DELIM_7f3a"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Create the GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.run_number }}
+          name: ${{ steps.commit.outputs.subject }}
+          body: ${{ steps.commit.outputs.body }}
+          files: dist/*.zip
+
+      - name: Install butler
+        run: |
+          set -euo pipefail
+          curl -fL -o butler.zip https://broth.itch.zone/butler/linux-amd64/LATEST/archive/default
+          unzip -q butler.zip -d butler-bin
+          chmod +x butler-bin/butler
+          echo "$GITHUB_WORKSPACE/butler-bin" >> "$GITHUB_PATH"
+
+      - name: Publish to itch.io
+        env:
+          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+          VERSION: build-${{ github.run_number }}
+        run: |
+          set -euo pipefail
+          butler push build/linux   "$ITCH_USER/$ITCH_GAME:linux"   --userversion "$VERSION"
+          butler push build/windows "$ITCH_USER/$ITCH_GAME:windows" --userversion "$VERSION"
+          butler push build/macos   "$ITCH_USER/$ITCH_GAME:osx"     --userversion "$VERSION"
+          butler push build/web     "$ITCH_USER/$ITCH_GAME:html5"   --userversion "$VERSION"

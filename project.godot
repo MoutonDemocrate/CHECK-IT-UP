@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="CHECK IT UP!"
-config/version="1.1"
+config/version="2.1"
 config/tags=PackedStringArray("arcade")
 run/main_scene="res://scenes/Controls.tscn"
 config/features=PackedStringArray("4.7", "Forward Plus")
@@ -23,6 +23,10 @@ boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/use_filter=false
 boot_splash/image="res://assets/textures/ui/logo/check_it_up_logo.png"
 config/icon="res://icon.png"
+
+[audio]
+
+buses/default_bus_layout="uid://c2vmeh1t2no4r"
 
 [autoload]
 
@@ -37,6 +41,11 @@ window/size/viewport_height=900
 window/size/mode=3
 window/size/borderless=true
 window/stretch/mode="canvas_items"
+display_server/driver.linuxbsd="wayland"
+
+[gui]
+
+theme/custom_font="res://assets/fonts/NotoSans-Regular.ttf"
 
 [input]
 
@@ -103,6 +112,7 @@ locale/translations=PackedStringArray("res://assets/lang/en_english.translation"
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+renderer/rendering_method="mobile"
 textures/vram_compression/import_etc2_astc=true
 anti_aliasing/quality/msaa_2d=1
 environment/defaults/default_clear_color=Color(0, 0, 0, 1)
