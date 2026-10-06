@@ -77,7 +77,7 @@ jobs:
       - name: Put Godot on PATH
         run: echo "$HOME/godot-bin" >> "$GITHUB_PATH"
 
-       - name: Import project resources
+      - name: Import project resources
         working-directory: ${{ env.PROJECT_PATH }}
         run: |
           godot --headless --import 2>&1 | tee import.log
