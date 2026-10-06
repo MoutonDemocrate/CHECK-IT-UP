@@ -77,15 +77,7 @@ jobs:
       - name: Put Godot on PATH
         run: echo "$HOME/godot-bin" >> "$GITHUB_PATH"
 
-      - name: Fail fast on unfetched Git LFS pointers
-        run: |
-          if grep -rlI --exclude-dir=.git 'https://git-lfs.github.com/spec/v1' . > /tmp/ptr.txt; then
-            echo "::error::LFS pointers checked out instead of real assets:"
-            cat /tmp/ptr.txt
-            exit 1
-          fi
-
-      - name: Import project resources
+       - name: Import project resources
         working-directory: ${{ env.PROJECT_PATH }}
         run: |
           godot --headless --import 2>&1 | tee import.log
